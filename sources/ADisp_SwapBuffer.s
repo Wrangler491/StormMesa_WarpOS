@@ -20,7 +20,7 @@
 * 68K Assembler stubs for SWFSDriver_SwapBuffer_FS/AGA (should not
 * be done by PPC)
 
-		near    a4,-1
+		*near    a4,-1
 		include "GL/Amigamesa.i"
 		include "exec/ports.i"
 		include "intuition/screens.i"
