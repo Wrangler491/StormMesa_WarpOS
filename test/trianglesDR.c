@@ -119,53 +119,62 @@ void drawTriangles(AmigaMesaContext context, int num)
   srand(42);
   totBegin=totColor=totVertex=totEnd=0;
 
-  gettimeofday(&startTime, NULL);
+  GetSysTimePPC(&startTime);
+  //gettimeofday(&startTime, NULL);
   midTime1 = startTime;
   for (count = 0; count < num; count++) {
     glBegin(GL_TRIANGLES);
-	gettimeofday(&midTime2, NULL);
+    	GetSysTimePPC(&midTime2);
+	//gettimeofday(&midTime2, NULL);
 	totBegin += (double)midTime2.tv_micro / 1000000 + midTime2.tv_secs;
 	totBegin -= (double)midTime1.tv_micro / 1000000 + midTime1.tv_secs;
 	midTime1 = midTime2;
 
     glColor3ub(rand() % 256, rand() % 256, rand() % 256);
-	gettimeofday(&midTime2, NULL);
+    	GetSysTimePPC(&midTime2);
+	//gettimeofday(&midTime2, NULL);
 	totColor += (double)midTime2.tv_micro / 1000000 + midTime2.tv_secs;
 	totColor -= (double)midTime1.tv_micro / 1000000 + midTime1.tv_secs;
 	midTime1 = midTime2;
 
     glVertex3i(rand() % 800 - 400, rand() % 600 - 300, rand() % 1000 - 500);
-	gettimeofday(&midTime2, NULL);
+	GetSysTimePPC(&midTime2);
+	//gettimeofday(&midTime2, NULL);
 	totVertex += (double)midTime2.tv_micro / 1000000 + midTime2.tv_secs;
 	totVertex -= (double)midTime1.tv_micro / 1000000 + midTime1.tv_secs;
 	midTime1 = midTime2;
 
     glColor3ub(rand() % 256, rand() % 256, rand() % 256);
-	gettimeofday(&midTime2, NULL);
+	GetSysTimePPC(&midTime2);
+	//gettimeofday(&midTime2, NULL);
 	totColor += (double)midTime2.tv_micro / 1000000 + midTime2.tv_secs;
 	totColor -= (double)midTime1.tv_micro / 1000000 + midTime1.tv_secs;
 	midTime1 = midTime2;
 
     glVertex3i(rand() % 800 - 400, rand() % 600 - 300, rand() % 1000 - 500);
-	gettimeofday(&midTime2, NULL);
+	GetSysTimePPC(&midTime2);
+	//gettimeofday(&midTime2, NULL);
 	totVertex += (double)midTime2.tv_micro / 1000000 + midTime2.tv_secs;
 	totVertex -= (double)midTime1.tv_micro / 1000000 + midTime1.tv_secs;
 	midTime1 = midTime2;
 
     glColor3ub(rand() % 256, rand() % 256, rand() % 256);
-	gettimeofday(&midTime2, NULL);
+	GetSysTimePPC(&midTime2);
+	//gettimeofday(&midTime2, NULL);
 	totColor += (double)midTime2.tv_micro / 1000000 + midTime2.tv_secs;
 	totColor -= (double)midTime1.tv_micro / 1000000 + midTime1.tv_secs;
 	midTime1 = midTime2;
 
     glVertex3i(rand() % 800 - 400, rand() % 600 - 300, rand() % 1000 - 500);
-	gettimeofday(&midTime2, NULL);
+	GetSysTimePPC(&midTime2);
+	//gettimeofday(&midTime2, NULL);
 	totVertex += (double)midTime2.tv_micro / 1000000 + midTime2.tv_secs;
 	totVertex -= (double)midTime1.tv_micro / 1000000 + midTime1.tv_secs;
 	midTime1 = midTime2;
 
     glEnd();
-	gettimeofday(&midTime2, NULL);
+	GetSysTimePPC(&midTime2);
+	//gettimeofday(&midTime2, NULL);
 	totEnd += (double)midTime2.tv_micro / 1000000 + midTime2.tv_secs;
 	totEnd -= (double)midTime1.tv_micro / 1000000 + midTime1.tv_secs;
 	midTime1 = midTime2;
@@ -173,8 +182,8 @@ void drawTriangles(AmigaMesaContext context, int num)
   glFlush();
 
 	AmigaMesaSwapBuffers(context);
-
-  gettimeofday(&stopTime, NULL);
+  GetSysTimePPC(&stopTime);
+  //gettimeofday(&stopTime, NULL);
   
   secs  = (double)stopTime.tv_micro  / 1000000 + stopTime.tv_secs ;
   secs -= (double)startTime.tv_micro / 1000000 + startTime.tv_secs;
@@ -271,7 +280,7 @@ int main(int argc, char **argv)
 				 WA_InnerHeight, HEIGHT,
 				 WA_Title, "Triangles",
 				 WA_PubScreen, screen,
-				 WA_IDCMP, IDCMP_CLOSEWINDOW | IDCMP_VANILLAKEY,
+				 //WA_IDCMP, IDCMP_CLOSEWINDOW | IDCMP_VANILLAKEY,
 				 WA_CloseGadget, TRUE,
 				 WA_DepthGadget, TRUE,
 				 WA_DragBar, TRUE,
@@ -299,7 +308,7 @@ int main(int argc, char **argv)
 	  drawTrianglesRGBAModes(context, argc == 2 ? atoi(argv[1]) : 500);
 
 printf("Done\n");
-	handle_window_events(window);
+	//handle_window_events(window);
 printf("Clicked close\n");
       }
 printf("Over\n");

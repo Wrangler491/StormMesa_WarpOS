@@ -50,7 +50,7 @@ extern struct DOSBase *DOSBase;
 struct Library *IntuitionBase;
 #else
 struct IntuitionBase *IntuitionBase;
-struct Library *CG;
+struct Library *CyberGFxBase;
 #endif
 struct Screen *screen;
 struct RastPort *rpptr;
@@ -94,7 +94,8 @@ void drawTriangles(AmigaMesaContext context, int num)
 
   srand(42);
 
-  gettimeofday(&startTime, NULL);
+  GetSysTimePPC(&startTime);	
+  //gettimeofday(&startTime, NULL);
   for (count = 0; count < num; count++) {
     glBegin(GL_TRIANGLES);
     glColor3ub(rand() % 256, rand() % 256, rand() % 256);
@@ -107,7 +108,8 @@ void drawTriangles(AmigaMesaContext context, int num)
   }
   glFlush();
 	AmigaMesaSwapBuffers(context);
-  gettimeofday(&stopTime, NULL);
+  GetSysTimePPC(&stopTime);
+  //gettimeofday(&stopTime, NULL);
   
   secs  = (double)stopTime.tv_micro  / 1000000 + stopTime.tv_secs ;
   secs -= (double)startTime.tv_micro / 1000000 + startTime.tv_secs;
@@ -175,9 +177,9 @@ void exitT(void) {
 	printf("Closing screen\n");
     CloseScreen(screen);
 	}
-  if (CG) {
+  if (CyberGfxBase) {
 	printf("Closing cgx library\n");
-	CloseLibrary(CG);
+	CloseLibrary(CyberGfxBase);
 	}
   if (IntuitionBase) {
 	printf("Closing library\n");
@@ -194,7 +196,7 @@ int main(int argc, char **argv)
 
   if ((IntuitionBase = OpenLibrary("intuition.library", 1))) {
 		printf("Opened intuition.library\n");
-	  if((CG=OpenLibrary("cybergraphics.library",0))) {
+	  if((CyberGfxBase=OpenLibrary("cybergraphics.library",0))) {
 		printf("Opened cybergraphics.library\n");	
 	   modeID = BestCModeIDTags(CYBRBIDTG_NominalWidth, WIDTH,
 				CYBRBIDTG_NominalHeight, HEIGHT,
@@ -206,7 +208,7 @@ int main(int argc, char **argv)
 			CloseLibrary(IntuitionBase);
 			return 0;
 		}
-		modeID = 0x50001100;
+		//modeID = 0x50001100;
 		if ((screen = OpenScreenTags(NULL,
 					 SA_Width, WIDTH,
 					 SA_Height, HEIGHT,
