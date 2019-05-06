@@ -38,7 +38,7 @@ ROOT = ..
 
 CC = gcc
 
-CFLAGS = --specs=warpup -DWARPUP -w
+CFLAGS = --specs=warpup -DWARPUP -w -O0
 
 ##### MACROS #####
 
@@ -63,7 +63,7 @@ SRCS = test.c triangles.c trianglesDB.c trianglesS.c
 ##accum.c
 
 ## programs to create
-PRGS = test triangles trianglesDB trianglesS 
+PRGS = test triangles trianglesDR trianglesS 
 ##accum
 
 # MASTER-CONFIG #
@@ -76,10 +76,16 @@ PRGS = test triangles trianglesDB trianglesS
 %.o: %.c
 	$(CC) -I$(INC_DIR) $(CFLAGS) $< -s -c -o $@
 
+#$(PRGS):  
+#	$(CC) -I. -I$(INC_DIR) $(CFLAGS) $< $(LIBS) -s -o $@
+
+
 ##accum: accum$(O) $(PRG_DEP)
 ##	$(CC) -I. -I$(INC_DIR) $(CFLAGS) $< -lMesaGLtk $(LIBS) -s -o $@
-triangles: triangles.o $(PRG_DEP)
-	$(CC) -I.. -I$(INC_DIR) $(CFLAGS) $< $(LIBS) -s -o $@
+#triangles: triangles.o $(PRG_DEP)
+#	$(CC) -I.. -I$(INC_DIR) $(CFLAGS) $< $(LIBS) -s -o $@
+#trianglesDR: trianglesDR.o $(PRG_DEP)
+#	$(CC) -I.. -I$(INC_DIR) $(CFLAGS) $< $(LIBS) -s -o $@
 ##trianglesDB: trianglesDB$(O) $(PRG_DEP)
 ##	$(CC) -I. -I$(INC_DIR) $(CFLAGS) $< $(LIBS) -s -o $@
 trianglesS: trianglesS.o $(PRG_DEP)

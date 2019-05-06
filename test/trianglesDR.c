@@ -110,18 +110,7 @@ void drawTriangles(AmigaMesaContext context, int num)
   glLoadIdentity();
 
   smglOrtho(-400.0, 400.0, -300.0, 300.0, 500.0, -500.0);
-/*
-	glBegin(GL_TRIANGLES);
-	glColor3f( 1, 0, 0 ); // red
-	glVertex2f( -.80, -.80 );
-	glColor3f( 0, 1, 0 ); // green
-	glVertex2f( .80, -.80 );
-	glColor3f( 0, 0, 1 ); // blue
-	glVertex2f( 0, .90 );
-	glEnd();
-	glFlush();
 
-*/
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
 
@@ -182,6 +171,9 @@ void drawTriangles(AmigaMesaContext context, int num)
 	midTime1 = midTime2;
   }
   glFlush();
+
+	AmigaMesaSwapBuffers(context);
+
   gettimeofday(&stopTime, NULL);
   
   secs  = (double)stopTime.tv_micro  / 1000000 + stopTime.tv_secs ;
@@ -295,6 +287,7 @@ int main(int argc, char **argv)
 						AMA_Width, WIDTH,
 						AMA_Height, HEIGHT,
 						AMA_RGBMode, GL_TRUE,
+						AMA_DirectRender, GL_TRUE,
 						TAG_END))) {
 	printf("AMCCT returned\n");
 	depth = GetBitMapAttr (window->WScreen->RastPort.BitMap, BMA_DEPTH);
@@ -304,7 +297,6 @@ int main(int argc, char **argv)
 	  drawTrianglesIndexModes0(context, argc == 2 ? atoi(argv[1]) : 500);
 	else*/
 	  drawTrianglesRGBAModes(context, argc == 2 ? atoi(argv[1]) : 500);
-
 
 printf("Done\n");
 	handle_window_events(window);
