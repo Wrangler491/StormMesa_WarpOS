@@ -196,7 +196,7 @@ const char * checkstrings[] = {
 		};
 ;;//
 
-//#define DBG
+#define DBG 1
 
 // misc support
 ;// logbase2
@@ -2364,10 +2364,13 @@ void HW_SetupDriver( GLcontext *ctx )
    W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
    W3D_Context *context = hwcontext->context;
 
+	REM(HW_SetupDriver);
+printf("GLcontext: 0x%08x, AM context: 0x%08x, HW context: 0x%08x, context: 0x%08x\n",ctx,c,hwcontext,context);
 /* texmapping setup */
 /* TODO: support 3d textures */
 
-   W3D_WaitIdle(context);
+   //W3D_WaitIdle(context);
+printf("HWSD step 1\n");
    if (ctx->Texture.Enabled)
    {
 		W3D_SetState(context,W3D_TEXMAPPING,W3D_ENABLE);
@@ -2383,6 +2386,7 @@ void HW_SetupDriver( GLcontext *ctx )
    }
    else
 		W3D_SetState(context,W3D_TEXMAPPING,W3D_DISABLE);
+printf("HWSD step 2\n");
 
 /* gouraud / flat shading setup */
 
@@ -2390,6 +2394,7 @@ void HW_SetupDriver( GLcontext *ctx )
 		W3D_SetState(context,W3D_GOURAUD,W3D_ENABLE);
    else
 		W3D_SetState(context,W3D_GOURAUD,W3D_DISABLE);
+printf("HWSD step 3\n");
 
 /* depth buffer setup */
 
@@ -2426,6 +2431,7 @@ void HW_SetupDriver( GLcontext *ctx )
 		W3D_SetState(context,W3D_ZBUFFER,W3D_DISABLE);
 		W3D_SetState(context,W3D_ZBUFFERUPDATE,W3D_DISABLE);
    }
+printf("HWSD step 4\n");
 
 /* alpha test setup */
 
@@ -2451,6 +2457,7 @@ void HW_SetupDriver( GLcontext *ctx )
    }
    else
 		W3D_SetState(context,W3D_ALPHATEST,W3D_DISABLE);
+printf("HWSD step 5\n");
 
 /* blending check */
 
@@ -2494,6 +2501,7 @@ void HW_SetupDriver( GLcontext *ctx )
    }
    else
 		W3D_SetState(context,W3D_BLENDING,W3D_DISABLE);
+printf("HWSD step 6\n");
 
 /* fogging check */
 
@@ -2504,6 +2512,7 @@ void HW_SetupDriver( GLcontext *ctx )
    }
    else
 		W3D_SetState(context,W3D_FOGGING,W3D_DISABLE);
+printf("HWSD step 7\n");
 
 /* antialiasing setup */
 
@@ -2519,6 +2528,7 @@ void HW_SetupDriver( GLcontext *ctx )
 		W3D_SetState(context,W3D_ANTI_POLYGON,W3D_ENABLE);
    else
 		W3D_SetState(context,W3D_ANTI_POLYGON,W3D_DISABLE);
+printf("HWSD step 8\n");
 
 /* dithering setup */
 
@@ -2526,6 +2536,7 @@ void HW_SetupDriver( GLcontext *ctx )
 		W3D_SetState(context,W3D_DITHERING,W3D_ENABLE);
    else
 		W3D_SetState(context,W3D_DITHERING,W3D_DISABLE);
+printf("HWSD step 9\n");
 
 /* scissor setup */
 
@@ -2548,6 +2559,7 @@ void HW_SetupDriver( GLcontext *ctx )
 		/* small workaround to fix W3DV2 Prototype problem */
 		W3D_SetScissor(context,&hwcontext->scissor);
    }
+printf("HWSD step 10\n");
 
 /* logic op setup */
 
@@ -2579,6 +2591,7 @@ void HW_SetupDriver( GLcontext *ctx )
    }
    else
 		W3D_SetState(context,W3D_LOGICOP,W3D_DISABLE);
+printf("HWSD step 11\n");
 
 /* masking setup */
 
@@ -2596,6 +2609,7 @@ void HW_SetupDriver( GLcontext *ctx )
    {
 		W3D_SetPenMask(context,(ULONG)ctx->Color.IndexMask);
    }
+printf("HWSD step 12\n");
 
 /* stencil setup */
 
@@ -2656,6 +2670,7 @@ void HW_SetupDriver( GLcontext *ctx )
    else
 		W3D_SetState(context,W3D_STENCILBUFFER,W3D_DISABLE);
 */
+printf("HWSD step 13\n");
 
 /* TODO: support specular highlighting as soon as supported by W3D */
 
@@ -4255,13 +4270,17 @@ void HW_DD_pointers( GLcontext *ctx )
 #ifdef DBG
    /*LibPrintf*/ printf("HW_DD_pointers\n");
 #endif
+	REM(HW_DD_pointers);
+
    /* if only lighting state changes, then it shouldn't have any
 	  effect on the driver state */
-
-   if ((rc = ((*hwcontext->CompCheck)(ctx))) == CHECK_SUCCESS)
+	rc = ((*hwcontext->CompCheck)(ctx));
+   if (rc == CHECK_SUCCESS)
    {
+	printf("HWDDP: part 1\n");
 	if(ChangePrimitiveFuncs)
 	{
+		printf("HWDDP: part 2\n");
 		ctx->Driver.PointsFunc = (*hwcontext->ChPoint)(ctx);
 		ctx->Driver.LineFunc = (*hwcontext->ChLine)(ctx);
 		ctx->Driver.TriangleFunc = (*hwcontext->ChTriangle)(ctx);
@@ -4270,6 +4289,7 @@ void HW_DD_pointers( GLcontext *ctx )
 		ctx->Driver.TriStripFunc = (*hwcontext->ChTriStrip)(ctx);
 		ctx->Driver.TriFanFunc = (*hwcontext->ChTriFan)(ctx);
 	}
+		printf("HWDDP: part 3\n");
 		ctx->Driver.GetParameteri = HW_GetParameteri;
 		ctx->Driver.RasterSetup = HW_ChooseRasterSetup(ctx,hwcontext);
 		if (ctx->NewState & (~NEW_LIGHTING))
@@ -4278,11 +4298,13 @@ void HW_DD_pointers( GLcontext *ctx )
    }
    else
    {
+		printf("HWDDP: part 4\n");
 		ctx->Driver.GetParameteri = SW_GetParameteri;
 		ctx->Driver.RasterSetup = NULL;
    }
    if (!(hwcontext->nohw))
    {
+		printf("HWDDP: part 5\n");
 	   ctx->Driver.AllocDepthBuffer = HW_AllocDepthBuffer;
 	   ctx->Driver.DepthTestSpan = HW_DepthTestSpan;
 	   ctx->Driver.DepthTestPixels = HW_DepthTestPixels;
@@ -4291,10 +4313,15 @@ void HW_DD_pointers( GLcontext *ctx )
    }
    else
    {
+		printf("HWDDP: part 6\n");
+
 	   if (ctx->Buffer)
 	   {
+		printf("HWDDP: part 7\n");
+
 		   if (!ctx->Buffer->Depth)
 		   {
+			printf("HWDDP: part 8\n");
 				gl_alloc_depth_buffer(ctx);
 				gl_clear_depth_buffer(ctx);
 		   }
@@ -4302,13 +4329,19 @@ void HW_DD_pointers( GLcontext *ctx )
    }
    if (hwcontext->flags & HWFLAG_STATS)
    {
+		printf("HWDDP: part 9\n");
+
 		if (rc > 0)
 		{
+			printf("HWDDP: part 10\n");
+
 				(hwcontext->statarray[rc-1])++;
 				hwcontext->failed++;
 		}
    }
+	printf("HWDDP: part 11\n");
    W3D_Flush(hwcontext->context);
+	printf("HWDDP: part 12\n");
 }
 ;;//
 
@@ -4482,6 +4515,7 @@ void HW_SetupDD_pointers( GLcontext *ctx )
 #ifdef DBG
    /*LibPrintf*/ printf("HW_SetupDD_pointers\n");
 #endif
+	REM(HW_SetupDD_pointers);
 
    ctx->Driver.RendererString = HWDriver_rendererstring;
    ctx->Driver.SetBuffer = HWDriver_set_buffer;
@@ -4657,6 +4691,9 @@ void HWDriver_SwapBuffer_FS(struct amigamesa_context *c)
 		W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
 		W3D_Context *context = hwcontext->context;
 		ULONG result;
+#ifdef DBG
+   /*LibPrintf*/ printf("HWDriver_SwapBuffer_FS\n");
+#endif
 
 		result = W3D_Flush(context);
 		if (result == W3D_NOGFXMEM)
@@ -4696,6 +4733,9 @@ void HWDriver_SwapBuffer_DR(struct amigamesa_context *c)
 		W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
 		W3D_Context *context = hwcontext->context;
 		ULONG result;
+#ifdef DBG
+   /*LibPrintf*/ printf("HWDriver_SwapBuffer_DR\n");
+#endif
 
 		result = W3D_Flush(context);
 		if (result == W3D_NOGFXMEM)
@@ -4870,6 +4910,11 @@ REM(LaunchHWDriver);
 	}
 	c->right = c->RealWidth - c->width - c->left;
 	c->top = c->RealHeight - c->height - c->bottom;
+printf("FWxFH: %dx%d, RWxRH: %dx%d, WxH: %dx%d, top: %d, bottom %d, l %d, r %d\n", \
+	c->FixedWidth, c->FixedHeight, c->RealWidth, c->RealHeight, c->width, c->height, \
+	c->top, c->bottom, c->left, c->right);
+printf("Depth: %d\n",c->depth);
+
 #ifndef __PPC__
 	if (!(c->back_rp = AllocVec(sizeof(struct RastPort),MEMF_PUBLIC|MEMF_CLEAR)))
 		return(FALSE);
@@ -4885,6 +4930,7 @@ REM(LaunchHWDriver);
 		return(FALSE);
 	InitRastPort(c->back2_rp);
 #endif
+	printf("LHWD part 1\n");
 	c->draw_rp = c->back_rp;
 	if (c->flags & FLAG_FULLSCREEN)
 	{
@@ -4917,6 +4963,7 @@ REM(LaunchHWDriver);
 	c->FrontArray = c->BackArray;
 	SetAPen(c->back_rp,0);
 	RectFill(c->back_rp,0,0,c->width-1,c->height-1);
+	printf("LHWD part 2\n");
 	if (c->flags & FLAG_FULLSCREEN)
 	{
 		c->back_rp->BitMap = c->sbuf1->sb_BitMap;
@@ -4938,6 +4985,7 @@ REM(LaunchHWDriver);
 	c->bprow = GetCyberMapAttr(c->back_rp->BitMap,CYBRMATTR_XMOD);
 	c->bppix = GetCyberMapAttr(c->back_rp->BitMap,CYBRMATTR_BPPIX);
 	c->fmt = GetCyberMapAttr(c->back_rp->BitMap,CYBRMATTR_PIXFMT);
+	printf("LHWD part 3\n");
 
 	if (c->depth <= 8)
 	{
@@ -4967,6 +5015,7 @@ REM(LaunchHWDriver);
 #endif
 		return(FALSE);
 	hwcontext = (W3Ddriver *)c->hwdriver;
+	printf("LHWD part 4\n");
 
 
 /* Thellier: Warp3D can install several drivers but we cant select especially one 	*/
@@ -5137,6 +5186,7 @@ BOOL HWDriver_init(struct amigamesa_context *c,struct TagItem *tagList)
 
 REM(HWDriver_init);
 	c->front_rp = c->rp;
+	printf("HWDI: rastport pointer 0x%08x\n",c->rp);
 	if (c->flags & FLAG_FULLSCREEN)
 	{
 		if (CyberGfxBase)
@@ -5165,6 +5215,8 @@ REM(HWDriver_init);
 			}
 		}
 		c->front_rp = c->rp = &c->Screen->RastPort;
+	printf("HWDI: rastport pointer 0x%08x\n",c->rp);
+
 		if (!(c->dbport = CreateMsgPort()))
 		{
 				FreeScreenBuffer(c->Screen,c->sbuf1);

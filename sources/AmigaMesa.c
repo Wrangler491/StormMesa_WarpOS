@@ -124,6 +124,7 @@ AmigaMesaCreateVisual(struct TagItem *tagList)
 	  return NULL;
    }
 
+printf("AMCV, visual located at: 0x%08x\n",v);
 	v->rgb_flag=GetTagData(AMA_RGBMode,GL_TRUE,tagList);
 	v->db_flag=GetTagData(AMA_DoubleBuf,GL_FALSE,tagList);
 	v->alpha_flag=GetTagData(AMA_AlphaFlag,GL_FALSE,tagList);
@@ -149,6 +150,7 @@ AmigaMesaCreateVisual(struct TagItem *tagList)
    v->accum = 16;
    if (GetTagData(AMA_NoAccum,GL_FALSE,tagList))
 	v->accum = 0;
+printf("AMCV RGBMode: %d, DB: %d, alpha: %d\n",v->rgb_flag,v->db_flag,v->alpha_flag);
 
    /* Create core visual */
    v->gl_visual = (void *)gl_create_visual( v->rgb_flag,
@@ -208,6 +210,7 @@ struct amigamesa_buffer *AmigaMesaCreateBuffer( struct amigamesa_visual *visual,
 	  return NULL;
    }
 
+printf("AMCB, buffer located at: 0x%08x\n",b);
    b->gl_buffer = (void *)gl_create_framebuffer( (GLvisual *)visual->gl_visual);
 
    /* other stuff */
@@ -349,6 +352,7 @@ AmigaMesaCreateContext(struct TagItem *tagList)
 		{
 		return(NULL);
 		}
+	printf("AMCC context located at: 0x%08x ptr to: 0x%08x\n",c,*c);
 #ifndef __PPC__
 	c->oldFPU = oldrnd;
 #endif
@@ -360,11 +364,13 @@ AmigaMesaCreateContext(struct TagItem *tagList)
 	    c->rp=(struct RastPort *)GetTagData(AMA_RastPort,0,tagList);
 	    if (!c->rp)
 		{
+		printf("No rastport!\n");
 		return(FALSE);
 		}
 	    c->Screen=(struct Screen *)GetTagData(AMA_Screen,0,tagList);
 	    if (!c->Screen)
 		{
+		printf("No screen!\n");
 		return(FALSE);
 		}
 	    }
@@ -373,9 +379,10 @@ AmigaMesaCreateContext(struct TagItem *tagList)
 	    c->rp =c->window->RPort;
 	    c->Screen=c->window->WScreen;
 	}
-printf("Window ptr found: 0x%08x\n",c->window);
-printf("Screen ptr found: 0x%08x\n",c->Screen);
-printf("Rastport ptr found: 0x%08x\n",c->rp);
+if(c->window)
+	printf("Window ptr found: 0x%08x, ptr to: 0x%08x\n",c->window,*c->window);
+printf("Screen ptr found: 0x%08x, ptr to: 0x%08x\n",c->Screen,*c->Screen);
+printf("Rastport ptr found: 0x%08x, ptr to: 0x%08x\n",c->rp,*c->rp);
 
 	if (GetTagData(AMA_Fullscreen,GL_FALSE,tagList) == GL_TRUE)
 		c->flags = c->flags | FLAG_FULLSCREEN;
@@ -727,8 +734,12 @@ void APIENTRY AmigaMesaMakeCurrent(struct amigamesa_context *amesa,struct amigam
 
 	REM(AmigaMesaMakeCurrent);
    if (amesa && b) {
+	REM(AMMC: have ctx and buffer);
 	    if (amesa->gl_ctx == (void *)gl_get_current_context())
+		{
+	REM(AMMC: no gl_ctx);
 		return;
+		}
 	    if (amesa->share == NULL)
 	      if (!(amesa->visual->rgb_flag))
 	      {
@@ -741,7 +752,9 @@ void APIENTRY AmigaMesaMakeCurrent(struct amigamesa_context *amesa,struct amigam
 		AmigaMesaSetOneColor(amesa,6,0.0,1.0,1.0);
 		AmigaMesaSetOneColor(amesa,7,1.0,1.0,1.0);
 	     }
+	REM(AMMC: call driver init)
 	   (*amesa->InitDD)((GLcontext *)amesa->gl_ctx);                            /* Call Driver_init_rutine */
+	REM(AMMC: call gl_make_current)
 	   gl_make_current( (GLcontext *)amesa->gl_ctx,(GLframebuffer *)b->gl_buffer );
 	   if (((GLcontext *)amesa->gl_ctx)->Viewport.Width==0) {
 		aglViewport(amesa->gl_ctx, 0, 0, amesa->width, amesa->height );

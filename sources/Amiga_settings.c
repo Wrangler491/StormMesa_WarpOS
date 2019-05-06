@@ -188,6 +188,9 @@ void STORMMESA_Init()
 
 	StormMesa.LOCKMODE2.ON=TRUE;
 	StormMesa.VERYFAST.ON=TRUE;
+	//StormMesa.NOHW.ON=FALSE;
+	//StormMesa.UseDrawArray.ON=TRUE;
+
 }
 /*==================================================================================*/
 void STORMMESA_Close()

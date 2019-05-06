@@ -333,6 +333,8 @@ void HW_DrawTriangle_flat(GLcontext *ctx, GLuint v1, GLuint v2,
    W3D_Float* colf = hwcontext->colconv;
    GLboolean mono = VB->MonoColor;
 
+	//printf("HW_DrawTriangle_flat\n");
+
    if (hwcontext->flags & HWFLAG_STATS)
 	(hwcontext->statarray2[DRAW_TRIANGLE])++;
    if (hwcontext->lockmode >= 2)
@@ -402,6 +404,7 @@ void HW_DrawTriangle_smooth(GLcontext *ctx, GLuint v1, GLuint v2,
    W3D_Context *context = hwcontext->context;
    struct vertex_buffer *VB = ctx->VB;
    W3D_Triangle tri;
+	//printf("HW_DrawTriangle_smooth\n");
 
    if (hwcontext->flags & HWFLAG_STATS)
 	(hwcontext->statarray2[DRAW_TRIANGLE])++;

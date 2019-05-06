@@ -617,6 +617,7 @@ long FindNearestPen(struct amigamesa_context *c, unsigned long r, unsigned long 
 int CreateTransTable(struct amigamesa_context* c)
 {
 	int i,j;
+REM(CreateTransTable);
 
 	c->ColorTable = (long *)&(c->ColTable);
 	c->ColorTable2 = (long *)&(c->ColTable2);
@@ -659,6 +660,7 @@ void DisposeTransTable(struct amigamesa_context* c)
 int InitTransTable(struct amigamesa_context* c)
 {
 	int i;
+REM(InitTransTable);
 
 #ifndef __PPC__
 	if (!(c->ColorTable2 = AllocVec(256*sizeof(long),MEMF_PUBLIC|MEMF_CLEAR)))

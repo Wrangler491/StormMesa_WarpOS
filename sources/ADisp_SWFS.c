@@ -92,6 +92,8 @@ unsigned long getLibBase()
 }
 #endif
 
+#define DBG 1
+
 // misc support functions
 ;// SetBuffer
 void SetBuffer(AmigaMesaContext c)
@@ -1497,6 +1499,7 @@ void SWFSD_write_color_span_RGB(const GLcontext *ctx, GLuint n, GLint x, GLint y
 	    (c->height-y-1) * c->bprow + x * 3);
     int i;
 
+REM(SWFSD_write_color_span_RGB);
 #ifdef DBG
     /*LibPrintf*/ printf("SWFSD_write_color_span_RGB\n");
 #endif
@@ -5461,6 +5464,7 @@ void SWFSDriver_flush( GLcontext *ctx )
 void Common_DD_pointers(GLcontext *ctx)
 {
    AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
+	REM(Common_DD_pointers);
 
    switch (c->fmt)
    {
@@ -5870,6 +5874,7 @@ void SWFSDriver_SwapBuffer_FS3(struct amigamesa_context *c)
 void SWFSDriver_SwapBuffer_DR(struct amigamesa_context *c)
 {
 	struct BitMap* bm;
+	REM(SWFSDriver_SwapBuffer_DR);
 
 	c->backarrayflag ^= 1;
 	SetBuffer(c);

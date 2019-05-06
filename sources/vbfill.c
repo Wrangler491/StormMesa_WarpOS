@@ -1304,8 +1304,6 @@ void gl_End( GLcontext *ctx )
    struct pixel_buffer *PB = ctx->PB;
    struct vertex_buffer *VB = ctx->VB;
 
-	//printf("Pixels in the buffer: %d\n",PB->count);
-	printf("Vertices in the buffer: %d\n", VB->Count);
 	//REM(gl_End);
    if (ctx->Primitive==GL_BITMAP) {
       /* glEnd without glBegin */

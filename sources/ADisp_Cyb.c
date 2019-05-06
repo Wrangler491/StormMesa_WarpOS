@@ -277,7 +277,7 @@ static void cyb_write_color_span( const GLcontext *ctx,GLuint n, GLint x, GLint 
     ULONG *dp;
 
     register struct RastPort * rp = amesa->rp;
-	REM(cyb_write_color_span);
+	//REM(cyb_write_color_span);
     y=FIXy(y);
     x=FIXx(x);
 

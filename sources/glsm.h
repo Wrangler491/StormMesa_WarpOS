@@ -1,4 +1,10 @@
+#ifdef WARPUP
+#pragma pack(push,2)
+#endif
 #include <exec/libraries.h>
+#ifdef WARPUP
+#pragma pack(pop)
+#endif
 
 struct glreg
 {

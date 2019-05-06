@@ -1,5 +1,12 @@
+
+#ifdef WARPUP
+#pragma pack(push,2)
+#endif
 #include <exec/libraries.h>
 #include <clib/exec_protos.h>
+#ifdef WARPUP
+#pragma pack(pop)
+#endif
 #include "glsm.h"
 
 struct glBase

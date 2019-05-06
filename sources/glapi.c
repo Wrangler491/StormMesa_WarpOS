@@ -124,6 +124,23 @@
 /* The current GL context is stored in this task's library-base			*/
 /* so AmigaGetGLcontext(libbase) obtain the current GL context from a6		*/
 
+void glEnable(GLenum cap)	{aglEnable(CC,cap);}
+void glShadeModel(GLenum mode)	{aglShadeModel(CC,mode);}
+void glClearColor(GLclampf red,GLclampf green,GLclampf blue,GLclampf alpha)	{aglClearColor(CC,red,green,blue,alpha);}
+void glClear(GLbitfield mask)	{aglClear(CC,mask);}
+void glBegin(GLenum mode)	{aglBegin(CC,mode);}
+void glColor3f(GLfloat red,GLfloat green,GLfloat blue)	{aglColor3f(CC,red,green,blue);}
+void glVertex2f(GLfloat x,GLfloat y)	{aglVertex2f(CC,x,y);}
+void glEnd()	{aglEnd(CC);}
+void glFlush()	{aglFlush(CC);}
+void glMatrixMode(GLenum mode)	{aglMatrixMode(CC,mode);}
+void glLoadIdentity()	{aglLoadIdentity(CC);}
+void glOrtho(GLdouble left,GLdouble right,GLdouble bottom,GLdouble top,GLdouble nearval,GLdouble farval)	{aglOrtho(CC,left,right,bottom,top,nearval,farval);}
+void glColor3ub(GLubyte red,GLubyte green,GLubyte blue)	{aglColor3ub(CC,red,green,blue);}
+void glVertex3i(GLint x,GLint y,GLint z)	{aglVertex3i(CC,x,y,z);}
+
+
+
 void APIENTRY smglClearIndex(A6(void* libbase),FP0(GLfloat c))	{aglClearIndex(AmigaGetGLcontext(libbase),c);}
 void APIENTRY smglClearColor(A6(void* libbase),FP0(GLclampf red),FP1(GLclampf green),FP2(GLclampf blue),FP3(GLclampf alpha))	{aglClearColor(AmigaGetGLcontext(libbase),red,green,blue,alpha);}
 void APIENTRY smglClear(A6(void* libbase),D0(GLbitfield mask))	{aglClear(AmigaGetGLcontext(libbase),mask);}
