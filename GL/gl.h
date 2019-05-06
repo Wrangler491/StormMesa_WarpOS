@@ -1,3 +1,10 @@
+/* Thellier should not put the define here but in the makefile */
+#define AMIGA 1
+#define NOASM_68K 1
+#define NOASM_PPC 1
+#define DRIVEREXT 1
+
+
 /* $Id: gl.h,v 3.19 1998/07/31 03:23:36 brianp Exp $ */
 
 /*
@@ -91,9 +98,6 @@
 #define GL_H
 
 
-#if defined(USE_MGL_NAMESPACE)
-#include "gl_mangle.h"
-#endif
 
 
 #if defined(__WIN32__) || defined(__CYGWIN32__)
@@ -992,11 +996,11 @@ typedef void            GLvoid;
 typedef unsigned char   GLboolean;
 typedef signed char     GLbyte;         /* 1-byte signed */
 typedef short           GLshort;        /* 2-byte signed */
-typedef int             GLint;          /* 4-byte signed */
+typedef long             GLint;          /* 4-byte signed */
 typedef unsigned char   GLubyte;        /* 1-byte unsigned */
 typedef unsigned short  GLushort;       /* 2-byte unsigned */
-typedef unsigned int    GLuint;         /* 4-byte unsigned */
-typedef int             GLsizei;        /* 4-byte signed */
+typedef unsigned long    GLuint;         /* 4-byte unsigned */
+typedef long             GLsizei;        /* 4-byte signed */
 typedef float           GLfloat;        /* single precision float */
 typedef float           GLclampf;       /* single precision float in [0,1] */
 typedef double          GLdouble;       /* double precision float */
@@ -1008,7 +1012,7 @@ typedef double          GLclampd;       /* double precision float in [0,1] */
 #pragma export on
 #endif
 
-#if defined(__STORM__) && defined(__PPC__) && !defined(COMPILING_GL)
+#if defined(__STORM__) && defined(__PPC__) && !defined(COMPILING_GL)  && !defined(WARPUP)
 #include <stormprotos/gl_sprotos.h>
 #else
 
