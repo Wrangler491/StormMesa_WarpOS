@@ -143,6 +143,11 @@
 #define APIENTRY
 #define CALLBACK
 #define WINAPI
+#define GLAPIENTRY
+#define GLAPI extern
+#define GLCALLBACK
+#define GLWINAPI
+#define GLWINAPIV
 #endif /* WIN32 / CYGWIN32 bracket */
 
 
