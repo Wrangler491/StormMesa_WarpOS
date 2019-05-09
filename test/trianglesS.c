@@ -169,22 +169,6 @@ void drawTrianglesRGBAModes(AmigaMesaContext context, int num) {
 }
 
 void exitT(void) {
-  if (context) {
-	printf("Closing context\n");
-    AmigaMesaDestroyContext(context);
-	}
-  if (screen) {
-	printf("Closing screen\n");
-    CloseScreen(screen);
-	}
-  if (CyberGfxBase) {
-	printf("Closing cgx library\n");
-	CloseLibrary(CyberGfxBase);
-	}
-  if (IntuitionBase) {
-	printf("Closing library\n");
-    CloseLibrary(IntuitionBase);
-	}
 }
 
 int main(int argc, char **argv)
@@ -254,6 +238,21 @@ int main(int argc, char **argv)
 		  printf("No Cybergraphx!\n");
 	  }
   }
-  exitT;
+    if (context) {
+	printf("Closing context\n");
+    AmigaMesaDestroyContext(context);
+	}
+  if (screen) {
+	printf("Closing screen\n");
+    CloseScreen(screen);
+	}
+  if (CyberGfxBase) {
+	printf("Closing cgx library\n");
+	CloseLibrary(CyberGfxBase);
+	}
+  if (IntuitionBase) {
+	printf("Closing library\n");
+    CloseLibrary(IntuitionBase);
+	}
   return 0;
 }

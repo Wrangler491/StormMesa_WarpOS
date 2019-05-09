@@ -249,27 +249,12 @@ void drawTrianglesRGBAModes(AmigaMesaContext context, int num) {
 }
 
 void exitT(void) {
-  if (context) {
-	printf("Closing context\n");
-    AmigaMesaDestroyContext(context);
-	}
-  if (window) {
-	printf("Closing window\n");
-    CloseWindow(window);
-	}
-  if (screen) {
-	printf("Unlocking screen\n");
-    UnlockPubScreen(NULL, screen);
-	}
-  if (IntuitionBase) {
-	printf("Closing library\n");
-    CloseLibrary(IntuitionBase);
-	}
+
 }
 
 int main(int argc, char **argv)
 {
-  atexit(exitT);
+  //texit(exitT);
   uint16_t depth;
 
   if ((IntuitionBase = OpenLibrary("intuition.library", 1))) {
@@ -314,6 +299,21 @@ printf("Clicked close\n");
 printf("Over\n");
     }
   }
-  
+   if (context) {
+	printf("Closing context\n");
+    AmigaMesaDestroyContext(context);
+	}
+  if (window) {
+	printf("Closing window\n");
+    CloseWindow(window);
+	}
+  if (screen) {
+	printf("Unlocking screen\n");
+    UnlockPubScreen(NULL, screen);
+	}
+  if (IntuitionBase) {
+	printf("Closing library\n");
+    CloseLibrary(IntuitionBase);
+	} 
   return 0;
 }
