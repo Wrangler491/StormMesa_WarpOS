@@ -124,22 +124,471 @@
 /* The current GL context is stored in this task's library-base			*/
 /* so AmigaGetGLcontext(libbase) obtain the current GL context from a6		*/
 
-void glEnable(GLenum cap)	{aglEnable(CC,cap);}
-void glShadeModel(GLenum mode)	{aglShadeModel(CC,mode);}
+
+void glClearIndex(GLfloat c)	{aglClearIndex(CC,c);}
 void glClearColor(GLclampf red,GLclampf green,GLclampf blue,GLclampf alpha)	{aglClearColor(CC,red,green,blue,alpha);}
 void glClear(GLbitfield mask)	{aglClear(CC,mask);}
-void glBegin(GLenum mode)	{aglBegin(CC,mode);}
-void glColor3f(GLfloat red,GLfloat green,GLfloat blue)	{aglColor3f(CC,red,green,blue);}
-void glVertex2f(GLfloat x,GLfloat y)	{aglVertex2f(CC,x,y);}
-void glEnd()	{aglEnd(CC);}
+void glIndexMask(GLuint mask)	{aglIndexMask(CC,mask);}
+void glColorMask(GLboolean red,GLboolean green,GLboolean blue,GLboolean alpha)	{aglColorMask(CC,red,green,blue,alpha);}
+void glAlphaFunc(GLenum func,GLclampf ref)	{aglAlphaFunc(CC,func,ref);}
+void glBlendFunc(GLenum sfactor,GLenum dfactor)	{aglBlendFunc(CC,sfactor,dfactor);}
+void glLogicOp(GLenum opcode)	{aglLogicOp(CC,opcode);}
+void glCullFace(GLenum mode)	{aglCullFace(CC,mode);}
+void glFrontFace(GLenum mode)	{aglFrontFace(CC,mode);}
+void glPointSize(GLfloat size)	{aglPointSize(CC,size);}
+void glLineWidth(GLfloat width)	{aglLineWidth(CC,width);}
+void glLineStipple(GLint factor,GLushort pattern)	{aglLineStipple(CC,factor,pattern);}
+void glPolygonMode(GLenum face,GLenum mode)	{aglPolygonMode(CC,face,mode);}
+void glPolygonOffset(GLfloat factor,GLfloat units)	{aglPolygonOffset(CC,factor,units);}
+void glPolygonStipple(const GLubyte* mask)	{aglPolygonStipple(CC,mask);}
+void glGetPolygonStipple(GLubyte* mask)	{aglGetPolygonStipple(CC,mask);}
+void glEdgeFlag(GLboolean flag)	{aglEdgeFlag(CC,flag);}
+void glEdgeFlagv(const GLboolean* flag)	{aglEdgeFlagv(CC,flag);}
+void glScissor(GLint x,GLint y,GLsizei width,GLsizei height)	{aglScissor(CC,x,y,width,height);}
+void glClipPlane(GLenum plane,const GLdouble* equation)	{aglClipPlane(CC,plane,equation);}
+void glGetClipPlane(GLenum plane,GLdouble* equation)	{aglGetClipPlane(CC,plane,equation);}
+void glDrawBuffer(GLenum mode)	{aglDrawBuffer(CC,mode);}
+void glReadBuffer(GLenum mode)	{aglReadBuffer(CC,mode);}
+void glEnable(GLenum cap)	{aglEnable(CC,cap);}
+void glDisable(GLenum cap)	{aglDisable(CC,cap);}
+void glEnableClientState(GLenum cap)	{aglEnableClientState(CC,cap);}
+void glDisableClientState(GLenum cap)	{aglDisableClientState(CC,cap);}
+void glGetBooleanv(GLenum pname,GLboolean* params)	{aglGetBooleanv(CC,pname,params);}
+void glGetDoublev(GLenum pname,GLdouble* params)	{aglGetDoublev(CC,pname,params);}
+void glGetFloatv(GLenum pname,GLfloat* params)	{aglGetFloatv(CC,pname,params);}
+void glGetIntegerv(GLenum pname,GLint* params)	{aglGetIntegerv(CC,pname,params);}
+void glPushAttrib(GLbitfield mask)	{aglPushAttrib(CC,mask);}
+void glPopAttrib()	{aglPopAttrib(CC);}
+void glPushClientAttrib(GLbitfield mask)	{aglPushClientAttrib(CC,mask);}
+void glPopClientAttrib()	{aglPopClientAttrib(CC);}
+void glFinish()	{aglFinish(CC);}
 void glFlush()	{aglFlush(CC);}
+void glHint(GLenum target,GLenum mode)	{aglHint(CC,target,mode);}
+void glClearDepth(GLclampd depth)	{aglClearDepth(CC,depth);}
+void glDepthFunc(GLenum func)	{aglDepthFunc(CC,func);}
+void glDepthMask(GLboolean flag)	{aglDepthMask(CC,flag);}
+void glDepthRange(GLclampd near_val,GLclampd far_val)	{aglDepthRange(CC,near_val,far_val);}
+void glClearAccum(GLfloat red,GLfloat green,GLfloat blue,GLfloat alpha)	{aglClearAccum(CC,red,green,blue,alpha);}
+void glAccum(GLenum op,GLfloat value)	{aglAccum(CC,op,value);}
 void glMatrixMode(GLenum mode)	{aglMatrixMode(CC,mode);}
-void glLoadIdentity()	{aglLoadIdentity(CC);}
 void glOrtho(GLdouble left,GLdouble right,GLdouble bottom,GLdouble top,GLdouble nearval,GLdouble farval)	{aglOrtho(CC,left,right,bottom,top,nearval,farval);}
-void glColor3ub(GLubyte red,GLubyte green,GLubyte blue)	{aglColor3ub(CC,red,green,blue);}
+void glFrustum(GLdouble left,GLdouble right,GLdouble bottom,GLdouble top,GLdouble nearval,GLdouble farval)	{aglFrustum(CC,left,right,bottom,top,nearval,farval);}
+void glViewport(GLint x,GLint y,GLsizei width,GLsizei height)	{aglViewport(CC,x,y,width,height);}
+void glPushMatrix()	{aglPushMatrix(CC);}
+void glPopMatrix()	{aglPopMatrix(CC);}
+void glLoadIdentity()	{aglLoadIdentity(CC);}
+void glLoadMatrixd(const GLdouble* m)	{aglLoadMatrixd(CC,m);}
+void glLoadMatrixf(const GLfloat* m)	{aglLoadMatrixf(CC,m);}
+void glMultMatrixd(const GLdouble* m)	{aglMultMatrixd(CC,m);}
+void glMultMatrixf(const GLfloat* m)	{aglMultMatrixf(CC,m);}
+void glRotated(GLdouble angle,GLdouble x,GLdouble y,GLdouble z)	{aglRotated(CC,angle,x,y,z);}
+void glRotatef(GLfloat angle,GLfloat x,GLfloat y,GLfloat z)	{aglRotatef(CC,angle,x,y,z);}
+void glScaled(GLdouble x,GLdouble y,GLdouble z)	{aglScaled(CC,x,y,z);}
+void glScalef(GLfloat x,GLfloat y,GLfloat z)	{aglScalef(CC,x,y,z);}
+void glTranslated(GLdouble x,GLdouble y,GLdouble z)	{aglTranslated(CC,x,y,z);}
+void glTranslatef(GLfloat x,GLfloat y,GLfloat z)	{aglTranslatef(CC,x,y,z);}
+void glDeleteLists(GLuint list,GLsizei range)	{aglDeleteLists(CC,list,range);}
+void glNewList(GLuint list,GLenum mode)	{aglNewList(CC,list,mode);}
+void glEndList()	{aglEndList(CC);}
+void glCallList(GLuint list)	{aglCallList(CC,list);}
+void glCallLists(GLsizei n,GLenum type,const GLvoid* lists)	{aglCallLists(CC,n,type,lists);}
+void glListBase(GLuint base)	{aglListBase(CC,base);}
+void glBegin(GLenum mode)	{aglBegin(CC,mode);}
+void glEnd()	{aglEnd(CC);}
+void glVertex2d(GLdouble x,GLdouble y)	{aglVertex2d(CC,x,y);}
+void glVertex2f(GLfloat x,GLfloat y)	{aglVertex2f(CC,x,y);}
+void glVertex2i(GLint x,GLint y)	{aglVertex2i(CC,x,y);}
+void glVertex2s(GLshort x,GLshort y)	{aglVertex2s(CC,x,y);}
+void glVertex3d(GLdouble x,GLdouble y,GLdouble z)	{aglVertex3d(CC,x,y,z);}
+void glVertex3f(GLfloat x,GLfloat y,GLfloat z)	{aglVertex3f(CC,x,y,z);}
 void glVertex3i(GLint x,GLint y,GLint z)	{aglVertex3i(CC,x,y,z);}
-
-
+void glVertex3s(GLshort x,GLshort y,GLshort z)	{aglVertex3s(CC,x,y,z);}
+void glVertex4d(GLdouble x,GLdouble y,GLdouble z,GLdouble w)	{aglVertex4d(CC,x,y,z,w);}
+void glVertex4f(GLfloat x,GLfloat y,GLfloat z,GLfloat w)	{aglVertex4f(CC,x,y,z,w);}
+void glVertex4i(GLint x,GLint y,GLint z,GLint w)	{aglVertex4i(CC,x,y,z,w);}
+void glVertex4s(GLshort x,GLshort y,GLshort z,GLshort w)	{aglVertex4s(CC,x,y,z,w);}
+void glVertex2dv(const GLdouble* v)	{aglVertex2dv(CC,v);}
+void glVertex2fv(const GLfloat* v)	{aglVertex2fv(CC,v);}
+void glVertex2iv(const GLint* v)	{aglVertex2iv(CC,v);}
+void glVertex2sv(const GLshort* v)	{aglVertex2sv(CC,v);}
+void glVertex3dv(const GLdouble* v)	{aglVertex3dv(CC,v);}
+void glVertex3fv(const GLfloat* v)	{aglVertex3fv(CC,v);}
+void glVertex3iv(const GLint* v)	{aglVertex3iv(CC,v);}
+void glVertex3sv(const GLshort* v)	{aglVertex3sv(CC,v);}
+void glVertex4dv(const GLdouble* v)	{aglVertex4dv(CC,v);}
+void glVertex4fv(const GLfloat* v)	{aglVertex4fv(CC,v);}
+void glVertex4iv(const GLint* v)	{aglVertex4iv(CC,v);}
+void glVertex4sv(const GLshort* v)	{aglVertex4sv(CC,v);}
+void glNormal3b(GLbyte nx,GLbyte ny,GLbyte nz)	{aglNormal3b(CC,nx,ny,nz);}
+void glNormal3d(GLdouble nx,GLdouble ny,GLdouble nz)	{aglNormal3d(CC,nx,ny,nz);}
+void glNormal3f(GLfloat nx,GLfloat ny,GLfloat nz)	{aglNormal3f(CC,nx,ny,nz);}
+void glNormal3i(GLint nx,GLint ny,GLint nz)	{aglNormal3i(CC,nx,ny,nz);}
+void glNormal3s(GLshort nx,GLshort ny,GLshort nz)	{aglNormal3s(CC,nx,ny,nz);}
+void glNormal3bv(const GLbyte* v)	{aglNormal3bv(CC,v);}
+void glNormal3dv(const GLdouble* v)	{aglNormal3dv(CC,v);}
+void glNormal3fv(const GLfloat* v)	{aglNormal3fv(CC,v);}
+void glNormal3iv(const GLint* v)	{aglNormal3iv(CC,v);}
+void glNormal3sv(const GLshort* v)	{aglNormal3sv(CC,v);}
+void glIndexd(GLdouble c)	{aglIndexd(CC,c);}
+void glIndexf(GLfloat c)	{aglIndexf(CC,c);}
+void glIndexi(GLint c)	{aglIndexi(CC,c);}
+void glIndexs(GLshort c)	{aglIndexs(CC,c);}
+void glIndexub(GLubyte c)	{aglIndexub(CC,c);}
+void glIndexdv(const GLdouble* c)	{aglIndexdv(CC,c);}
+void glIndexfv(const GLfloat* c)	{aglIndexfv(CC,c);}
+void glIndexiv(const GLint* c)	{aglIndexiv(CC,c);}
+void glIndexsv(const GLshort* c)	{aglIndexsv(CC,c);}
+void glIndexubv(const GLubyte* c)	{aglIndexubv(CC,c);}
+void glColor3b(GLbyte red,GLbyte green,GLbyte blue)	{aglColor3b(CC,red,green,blue);}
+void glColor3d(GLdouble red,GLdouble green,GLdouble blue)	{aglColor3d(CC,red,green,blue);}
+void glColor3f(GLfloat red,GLfloat green,GLfloat blue)	{aglColor3f(CC,red,green,blue);}
+void glColor3i(GLint red,GLint green,GLint blue)	{aglColor3i(CC,red,green,blue);}
+void glColor3s(GLshort red,GLshort green,GLshort blue)	{aglColor3s(CC,red,green,blue);}
+void glColor3ub(GLubyte red,GLubyte green,GLubyte blue)	{aglColor3ub(CC,red,green,blue);}
+void glColor3ui(GLuint red,GLuint green,GLuint blue)	{aglColor3ui(CC,red,green,blue);}
+void glColor3us(GLushort red,GLushort green,GLushort blue)	{aglColor3us(CC,red,green,blue);}
+void glColor4b(GLbyte red,GLbyte green,GLbyte blue,GLbyte alpha)	{aglColor4b(CC,red,green,blue,alpha);}
+void glColor4d(GLdouble red,GLdouble green,GLdouble blue,GLdouble alpha)	{aglColor4d(CC,red,green,blue,alpha);}
+void glColor4f(GLfloat red,GLfloat green,GLfloat blue,GLfloat alpha)	{aglColor4f(CC,red,green,blue,alpha);}
+void glColor4i(GLint red,GLint green,GLint blue,GLint alpha)	{aglColor4i(CC,red,green,blue,alpha);}
+void glColor4s(GLshort red,GLshort green,GLshort blue,GLshort alpha)	{aglColor4s(CC,red,green,blue,alpha);}
+void glColor4ub(GLubyte red,GLubyte green,GLubyte blue,GLubyte alpha)	{aglColor4ub(CC,red,green,blue,alpha);}
+void glColor4ui(GLuint red,GLuint green,GLuint blue,GLuint alpha)	{aglColor4ui(CC,red,green,blue,alpha);}
+void glColor4us(GLushort red,GLushort green,GLushort blue,GLushort alpha)	{aglColor4us(CC,red,green,blue,alpha);}
+void glColor3bv(const GLbyte* v)	{aglColor3bv(CC,v);}
+void glColor3dv(const GLdouble* v)	{aglColor3dv(CC,v);}
+void glColor3fv(const GLfloat* v)	{aglColor3fv(CC,v);}
+void glColor3iv(const GLint* v)	{aglColor3iv(CC,v);}
+void glColor3sv(const GLshort* v)	{aglColor3sv(CC,v);}
+void glColor3ubv(const GLubyte* v)	{aglColor3ubv(CC,v);}
+void glColor3uiv(const GLuint* v)	{aglColor3uiv(CC,v);}
+void glColor3usv(const GLushort* v)	{aglColor3usv(CC,v);}
+void glColor4bv(const GLbyte* v)	{aglColor4bv(CC,v);}
+void glColor4dv(const GLdouble* v)	{aglColor4dv(CC,v);}
+void glColor4fv(const GLfloat* v)	{aglColor4fv(CC,v);}
+void glColor4iv(const GLint* v)	{aglColor4iv(CC,v);}
+void glColor4sv(const GLshort* v)	{aglColor4sv(CC,v);}
+void glColor4ubv(const GLubyte* v)	{aglColor4ubv(CC,v);}
+void glColor4uiv(const GLuint* v)	{aglColor4uiv(CC,v);}
+void glColor4usv(const GLushort* v)	{aglColor4usv(CC,v);}
+void glTexCoord1d(GLdouble s)	{aglTexCoord1d(CC,s);}
+void glTexCoord1f(GLfloat s)	{aglTexCoord1f(CC,s);}
+void glTexCoord1i(GLint s)	{aglTexCoord1i(CC,s);}
+void glTexCoord1s(GLshort s)	{aglTexCoord1s(CC,s);}
+void glTexCoord2d(GLdouble s,GLdouble t)	{aglTexCoord2d(CC,s,t);}
+void glTexCoord2f(GLfloat s,GLfloat t)	{aglTexCoord2f(CC,s,t);}
+void glTexCoord2i(GLint s,GLint t)	{aglTexCoord2i(CC,s,t);}
+void glTexCoord2s(GLshort s,GLshort t)	{aglTexCoord2s(CC,s,t);}
+void glTexCoord3d(GLdouble s,GLdouble t,GLdouble r)	{aglTexCoord3d(CC,s,t,r);}
+void glTexCoord3f(GLfloat s,GLfloat t,GLfloat r)	{aglTexCoord3f(CC,s,t,r);}
+void glTexCoord3i(GLint s,GLint t,GLint r)	{aglTexCoord3i(CC,s,t,r);}
+void glTexCoord3s(GLshort s,GLshort t,GLshort r)	{aglTexCoord3s(CC,s,t,r);}
+void glTexCoord4d(GLdouble s,GLdouble t,GLdouble r,GLdouble q)	{aglTexCoord4d(CC,s,t,r,q);}
+void glTexCoord4f(GLfloat s,GLfloat t,GLfloat r,GLfloat q)	{aglTexCoord4f(CC,s,t,r,q);}
+void glTexCoord4i(GLint s,GLint t,GLint r,GLint q)	{aglTexCoord4i(CC,s,t,r,q);}
+void glTexCoord4s(GLshort s,GLshort t,GLshort r,GLshort q)	{aglTexCoord4s(CC,s,t,r,q);}
+void glTexCoord1dv(const GLdouble* v)	{aglTexCoord1dv(CC,v);}
+void glTexCoord1fv(const GLfloat* v)	{aglTexCoord1fv(CC,v);}
+void glTexCoord1iv(const GLint* v)	{aglTexCoord1iv(CC,v);}
+void glTexCoord1sv(const GLshort* v)	{aglTexCoord1sv(CC,v);}
+void glTexCoord2dv(const GLdouble* v)	{aglTexCoord2dv(CC,v);}
+void glTexCoord2fv(const GLfloat* v)	{aglTexCoord2fv(CC,v);}
+void glTexCoord2iv(const GLint* v)	{aglTexCoord2iv(CC,v);}
+void glTexCoord2sv(const GLshort* v)	{aglTexCoord2sv(CC,v);}
+void glTexCoord3dv(const GLdouble* v)	{aglTexCoord3dv(CC,v);}
+void glTexCoord3fv(const GLfloat* v)	{aglTexCoord3fv(CC,v);}
+void glTexCoord3iv(const GLint* v)	{aglTexCoord3iv(CC,v);}
+void glTexCoord3sv(const GLshort* v)	{aglTexCoord3sv(CC,v);}
+void glTexCoord4dv(const GLdouble* v)	{aglTexCoord4dv(CC,v);}
+void glTexCoord4fv(const GLfloat* v)	{aglTexCoord4fv(CC,v);}
+void glTexCoord4iv(const GLint* v)	{aglTexCoord4iv(CC,v);}
+void glTexCoord4sv(const GLshort* v)	{aglTexCoord4sv(CC,v);}
+void glRasterPos2d(GLdouble x,GLdouble y)	{aglRasterPos2d(CC,x,y);}
+void glRasterPos2f(GLfloat x,GLfloat y)	{aglRasterPos2f(CC,x,y);}
+void glRasterPos2i(GLint x,GLint y)	{aglRasterPos2i(CC,x,y);}
+void glRasterPos2s(GLshort x,GLshort y)	{aglRasterPos2s(CC,x,y);}
+void glRasterPos3d(GLdouble x,GLdouble y,GLdouble z)	{aglRasterPos3d(CC,x,y,z);}
+void glRasterPos3f(GLfloat x,GLfloat y,GLfloat z)	{aglRasterPos3f(CC,x,y,z);}
+void glRasterPos3i(GLint x,GLint y,GLint z)	{aglRasterPos3i(CC,x,y,z);}
+void glRasterPos3s(GLshort x,GLshort y,GLshort z)	{aglRasterPos3s(CC,x,y,z);}
+void glRasterPos4d(GLdouble x,GLdouble y,GLdouble z,GLdouble w)	{aglRasterPos4d(CC,x,y,z,w);}
+void glRasterPos4f(GLfloat x,GLfloat y,GLfloat z,GLfloat w)	{aglRasterPos4f(CC,x,y,z,w);}
+void glRasterPos4i(GLint x,GLint y,GLint z,GLint w)	{aglRasterPos4i(CC,x,y,z,w);}
+void glRasterPos4s(GLshort x,GLshort y,GLshort z,GLshort w)	{aglRasterPos4s(CC,x,y,z,w);}
+void glRasterPos2dv(const GLdouble* v)	{aglRasterPos2dv(CC,v);}
+void glRasterPos2fv(const GLfloat* v)	{aglRasterPos2fv(CC,v);}
+void glRasterPos2iv(const GLint* v)	{aglRasterPos2iv(CC,v);}
+void glRasterPos2sv(const GLshort* v)	{aglRasterPos2sv(CC,v);}
+void glRasterPos3dv(const GLdouble* v)	{aglRasterPos3dv(CC,v);}
+void glRasterPos3fv(const GLfloat* v)	{aglRasterPos3fv(CC,v);}
+void glRasterPos3iv(const GLint* v)	{aglRasterPos3iv(CC,v);}
+void glRasterPos3sv(const GLshort* v)	{aglRasterPos3sv(CC,v);}
+void glRasterPos4dv(const GLdouble* v)	{aglRasterPos4dv(CC,v);}
+void glRasterPos4fv(const GLfloat* v)	{aglRasterPos4fv(CC,v);}
+void glRasterPos4iv(const GLint* v)	{aglRasterPos4iv(CC,v);}
+void glRasterPos4sv(const GLshort* v)	{aglRasterPos4sv(CC,v);}
+void glRectd(GLdouble x1,GLdouble y1,GLdouble x2,GLdouble y2)	{aglRectd(CC,x1,y1,x2,y2);}
+void glRectf(GLfloat x1,GLfloat y1,GLfloat x2,GLfloat y2)	{aglRectf(CC,x1,y1,x2,y2);}
+void glRecti(GLint x1,GLint y1,GLint x2,GLint y2)	{aglRecti(CC,x1,y1,x2,y2);}
+void glRects(GLshort x1,GLshort y1,GLshort x2,GLshort y2)	{aglRects(CC,x1,y1,x2,y2);}
+void glRectdv(const GLdouble* v1,const GLdouble* v2)	{aglRectdv(CC,v1,v2);}
+void glRectfv(const GLfloat* v1,const GLfloat* v2)	{aglRectfv(CC,v1,v2);}
+void glRectiv(const GLint* v1,const GLint* v2)	{aglRectiv(CC,v1,v2);}
+void glRectsv(const GLshort* v1,const GLshort* v2)	{aglRectsv(CC,v1,v2);}
+void glVertexPointer(GLint size,GLenum type,GLsizei stride,const GLvoid* ptr)	{aglVertexPointer(CC,size,type,stride,ptr);}
+void glNormalPointer(GLenum type,GLsizei stride,const GLvoid* ptr)	{aglNormalPointer(CC,type,stride,ptr);}
+void glColorPointer(GLint size,GLenum type,GLsizei stride,const GLvoid* ptr)	{aglColorPointer(CC,size,type,stride,ptr);}
+void glIndexPointer(GLenum type,GLsizei stride,const GLvoid* ptr)	{aglIndexPointer(CC,type,stride,ptr);}
+void glTexCoordPointer(GLint size,GLenum type,GLsizei stride,const GLvoid* ptr)	{aglTexCoordPointer(CC,size,type,stride,ptr);}
+void glEdgeFlagPointer(GLsizei stride,const GLboolean* ptr)	{aglEdgeFlagPointer(CC,stride,ptr);}
+void glGetPointerv(GLenum pname,GLvoid* *params)	{aglGetPointerv(CC,pname,params);}
+void glArrayElement(GLint i)	{aglArrayElement(CC,i);}
+void glDrawArrays(GLenum mode,GLint first,GLsizei count)	{aglDrawArrays(CC,mode,first,count);}
+void glDrawElements(GLenum mode,GLsizei count,GLenum type,const GLvoid* indices)	{aglDrawElements(CC,mode,count,type,indices);}
+void glInterleavedArrays(GLenum format,GLsizei stride,const GLvoid* pointer)	{aglInterleavedArrays(CC,format,stride,pointer);}
+void glShadeModel(GLenum mode)	{aglShadeModel(CC,mode);}
+void glLightf(GLenum light,GLenum pname,GLfloat param)	{aglLightf(CC,light,pname,param);}
+void glLighti(GLenum light,GLenum pname,GLint param)	{aglLighti(CC,light,pname,param);}
+void glLightfv(GLenum light,GLenum pname,const GLfloat* params)	{aglLightfv(CC,light,pname,params);}
+void glLightiv(GLenum light,GLenum pname,const GLint* params)	{aglLightiv(CC,light,pname,params);}
+void glGetLightfv(GLenum light,GLenum pname,GLfloat* params)	{aglGetLightfv(CC,light,pname,params);}
+void glGetLightiv(GLenum light,GLenum pname,GLint* params)	{aglGetLightiv(CC,light,pname,params);}
+void glLightModelf(GLenum pname,GLfloat param)	{aglLightModelf(CC,pname,param);}
+void glLightModeli(GLenum pname,GLint param)	{aglLightModeli(CC,pname,param);}
+void glLightModelfv(GLenum pname,const GLfloat* params)	{aglLightModelfv(CC,pname,params);}
+void glLightModeliv(GLenum pname,const GLint* params)	{aglLightModeliv(CC,pname,params);}
+void glMaterialf(GLenum face,GLenum pname,GLfloat param)	{aglMaterialf(CC,face,pname,param);}
+void glMateriali(GLenum face,GLenum pname,GLint param)	{aglMateriali(CC,face,pname,param);}
+void glMaterialfv(GLenum face,GLenum pname,const GLfloat* params)	{aglMaterialfv(CC,face,pname,params);}
+void glMaterialiv(GLenum face,GLenum pname,const GLint* params)	{aglMaterialiv(CC,face,pname,params);}
+void glGetMaterialfv(GLenum face,GLenum pname,GLfloat* params)	{aglGetMaterialfv(CC,face,pname,params);}
+void glGetMaterialiv(GLenum face,GLenum pname,GLint* params)	{aglGetMaterialiv(CC,face,pname,params);}
+void glColorMaterial(GLenum face,GLenum mode)	{aglColorMaterial(CC,face,mode);}
+void glPixelZoom(GLfloat xfactor,GLfloat yfactor)	{aglPixelZoom(CC,xfactor,yfactor);}
+void glPixelStoref(GLenum pname,GLfloat param)	{aglPixelStoref(CC,pname,param);}
+void glPixelStorei(GLenum pname,GLint param)	{aglPixelStorei(CC,pname,param);}
+void glPixelTransferf(GLenum pname,GLfloat param)	{aglPixelTransferf(CC,pname,param);}
+void glPixelTransferi(GLenum pname,GLint param)	{aglPixelTransferi(CC,pname,param);}
+void glPixelMapfv(GLenum map,GLint mapsize,const GLfloat* values)	{aglPixelMapfv(CC,map,mapsize,values);}
+void glPixelMapuiv(GLenum map,GLint mapsize,const GLuint* values)	{aglPixelMapuiv(CC,map,mapsize,values);}
+void glPixelMapusv(GLenum map,GLint mapsize,const GLushort* values)	{aglPixelMapusv(CC,map,mapsize,values);}
+void glGetPixelMapfv(GLenum map,GLfloat* values)	{aglGetPixelMapfv(CC,map,values);}
+void glGetPixelMapuiv(GLenum map,GLuint* values)	{aglGetPixelMapuiv(CC,map,values);}
+void glGetPixelMapusv(GLenum map,GLushort* values)	{aglGetPixelMapusv(CC,map,values);}
+void glBitmap(GLsizei width,GLsizei height,GLfloat xorig,GLfloat yorig,GLfloat xmove,GLfloat ymove,const GLubyte* bitmap)	{aglBitmap(CC,width,height,xorig,yorig,xmove,ymove,bitmap);}
+void glReadPixels(GLint x,GLint y,GLsizei width,GLsizei height,GLenum format,GLenum type,GLvoid* pixels)	{aglReadPixels(CC,x,y,width,height,format,type,pixels);}
+void glDrawPixels(GLsizei width,GLsizei height,GLenum format,GLenum type,const GLvoid* pixels)	{aglDrawPixels(CC,width,height,format,type,pixels);}
+void glCopyPixels(GLint x,GLint y,GLsizei width,GLsizei height,GLenum type)	{aglCopyPixels(CC,x,y,width,height,type);}
+void glStencilFunc(GLenum func,GLint ref,GLuint mask)	{aglStencilFunc(CC,func,ref,mask);}
+void glStencilMask(GLuint mask)	{aglStencilMask(CC,mask);}
+void glStencilOp(GLenum fail,GLenum zfail,GLenum zpass)	{aglStencilOp(CC,fail,zfail,zpass);}
+void glClearStencil(GLint s)	{aglClearStencil(CC,s);}
+void glTexGend(GLenum coord,GLenum pname,GLdouble param)	{aglTexGend(CC,coord,pname,param);}
+void glTexGenf(GLenum coord,GLenum pname,GLfloat param)	{aglTexGenf(CC,coord,pname,param);}
+void glTexGeni(GLenum coord,GLenum pname,GLint param)	{aglTexGeni(CC,coord,pname,param);}
+void glTexGendv(GLenum coord,GLenum pname,const GLdouble* params)	{aglTexGendv(CC,coord,pname,params);}
+void glTexGenfv(GLenum coord,GLenum pname,const GLfloat* params)	{aglTexGenfv(CC,coord,pname,params);}
+void glTexGeniv(GLenum coord,GLenum pname,const GLint* params)	{aglTexGeniv(CC,coord,pname,params);}
+void glGetTexGendv(GLenum coord,GLenum pname,GLdouble* params)	{aglGetTexGendv(CC,coord,pname,params);}
+void glGetTexGenfv(GLenum coord,GLenum pname,GLfloat* params)	{aglGetTexGenfv(CC,coord,pname,params);}
+void glGetTexGeniv(GLenum coord,GLenum pname,GLint* params)	{aglGetTexGeniv(CC,coord,pname,params);}
+void glTexEnvf(GLenum target,GLenum pname,GLfloat param)	{aglTexEnvf(CC,target,pname,param);}
+void glTexEnvi(GLenum target,GLenum pname,GLint param)	{aglTexEnvi(CC,target,pname,param);}
+void glTexEnvfv(GLenum target,GLenum pname,const GLfloat* params)	{aglTexEnvfv(CC,target,pname,params);}
+void glTexEnviv(GLenum target,GLenum pname,const GLint* params)	{aglTexEnviv(CC,target,pname,params);}
+void glGetTexEnvfv(GLenum target,GLenum pname,GLfloat* params)	{aglGetTexEnvfv(CC,target,pname,params);}
+void glGetTexEnviv(GLenum target,GLenum pname,GLint* params)	{aglGetTexEnviv(CC,target,pname,params);}
+void glTexParameterf(GLenum target,GLenum pname,GLfloat param)	{aglTexParameterf(CC,target,pname,param);}
+void glTexParameteri(GLenum target,GLenum pname,GLint param)	{aglTexParameteri(CC,target,pname,param);}
+void glTexParameterfv(GLenum target,GLenum pname,const GLfloat* params)	{aglTexParameterfv(CC,target,pname,params);}
+void glTexParameteriv(GLenum target,GLenum pname,const GLint* params)	{aglTexParameteriv(CC,target,pname,params);}
+void glGetTexParameterfv(GLenum target,GLenum pname,GLfloat* params)	{aglGetTexParameterfv(CC,target,pname,params);}
+void glGetTexParameteriv(GLenum target,GLenum pname,GLint* params)	{aglGetTexParameteriv(CC,target,pname,params);}
+void glGetTexLevelParameterfv(GLenum target,GLint level,GLenum pname,GLfloat* params)	{aglGetTexLevelParameterfv(CC,target,level,pname,params);}
+void glGetTexLevelParameteriv(GLenum target,GLint level,GLenum pname,GLint* params)	{aglGetTexLevelParameteriv(CC,target,level,pname,params);}
+void glTexImage1D(GLenum target,GLint level,GLint components,GLsizei width,GLint border,GLenum format,GLenum type,const GLvoid* pixels)	{aglTexImage1D(CC,target,level,components,width,border,format,type,pixels);}
+void glTexImage2D(GLenum target,GLint level,GLint components,GLsizei width,GLsizei height,GLint border,GLenum format,GLenum type,const GLvoid *pixels)	{aglTexImage2D(CC,target,level,components,width,height,border,format,type,pixels);}
+void glGetTexImage(GLenum target,GLint level,GLenum format,GLenum type,GLvoid* pixels)	{aglGetTexImage(CC,target,level,format,type,pixels);}
+void glGenTextures(GLsizei n,GLuint* textures)	{aglGenTextures(CC,n,textures);}
+void glDeleteTextures(GLsizei n,const GLuint* textures)	{aglDeleteTextures(CC,n,textures);}
+void glBindTexture(GLenum target,GLuint texture)	{aglBindTexture(CC,target,texture);}
+void glPrioritizeTextures(GLsizei n,const GLuint* textures,const GLclampf* priorities)	{aglPrioritizeTextures(CC,n,textures,priorities);}
+void glTexSubImage1D(GLenum target,GLint level,GLint xoffset,GLsizei width,GLenum format,GLenum type,const GLvoid* pixels)	{aglTexSubImage1D(CC,target,level,xoffset,width,format,type,pixels);}
+void glTexSubImage2D(GLenum target,GLint level,GLint xoffset,GLint yoffset,GLsizei width,GLsizei height,GLenum format,GLenum type,const GLvoid *pixels)	{aglTexSubImage2D(CC,target,level,xoffset,yoffset,width,height,format,type,pixels);}
+void glCopyTexImage1D(GLenum target,GLint level,GLenum internalformat,GLint x,GLint y,GLsizei width,GLint border)	{aglCopyTexImage1D(CC,target,level,internalformat,x,y,width,border);}
+void glCopyTexImage2D(GLenum target,GLint level,GLenum internalformat,GLint x,GLint y,GLsizei width,GLsizei height,GLint border)	{aglCopyTexImage2D(CC,target,level,internalformat,x,y,width,height,border);}
+void glCopyTexSubImage1D(GLenum target,GLint level,GLint xoffset,GLint x,GLint y,GLsizei width)	{aglCopyTexSubImage1D(CC,target,level,xoffset,x,y,width);}
+void glCopyTexSubImage2D(GLenum target,GLint level,GLint xoffset,GLint yoffset,GLint x,GLint y,GLsizei width,GLsizei height)	{aglCopyTexSubImage2D(CC,target,level,xoffset,yoffset,x,y,width,height);}
+void glMap1d(GLenum target,GLdouble u1,GLdouble u2,GLint stride,GLint order,const GLdouble* points)	{aglMap1d(CC,target,u1,u2,stride,order,points);}
+void glMap1f(GLenum target,GLfloat u1,GLfloat u2,GLint stride,GLint order,const GLfloat* points)	{aglMap1f(CC,target,u1,u2,stride,order,points);}
+void glMap2d(GLenum target,GLdouble u1,GLdouble u2,GLint ustride,GLint uorder,GLdouble v1,GLdouble v2,GLint vstride,GLint vorder,const GLdouble* points)	{aglMap2d(CC,target,u1,u2,ustride,uorder,v1,v2,vstride,vorder,points);}
+void glMap2f(GLenum target,GLfloat u1,GLfloat u2,GLint ustride,GLint uorder,GLfloat v1,GLfloat v2,GLint vstride,GLint vorder,const GLfloat* points)	{aglMap2f(CC,target,u1,u2,ustride,uorder,v1,v2,vstride,vorder,points);}
+void glGetMapdv(GLenum target,GLenum query,GLdouble* v)	{aglGetMapdv(CC,target,query,v);}
+void glGetMapfv(GLenum target,GLenum query,GLfloat* v)	{aglGetMapfv(CC,target,query,v);}
+void glGetMapiv(GLenum target,GLenum query,GLint* v)	{aglGetMapiv(CC,target,query,v);}
+void glEvalCoord1d(GLdouble u)	{aglEvalCoord1d(CC,u);}
+void glEvalCoord1f(GLfloat u)	{aglEvalCoord1f(CC,u);}
+void glEvalCoord1dv(const GLdouble* u)	{aglEvalCoord1dv(CC,u);}
+void glEvalCoord1fv(const GLfloat* u)	{aglEvalCoord1fv(CC,u);}
+void glEvalCoord2d(GLdouble u,GLdouble v)	{aglEvalCoord2d(CC,u,v);}
+void glEvalCoord2f(GLfloat u,GLfloat v)	{aglEvalCoord2f(CC,u,v);}
+void glEvalCoord2dv(const GLdouble* u)	{aglEvalCoord2dv(CC,u);}
+void glEvalCoord2fv(const GLfloat* u)	{aglEvalCoord2fv(CC,u);}
+void glMapGrid1d(GLint un,GLdouble u1,GLdouble u2)	{aglMapGrid1d(CC,un,u1,u2);}
+void glMapGrid1f(GLint un,GLfloat u1,GLfloat u2)	{aglMapGrid1f(CC,un,u1,u2);}
+void glMapGrid2d(GLint un,GLdouble u1,GLdouble u2,GLint vn,GLdouble v1,GLdouble v2)	{aglMapGrid2d(CC,un,u1,u2,vn,v1,v2);}
+void glMapGrid2f(GLint un,GLfloat u1,GLfloat u2,GLint vn,GLfloat v1,GLfloat v2)	{aglMapGrid2f(CC,un,u1,u2,vn,v1,v2);}
+void glEvalPoint1(GLint i)	{aglEvalPoint1(CC,i);}
+void glEvalPoint2(GLint i,GLint j)	{aglEvalPoint2(CC,i,j);}
+void glEvalMesh1(GLenum mode,GLint i1,GLint i2)	{aglEvalMesh1(CC,mode,i1,i2);}
+void glEvalMesh2(GLenum mode,GLint i1,GLint i2,GLint j1,GLint j2)	{aglEvalMesh2(CC,mode,i1,i2,j1,j2);}
+void glFogf(GLenum pname,GLfloat param)	{aglFogf(CC,pname,param);}
+void glFogi(GLenum pname,GLint param)	{aglFogi(CC,pname,param);}
+void glFogfv(GLenum pname,const GLfloat* params)	{aglFogfv(CC,pname,params);}
+void glFogiv(GLenum pname,const GLint* params)	{aglFogiv(CC,pname,params);}
+void glFeedbackBuffer(GLsizei size,GLenum type,GLfloat* buffer)	{aglFeedbackBuffer(CC,size,type,buffer);}
+void glPassThrough(GLfloat token)	{aglPassThrough(CC,token);}
+void glSelectBuffer(GLsizei size,GLuint* buffer)	{aglSelectBuffer(CC,size,buffer);}
+void glInitNames()	{aglInitNames(CC);}
+void glLoadName(GLuint name)	{aglLoadName(CC,name);}
+void glPushName(GLuint name)	{aglPushName(CC,name);}
+void glPopName()	{aglPopName(CC);}
+void glBlendEquationEXT(GLenum mode)	{aglBlendEquationEXT(CC,mode);}
+void glBlendColorEXT(GLclampf red,GLclampf green,GLclampf blue,GLclampf alpha)	{aglBlendColorEXT(CC,red,green,blue,alpha);}
+void glPolygonOffsetEXT(GLfloat factor,GLfloat bias)	{aglPolygonOffsetEXT(CC,factor,bias);}
+void glVertexPointerEXT(GLint size,GLenum type,GLsizei stride,GLsizei count,const GLvoid* ptr)	{aglVertexPointerEXT(CC,size,type,stride,count,ptr);}
+void glNormalPointerEXT(GLenum type,GLsizei stride,GLsizei count,const GLvoid* ptr)	{aglNormalPointerEXT(CC,type,stride,count,ptr);}
+void glColorPointerEXT(GLint size,GLenum type,GLsizei stride,GLsizei count,const GLvoid* ptr)	{aglColorPointerEXT(CC,size,type,stride,count,ptr);}
+void glIndexPointerEXT(GLenum type,GLsizei stride,GLsizei count,const GLvoid* ptr)	{aglIndexPointerEXT(CC,type,stride,count,ptr);}
+void glTexCoordPointerEXT(GLint size,GLenum type,GLsizei stride,GLsizei count,const GLvoid* ptr)	{aglTexCoordPointerEXT(CC,size,type,stride,count,ptr);}
+void glEdgeFlagPointerEXT(GLsizei stride,GLsizei count,const GLboolean* ptr)	{aglEdgeFlagPointerEXT(CC,stride,count,ptr);}
+void glGetPointervEXT(GLenum pname,void* *params)	{aglGetPointervEXT(CC,pname,params);}
+void glArrayElementEXT(GLint i)	{aglArrayElementEXT(CC,i);}
+void glDrawArraysEXT(GLenum mode,GLint first,GLsizei count)	{aglDrawArraysEXT(CC,mode,first,count);}
+void glGenTexturesEXT(GLsizei n,GLuint* textures)	{aglGenTexturesEXT(CC,n,textures);}
+void glDeleteTexturesEXT(GLsizei n,const GLuint* textures)	{aglDeleteTexturesEXT(CC,n,textures);}
+void glBindTextureEXT(GLenum target,GLuint texture)	{aglBindTextureEXT(CC,target,texture);}
+void glPrioritizeTexturesEXT(GLsizei n,const GLuint* textures,const GLclampf* priorities)	{aglPrioritizeTexturesEXT(CC,n,textures,priorities);}
+void glTexImage3DEXT(GLenum target,GLint level,GLenum internalformat,GLsizei width,GLsizei height,GLsizei depth,GLint border,GLenum format,GLenum type,const GLvoid *pixels)	{aglTexImage3DEXT(CC,target,level,internalformat,width,height,depth,border,format,type,pixels);}
+void glTexSubImage3DEXT(GLenum target,GLint level,GLint xoffset,GLint yoffset,GLint zoffset,GLsizei width,GLsizei height,GLsizei depth,GLenum format,GLenum type,const GLvoid *pixels)	{aglTexSubImage3DEXT(CC,target,level,xoffset,yoffset,zoffset,width,height,depth,format,type,pixels);}
+void glCopyTexSubImage3DEXT(GLenum target,GLint level,GLint xoffset,GLint yoffset,GLint zoffset,GLint x,GLint y,GLsizei width,GLsizei height)	{aglCopyTexSubImage3DEXT(CC,target,level,xoffset,yoffset,zoffset,x,y,width,height);}
+void glColorTableEXT(GLenum target,GLenum internalformat,GLsizei width,GLenum format,GLenum type,const GLvoid* table)	{aglColorTableEXT(CC,target,internalformat,width,format,type,table);}
+void glColorSubTableEXT(GLenum target,GLsizei start,GLsizei count,GLenum format,GLenum type,const GLvoid* data)	{aglColorSubTableEXT(CC,target,start,count,format,type,data);}
+void glGetColorTableEXT(GLenum target,GLenum format,GLenum type,GLvoid* table)	{aglGetColorTableEXT(CC,target,format,type,table);}
+void glGetColorTableParameterfvEXT(GLenum target,GLenum pname,GLfloat* params)	{aglGetColorTableParameterfvEXT(CC,target,pname,params);}
+void glGetColorTableParameterivEXT(GLenum target,GLenum pname,GLint* params)	{aglGetColorTableParameterivEXT(CC,target,pname,params);}
+void glMultiTexCoord1dSGIS(GLenum target,GLdouble s)	{aglMultiTexCoord1dSGIS(CC,target,s);}
+void glMultiTexCoord1dvSGIS(GLenum target,const GLdouble* v)	{aglMultiTexCoord1dvSGIS(CC,target,v);}
+void glMultiTexCoord1fSGIS(GLenum target,GLfloat s)	{aglMultiTexCoord1fSGIS(CC,target,s);}
+void glMultiTexCoord1fvSGIS(GLenum target,const GLfloat* v)	{aglMultiTexCoord1fvSGIS(CC,target,v);}
+void glMultiTexCoord1iSGIS(GLenum target,GLint s)	{aglMultiTexCoord1iSGIS(CC,target,s);}
+void glMultiTexCoord1ivSGIS(GLenum target,const GLint* v)	{aglMultiTexCoord1ivSGIS(CC,target,v);}
+void glMultiTexCoord1sSGIS(GLenum target,GLshort s)	{aglMultiTexCoord1sSGIS(CC,target,s);}
+void glMultiTexCoord1svSGIS(GLenum target,const GLshort* v)	{aglMultiTexCoord1svSGIS(CC,target,v);}
+void glMultiTexCoord2dSGIS(GLenum target,GLdouble s,GLdouble t)	{aglMultiTexCoord2dSGIS(CC,target,s,t);}
+void glMultiTexCoord2dvSGIS(GLenum target,const GLdouble* v)	{aglMultiTexCoord2dvSGIS(CC,target,v);}
+void glMultiTexCoord2fSGIS(GLenum target,GLfloat s,GLfloat t)	{aglMultiTexCoord2fSGIS(CC,target,s,t);}
+void glMultiTexCoord2fvSGIS(GLenum target,const GLfloat* v)	{aglMultiTexCoord2fvSGIS(CC,target,v);}
+void glMultiTexCoord2iSGIS(GLenum target,GLint s,GLint t)	{aglMultiTexCoord2iSGIS(CC,target,s,t);}
+void glMultiTexCoord2ivSGIS(GLenum target,const GLint* v)	{aglMultiTexCoord2ivSGIS(CC,target,v);}
+void glMultiTexCoord2sSGIS(GLenum target,GLshort s,GLshort t)	{aglMultiTexCoord2sSGIS(CC,target,s,t);}
+void glMultiTexCoord2svSGIS(GLenum target,const GLshort* v)	{aglMultiTexCoord2svSGIS(CC,target,v);}
+void glMultiTexCoord3dSGIS(GLenum target,GLdouble s,GLdouble t,GLdouble r)	{aglMultiTexCoord3dSGIS(CC,target,s,t,r);}
+void glMultiTexCoord3dvSGIS(GLenum target,const GLdouble* v)	{aglMultiTexCoord3dvSGIS(CC,target,v);}
+void glMultiTexCoord3fSGIS(GLenum target,GLfloat s,GLfloat t,GLfloat r)	{aglMultiTexCoord3fSGIS(CC,target,s,t,r);}
+void glMultiTexCoord3fvSGIS(GLenum target,const GLfloat* v)	{aglMultiTexCoord3fvSGIS(CC,target,v);}
+void glMultiTexCoord3iSGIS(GLenum target,GLint s,GLint t,GLint r)	{aglMultiTexCoord3iSGIS(CC,target,s,t,r);}
+void glMultiTexCoord3ivSGIS(GLenum target,const GLint* v)	{aglMultiTexCoord3ivSGIS(CC,target,v);}
+void glMultiTexCoord3sSGIS(GLenum target,GLshort s,GLshort t,GLshort r)	{aglMultiTexCoord3sSGIS(CC,target,s,t,r);}
+void glMultiTexCoord3svSGIS(GLenum target,const GLshort* v)	{aglMultiTexCoord3svSGIS(CC,target,v);}
+void glMultiTexCoord4dSGIS(GLenum target,GLdouble s,GLdouble t,GLdouble r,GLdouble q)	{aglMultiTexCoord4dSGIS(CC,target,s,t,r,q);}
+void glMultiTexCoord4dvSGIS(GLenum target,const GLdouble* v)	{aglMultiTexCoord4dvSGIS(CC,target,v);}
+void glMultiTexCoord4fSGIS(GLenum target,GLfloat s,GLfloat t,GLfloat r,GLfloat q)	{aglMultiTexCoord4fSGIS(CC,target,s,t,r,q);}
+void glMultiTexCoord4fvSGIS(GLenum target,const GLfloat* v)	{aglMultiTexCoord4fvSGIS(CC,target,v);}
+void glMultiTexCoord4iSGIS(GLenum target,GLint s,GLint t,GLint r,GLint q)	{aglMultiTexCoord4iSGIS(CC,target,s,t,r,q);}
+void glMultiTexCoord4ivSGIS(GLenum target,const GLint* v)	{aglMultiTexCoord4ivSGIS(CC,target,v);}
+void glMultiTexCoord4sSGIS(GLenum target,GLshort s,GLshort t,GLshort r,GLshort q)	{aglMultiTexCoord4sSGIS(CC,target,s,t,r,q);}
+void glMultiTexCoord4svSGIS(GLenum target,const GLshort* v)	{aglMultiTexCoord4svSGIS(CC,target,v);}
+void glMultiTexCoordPointerSGIS(GLenum target,GLint size,GLenum type,GLsizei stride,const GLvoid* pointer)	{aglMultiTexCoordPointerSGIS(CC,target,size,type,stride,pointer);}
+void glSelectTextureSGIS(GLenum target)	{aglSelectTextureSGIS(CC,target);}
+void glSelectTextureCoordSetSGIS(GLenum target)	{aglSelectTextureCoordSetSGIS(CC,target);}
+void glMultiTexCoord1dEXT(GLenum target,GLdouble s)	{aglMultiTexCoord1dEXT(CC,target,s);}
+void glMultiTexCoord1dvEXT(GLenum target,const GLdouble* v)	{aglMultiTexCoord1dvEXT(CC,target,v);}
+void glMultiTexCoord1fEXT(GLenum target,GLfloat s)	{aglMultiTexCoord1fEXT(CC,target,s);}
+void glMultiTexCoord1fvEXT(GLenum target,const GLfloat* v)	{aglMultiTexCoord1fvEXT(CC,target,v);}
+void glMultiTexCoord1iEXT(GLenum target,GLint s)	{aglMultiTexCoord1iEXT(CC,target,s);}
+void glMultiTexCoord1ivEXT(GLenum target,const GLint* v)	{aglMultiTexCoord1ivEXT(CC,target,v);}
+void glMultiTexCoord1sEXT(GLenum target,GLshort s)	{aglMultiTexCoord1sEXT(CC,target,s);}
+void glMultiTexCoord1svEXT(GLenum target,const GLshort* v)	{aglMultiTexCoord1svEXT(CC,target,v);}
+void glMultiTexCoord2dEXT(GLenum target,GLdouble s,GLdouble t)	{aglMultiTexCoord2dEXT(CC,target,s,t);}
+void glMultiTexCoord2dvEXT(GLenum target,const GLdouble* v)	{aglMultiTexCoord2dvEXT(CC,target,v);}
+void glMultiTexCoord2fEXT(GLenum target,GLfloat s,GLfloat t)	{aglMultiTexCoord2fEXT(CC,target,s,t);}
+void glMultiTexCoord2fvEXT(GLenum target,const GLfloat* v)	{aglMultiTexCoord2fvEXT(CC,target,v);}
+void glMultiTexCoord2iEXT(GLenum target,GLint s,GLint t)	{aglMultiTexCoord2iEXT(CC,target,s,t);}
+void glMultiTexCoord2ivEXT(GLenum target,const GLint* v)	{aglMultiTexCoord2ivEXT(CC,target,v);}
+void glMultiTexCoord2sEXT(GLenum target,GLshort s,GLshort t)	{aglMultiTexCoord2sEXT(CC,target,s,t);}
+void glMultiTexCoord2svEXT(GLenum target,const GLshort* v)	{aglMultiTexCoord2svEXT(CC,target,v);}
+void glMultiTexCoord3dEXT(GLenum target,GLdouble s,GLdouble t,GLdouble r)	{aglMultiTexCoord3dEXT(CC,target,s,t,r);}
+void glMultiTexCoord3dvEXT(GLenum target,const GLdouble* v)	{aglMultiTexCoord3dvEXT(CC,target,v);}
+void glMultiTexCoord3fEXT(GLenum target,GLfloat s,GLfloat t,GLfloat r)	{aglMultiTexCoord3fEXT(CC,target,s,t,r);}
+void glMultiTexCoord3fvEXT(GLenum target,const GLfloat* v)	{aglMultiTexCoord3fvEXT(CC,target,v);}
+void glMultiTexCoord3iEXT(GLenum target,GLint s,GLint t,GLint r)	{aglMultiTexCoord3iEXT(CC,target,s,t,r);}
+void glMultiTexCoord3ivEXT(GLenum target,const GLint* v)	{aglMultiTexCoord3ivEXT(CC,target,v);}
+void glMultiTexCoord3sEXT(GLenum target,GLshort s,GLshort t,GLshort r)	{aglMultiTexCoord3sEXT(CC,target,s,t,r);}
+void glMultiTexCoord3svEXT(GLenum target,const GLshort* v)	{aglMultiTexCoord3svEXT(CC,target,v);}
+void glMultiTexCoord4dEXT(GLenum target,GLdouble s,GLdouble t,GLdouble r,GLdouble q)	{aglMultiTexCoord4dEXT(CC,target,s,t,r,q);}
+void glMultiTexCoord4dvEXT(GLenum target,const GLdouble* v)	{aglMultiTexCoord4dvEXT(CC,target,v);}
+void glMultiTexCoord4fEXT(GLenum target,GLfloat s,GLfloat t,GLfloat r,GLfloat q)	{aglMultiTexCoord4fEXT(CC,target,s,t,r,q);}
+void glMultiTexCoord4fvEXT(GLenum target,const GLfloat* v)	{aglMultiTexCoord4fvEXT(CC,target,v);}
+void glMultiTexCoord4iEXT(GLenum target,GLint s,GLint t,GLint r,GLint q)	{aglMultiTexCoord4iEXT(CC,target,s,t,r,q);}
+void glMultiTexCoord4ivEXT(GLenum target,const GLint* v)	{aglMultiTexCoord4ivEXT(CC,target,v);}
+void glMultiTexCoord4sEXT(GLenum target,GLshort s,GLshort t,GLshort r,GLshort q)	{aglMultiTexCoord4sEXT(CC,target,s,t,r,q);}
+void glMultiTexCoord4svEXT(GLenum target,const GLshort* v)	{aglMultiTexCoord4svEXT(CC,target,v);}
+void glInterleavedTextureCoordSetsEXT(GLint factor)	{aglInterleavedTextureCoordSetsEXT(CC,factor);}
+void glSelectTextureEXT(GLenum target)	{aglSelectTextureEXT(CC,target);}
+void glSelectTextureCoordSetEXT(GLenum target)	{aglSelectTextureCoordSetEXT(CC,target);}
+void glSelectTextureTransformEXT(GLenum target)	{aglSelectTextureTransformEXT(CC,target);}
+void glPointParameterfEXT(GLenum pname,GLfloat param)	{aglPointParameterfEXT(CC,pname,param);}
+void glPointParameterfvEXT(GLenum pname,const GLfloat* params)	{aglPointParameterfvEXT(CC,pname,params);}
+void glWindowPos2iMESA(GLint x,GLint y)	{aglWindowPos2iMESA(CC,x,y);}
+void glWindowPos2sMESA(GLshort x,GLshort y)	{aglWindowPos2sMESA(CC,x,y);}
+void glWindowPos2fMESA(GLfloat x,GLfloat y)	{aglWindowPos2fMESA(CC,x,y);}
+void glWindowPos2dMESA(GLdouble x,GLdouble y)	{aglWindowPos2dMESA(CC,x,y);}
+void glWindowPos2ivMESA(const GLint* p)	{aglWindowPos2ivMESA(CC,p);}
+void glWindowPos2svMESA(const GLshort* p)	{aglWindowPos2svMESA(CC,p);}
+void glWindowPos2fvMESA(const GLfloat* p)	{aglWindowPos2fvMESA(CC,p);}
+void glWindowPos2dvMESA(const GLdouble* p)	{aglWindowPos2dvMESA(CC,p);}
+void glWindowPos3iMESA(GLint x,GLint y,GLint z)	{aglWindowPos3iMESA(CC,x,y,z);}
+void glWindowPos3sMESA(GLshort x,GLshort y,GLshort z)	{aglWindowPos3sMESA(CC,x,y,z);}
+void glWindowPos3fMESA(GLfloat x,GLfloat y,GLfloat z)	{aglWindowPos3fMESA(CC,x,y,z);}
+void glWindowPos3dMESA(GLdouble x,GLdouble y,GLdouble z)	{aglWindowPos3dMESA(CC,x,y,z);}
+void glWindowPos3ivMESA(const GLint* p)	{aglWindowPos3ivMESA(CC,p);}
+void glWindowPos3svMESA(const GLshort* p)	{aglWindowPos3svMESA(CC,p);}
+void glWindowPos3fvMESA(const GLfloat* p)	{aglWindowPos3fvMESA(CC,p);}
+void glWindowPos3dvMESA(const GLdouble* p)	{aglWindowPos3dvMESA(CC,p);}
+void glWindowPos4iMESA(GLint x,GLint y,GLint z,GLint w)	{aglWindowPos4iMESA(CC,x,y,z,w);}
+void glWindowPos4sMESA(GLshort x,GLshort y,GLshort z,GLshort w)	{aglWindowPos4sMESA(CC,x,y,z,w);}
+void glWindowPos4fMESA(GLfloat x,GLfloat y,GLfloat z,GLfloat w)	{aglWindowPos4fMESA(CC,x,y,z,w);}
+void glWindowPos4dMESA(GLdouble x,GLdouble y,GLdouble z,GLdouble w)	{aglWindowPos4dMESA(CC,x,y,z,w);}
+void glWindowPos4ivMESA(const GLint* p)	{aglWindowPos4ivMESA(CC,p);}
+void glWindowPos4svMESA(const GLshort* p)	{aglWindowPos4svMESA(CC,p);}
+void glWindowPos4fvMESA(const GLfloat* p)	{aglWindowPos4fvMESA(CC,p);}
+void glWindowPos4dvMESA(const GLdouble* p)	{aglWindowPos4dvMESA(CC,p);}
+void glResizeBuffersMESA()	{aglResizeBuffersMESA(CC);}
+void glDrawRangeElements(GLenum mode,GLuint start,GLuint end,GLsizei count,GLenum type,const GLvoid* indices)	{aglDrawRangeElements(CC,mode,start,end,count,type,indices);}
+void glTexImage3D(GLenum target,GLint level,GLenum internalFormat,GLsizei width,GLsizei height,GLsizei depth,GLint border,GLenum format,GLenum type,const GLvoid *pixels)	{aglTexImage3D(CC,target,level,internalFormat,width,height,depth,border,format,type,pixels);}
+void glTexSubImage3D(GLenum target,GLint level,GLint xoffset,GLint yoffset,GLint zoffset,GLsizei width,GLsizei height,GLsizei depth,GLenum format,GLenum type,const GLvoid *pixels)	{aglTexSubImage3D(CC,target,level,xoffset,yoffset,zoffset,width,height,depth,format,type,pixels);}
+void glCopyTexSubImage3D(GLenum target,GLint level,GLint xoffset,GLint yoffset,GLint zoffset,GLint x,GLint y,GLsizei width,GLsizei height)	{aglCopyTexSubImage3D(CC,target,level,xoffset,yoffset,zoffset,x,y,width,height);}
+GLint glRenderMode(GLenum mode)	{return(aglRenderMode(CC,mode));}
+GLenum glGetError()	{return(aglGetError(CC));}
+GLuint glGenLists(GLsizei range)	{return(aglGenLists(CC,range));}
+GLboolean glIsEnabled(GLenum cap)	{return(aglIsEnabled(CC,cap));}
+GLboolean glIsList(GLuint list)	{return(aglIsList(CC,list));}
+GLboolean glAreTexturesResident(GLsizei n,const GLuint* textures,GLboolean* residences)	{return(aglAreTexturesResident(CC,n,textures,residences));}
+GLboolean glIsTexture(GLuint texture)	{return(aglIsTexture(CC,texture));}
+GLboolean glAreTexturesResidentEXT(GLsizei n,const GLuint* textures,GLboolean* residences)	{return(aglAreTexturesResidentEXT(CC,n,textures,residences));}
+GLboolean glIsTextureEXT(GLuint texture)	{return(FALSE);}
+const GLubyte* glGetString(GLenum name)	{return(aglGetString(CC,name));}
 
 void APIENTRY smglClearIndex(A6(void* libbase),FP0(GLfloat c))	{aglClearIndex(AmigaGetGLcontext(libbase),c);}
 void APIENTRY smglClearColor(A6(void* libbase),FP0(GLclampf red),FP1(GLclampf green),FP2(GLclampf blue),FP3(GLclampf alpha))	{aglClearColor(AmigaGetGLcontext(libbase),red,green,blue,alpha);}
