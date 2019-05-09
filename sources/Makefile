@@ -92,8 +92,9 @@ OBJ = Amiga_library.o Amiga_settings.o ADisp_Cyb.o \
 ARCHIVE = 
 
 libagl.a: $(OBJ)
-	mklib libagl.a $^
+	../mklib libagl.a $^
 #	$(CC) $(CFLAGS) -c -o $@ $^ $(ARCHIVE) $(LIB)
+	mv libagl.a ../lib
 
 all: clean libagl.a
 
