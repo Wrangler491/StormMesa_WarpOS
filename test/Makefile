@@ -38,7 +38,7 @@ ROOT = ..
 
 CC = gcc
 
-CFLAGS = --specs=warpup -DWARPUP -w -O0
+CFLAGS = --specs=warpup -woslibs -DWARPUP -w -O0
 
 ##### MACROS #####
 
@@ -53,7 +53,7 @@ LIB_DIR = $(ROOT)/lib
 LIB_DEP = 
 
 ## no libraries to build
-LIBS = -L$(LIB_DIR) -L../sources -L/gg/ppc-warpos/newlib/lib -L/gg/ppc-warpos/lib  -lagl 
+LIBS = -L$(LIB_DIR) -lagl -L../sources -L/gg/ppc-warpos/newlib/lib -L/gg/ppc-warpos/lib 
 
 ## no dirs to recurse
 DIRS = glut mui
@@ -73,11 +73,20 @@ PRGS = test triangles trianglesDR trianglesS
 ##### RULES #####
 
 ## implicit rule to make object-files
-%.o: %.c
-	$(CC) -I$(INC_DIR) $(CFLAGS) $< -s -c -o $@
+#%.o: %.c
+#	$(CC) -I$(INC_DIR) $(CFLAGS) $< -s -c -o $@
 
 #$(PRGS):  
 #	$(CC) -I. -I$(INC_DIR) $(CFLAGS) $< $(LIBS) -s -o $@
+
+.SUFFIXES:
+.SUFFIXES: .c
+
+.c: $(LIB_DEP)
+	$(CC) $(CFLAGS) -I$(INC_DIR) $< $(LIBS) -o $@
+
+targets: $(PRGS)
+
 
 
 ##accum: accum$(O) $(PRG_DEP)
@@ -88,5 +97,5 @@ PRGS = test triangles trianglesDR trianglesS
 #	$(CC) -I.. -I$(INC_DIR) $(CFLAGS) $< $(LIBS) -s -o $@
 ##trianglesDB: trianglesDB$(O) $(PRG_DEP)
 ##	$(CC) -I. -I$(INC_DIR) $(CFLAGS) $< $(LIBS) -s -o $@
-trianglesS: trianglesS.o $(PRG_DEP)
-	$(CC) -I.. -I$(INC_DIR) $(CFLAGS) $< $(LIBS) -s -o $@
+#trianglesS: trianglesS.o $(PRG_DEP)
+#	$(CC) -I.. -I$(INC_DIR) $(CFLAGS) $< $(LIBS) -s -o $@
