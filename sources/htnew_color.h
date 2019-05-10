@@ -1,6 +1,11 @@
+#ifdef WARPUP
+#pragma pack(push,2)
+#endif
 #include <exec/types.h>
 #include <intuition/screens.h>
-
+#ifdef WARPUP
+#pragma pack(pop)
+#endif
 
 extern int Colors[];
 

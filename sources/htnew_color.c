@@ -4,6 +4,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+#ifdef WARPUP
+#pragma pack(push,2)
+#endif
 #include <intuition/screens.h>
 #include "htnew_color.h"
 #ifdef WARPUP
@@ -18,6 +21,9 @@
 #include <clib/graphics_protos.h>
 #endif
 #endif 
+#ifdef WARPUP
+#pragma pack(pop)
+#endif
 
 UBYTE DividedBy51Rounded[256] =
 {
