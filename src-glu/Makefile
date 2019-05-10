@@ -1,8 +1,8 @@
-# $Id: Makefile,v 1.3 1997/10/21 23:58:26 brianp Exp $
+# $Id: Makefile,v 3.3 1998/06/10 02:52:20 brianp Exp $
 
 # Mesa 3-D graphics library
-# Version:  2.5
-# Copyright (C) 1995-1997  Brian Paul
+# Version:  3.0
+# Copyright (C) 1995-1998  Brian Paul
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -18,73 +18,84 @@
 # License along with this library; if not, write to the Free
 # Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
+# Makefile for GLUT-based demo programs for Unix/X11
 
 # $Log: Makefile,v $
-# Revision 1.3  1997/10/21 23:58:26  brianp
-# now pass version numbers to library maker
+# Revision 3.3  1998/06/10 02:52:20  brianp
+# added multiext example
 #
-# Revision 1.2  1997/08/13 01:26:22  brianp
-# updated for 2.4
+# Revision 3.2  1998/04/21 23:58:41  brianp
+# added LIBDIR variable
 #
-# Revision 1.1  1996/09/27 01:22:36  brianp
-# Initial revision
+# Revision 3.1  1998/02/21 01:31:56  brianp
+# added multitex and renormal demos
 #
+# Revision 3.0  1998/02/14 18:30:39  brianp
+# initial rev
+#
+
+ROOT = ..
 
 CC = gcc
-CFLAGS = --specs=warpup -woslibs -O3 -w
 
+CFLAGS = --specs=warpup -woslibs -DWARPUP -w -O0
 
 ##### MACROS #####
 
-VPATH = RCS
+## include-directory (replace by ${srcdir}/include later)
+INC_DIR = $(ROOT)
+#$(ROOT)/include
 
-INCDIR = ..
-LIBDIR = ../lib
+## lib-directory (replace by ${srcdir}/lib later)
+LIB_DIR = $(ROOT)/lib
 
-SOURCES = glu.c mipmap.c nurbs.c nurbscrv.c nurbssrf.c nurbsutl.c	\
-	project.c quadric.c tess.c tess_clip.c tess_fist.c	\
-	tess_hash.c tess_heap.c tess_winding.c
+## library dependencies
+LIB_DEP = 
 
-#glu.c mipmap.c nurbs.c nurbscrv.c nurbssrf.c nurbsutl.c \
-#	project.c quadric.c tess.c tesselat.c polytest.c
+## no libraries to build
+LIBS = -L$(LIB_DIR) -lagl -L../sources -L/gg/ppc-warpos/newlib/lib -L/gg/ppc-warpos/lib 
 
-OBJECTS = $(SOURCES:.c=.o)
+## no dirs to recurse
+DIRS = glut mui
 
+## sources to process
+SRCS = test.c triangles.c trianglesDB.c trianglesS.c 
+##accum.c
 
+## programs to create
+PRGS = test triangles trianglesDR trianglesS 
+##accum
+
+# MASTER-CONFIG #
+
+#include $(ROOT)/Make-config.AmigaOS
 
 ##### RULES #####
 
-.c.o:
-	$(CC) -c -I$(INCDIR) $(CFLAGS) $<
+## implicit rule to make object-files
+#%.o: %.c
+#	$(CC) -I$(INC_DIR) $(CFLAGS) $< -s -c -o $@
+
+#$(PRGS):  
+#	$(CC) -I. -I$(INC_DIR) $(CFLAGS) $< $(LIBS) -s -o $@
+
+.SUFFIXES:
+.SUFFIXES: .c
+
+.c: $(LIB_DEP)
+	$(CC) $(CFLAGS) -I$(INC_DIR) $< $(LIBS) -o $@
+
+targets: $(PRGS)
 
 
 
-##### TARGETS #####
-
-#default:
-#	@echo "Specify a target configuration"
-
-targets: libaglu.a
-#$(LIBDIR)/$(GLU_LIB)
-
-# Make the library:
-libaglu.a: $(OBJECTS)
-	../mklib libaglu.a $^
-	#$(MAKELIB) $(GLU_LIB) $(MAJOR) $(MINOR) $(OBJECTS)
-	mv libaglu.a $(LIBDIR)
-
-#include ../Make-config
-
-include depend
-
-clean:
-	-rm *.o *~
-
-
-
-#
-# Run 'make depend' to update the dependencies if you change what's included
-# by any source file.
-# 
-dep: $(SOURCES)
-	makedepend -fdepend -Y -I. $(SOURCES)
+##accum: accum$(O) $(PRG_DEP)
+##	$(CC) -I. -I$(INC_DIR) $(CFLAGS) $< -lMesaGLtk $(LIBS) -s -o $@
+#triangles: triangles.o $(PRG_DEP)
+#	$(CC) -I.. -I$(INC_DIR) $(CFLAGS) $< $(LIBS) -s -o $@
+#trianglesDR: trianglesDR.o $(PRG_DEP)
+#	$(CC) -I.. -I$(INC_DIR) $(CFLAGS) $< $(LIBS) -s -o $@
+##trianglesDB: trianglesDB$(O) $(PRG_DEP)
+##	$(CC) -I. -I$(INC_DIR) $(CFLAGS) $< $(LIBS) -s -o $@
+#trianglesS: trianglesS.o $(PRG_DEP)
+#	$(CC) -I.. -I$(INC_DIR) $(CFLAGS) $< $(LIBS) -s -o $@
