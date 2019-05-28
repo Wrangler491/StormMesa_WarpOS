@@ -40,16 +40,15 @@
 #include <inline/gadtools.h>
 #include <inline/layers.h>
 #include <libraries/gadtools.h>
-#include "glutstuff.h"
 #else
 #pragma pack(push,2)
 #include <proto/intuition.h>
 #include <proto/gadtools.h>
 #include <proto/layers.h>
 #include <libraries/gadtools.h>
-#include "glutstuff.h"
 #pragma pack(pop)
 #endif
+#include "glutstuff.h"
 #include <GL/Amigamesa.h>
 
 extern VOID CloseWindowSafely(struct Window *win);
@@ -72,6 +71,7 @@ int glutCreateSubWindow(int win, int x, int y, int width, int height) {
   struct GlutWindow *gw;
   int newWinID = -1;
 
+          DEBUGOUT(11, "glutCreateSubWindow\n");
   IGNORE_IN_GAME_MODE(newWinID);
 
   if((gw = stuffGetWin(win))) {
@@ -97,6 +97,7 @@ int glutCreateWindow(const char *title)
 {
   struct GlutWindow *gw;
 
+          DEBUGOUT(11, "glutCreateWindow\n");
 #ifndef WARPUP
   if ((gw = AllocVecPooled(glutPool, sizeof(struct GlutWindow)))) {
 #else
@@ -148,6 +149,7 @@ int glutCreateWindow(const char *title)
 						    AMA_Bottom, win->BorderBottom,
 						    AMA_Width, glutstuff.initwidth,
 						    AMA_Height, glutstuff.initheight,
+							AMA_DirectRender, GL_TRUE,
 						    TAG_END))) {
 	if (ModifyIDCMP(win, IDCMP_CLOSEWINDOW | IDCMP_VANILLAKEY | IDCMP_RAWKEY | IDCMP_MENUPICK | IDCMP_MOUSEBUTTONS | IDCMP_INTUITICKS | IDCMP_CHANGEWINDOW)) {
 	  DEBUGOUT(11,"CreateWindow step 1\n");
@@ -159,14 +161,11 @@ int glutCreateWindow(const char *title)
 	  DEBUGOUT(11,"CreateWindow step 2\n");
 
 	  if ((gw->menu = CreateMenus(defmenu, TAG_END))) {
-	  DEBUGOUT(11,"CreateWindow step 2.1\n");
 	    if(LayoutMenus(gw->menu, gw->vi, TAG_END)) {
-	  DEBUGOUT(11,"CreateWindow step 2.2\n");
 	    SetMenuStrip(win, gw->menu);
 		} else {
 			DEBUGOUT(1,"create menu failed\n");
 		}
-	  DEBUGOUT(11,"CreateWindow step 2.3\n");
 	  }
 	  else
 	    DEBUGOUT(1, "failed to create menu\n");
@@ -175,10 +174,15 @@ int glutCreateWindow(const char *title)
 	  gw->mousex = -1;
 	  gw->mousey = -1;
 
-	  gw->winx = gw->wincurx = win->LeftEdge;
-	  gw->winy = gw->wincury = win->TopEdge;
-	  gw->winwidth = gw->wincurwidth = InnerWidth(win);
-	  gw->winheight = gw->wincurheight = InnerHeight(win);
+	  gw->winx = gw->wincurx = (uint16_t)win->LeftEdge;
+	  gw->winy = gw->wincury = (uint16_t)win->TopEdge;
+printf("InnerWidth: %d, width: %d, left: %d, right: %d \n",InnerWidth(win), win->Width, win->BorderLeft, win->BorderRight);
+printf("InnerHeight: %d, height: %d, top: %d, bottom: %d \n",InnerHeight(win), win->Height, win->BorderTop, win->BorderBottom);
+	  gw->winwidth = InnerWidth(win);
+	  gw->winheight =  InnerHeight(win);
+	  gw->wincurwidth = gw->winwidth;
+	  gw->wincurheight = gw->winheight;
+printf("Winwidthxheight: %d x %d, curwidthxcurheight: %d x %d\n",gw->winwidth,gw->winheight,gw->wincurwidth,gw->wincurheight);
 
 	  gw->needreshapegui = TRUE;
 	  gw->needpositiongui = TRUE;
@@ -190,6 +194,7 @@ int glutCreateWindow(const char *title)
 	  gw->needrightmenu = TRUE;
 	  DEBUGOUT(11,"CreateWindow step 3\n");
 
+		printf("Linking in gw: 0x%08x\n",gw);
 	  stuffLinkInWin(gw);
 	  DEBUGOUT(10, "glutCreateWindow about to call glEnable\n");
 
@@ -199,6 +204,8 @@ int glutCreateWindow(const char *title)
 	//ActivateWindow(win);
 	//glutstuff.activeWindow = gw;
 	  DEBUGOUT(2, "%d = glutCreateWindow(`%s')\n", gw->WinID, title);
+printf("Winwidth as we leave CreateWindow: %d x %d\n",gw->winwidth,gw->winheight);
+printf("First lw in gw: 0x%08x\n",*gw);
 
 	  return gw->WinID;
 	}

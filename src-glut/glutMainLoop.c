@@ -45,6 +45,7 @@ extern struct ExecBase *SysBase;
 #include <proto/dos.h>
 #include <proto/graphics.h>
 #include <proto/layers.h>
+#include <stdint.h>
 #endif
 #include <libraries/gadtools.h>
 #ifdef WARPUP
@@ -56,6 +57,11 @@ extern struct ExecBase *SysBase;
 #include "glutstuff.h"
 
 extern void RedoMenu(int button, struct GlutMenu *glutmenu);
+
+BOOL wanttoquit = FALSE;
+
+/* delete this*/
+int wranglercount=1;
 
 static int ConvRaw(UWORD code, UWORD qual)
 {
@@ -132,13 +138,15 @@ static int ConvToButtonState(UWORD code)
 
 void glutMainLoop(void)
 {
-  BOOL wanttoquit = FALSE;
+		        DEBUGOUT(11, "glutMainLoop\n");
+	int wcount = 0;
 
   while (1) {
     struct GlutWindow *actWindow;
     struct GlutMenu *actMenu;
     struct IntuiMessage *msg;
     struct Window *win;
+	void *misc;
     BOOL idleing = TRUE;
 
     if(!glutstuff.Windows.nodes) {
@@ -148,16 +156,22 @@ void glutMainLoop(void)
 
     /* Apply changes
      */
-    actWindow = (struct GlutWindow *)&glutstuff.Windows;
-    while ((actWindow = (struct GlutWindow *)nGetNext(&actWindow->WindowNode))) {
-      win = actWindow->window;
-      stuffMakeCurrent(actWindow);
+    actWindow = (struct GlutWindow *)nGetHeadext(&glutstuff.Windows);
+	//printf("actWindow: 0x%08x\n",actWindow);
+    do {
+	//printf("Entered do loop\n");
+	//printf("First lw in gw: 0x%08x\n",*actWindow);
+	//printf("Step -1, width: %d, height: %d\n",actWindow->winwidth, (uint16_t)actWindow->winheight);
+       win = actWindow->window;
+
+     stuffMakeCurrent(actWindow);
+	printf("Step 0, width: %d, height: %d\n",actWindow->winwidth, actWindow->winheight);
 
       if (actWindow->WindowTimers.nodes) {
-        struct GlutTimer *gt = (struct GlutTimer *)nGetHead(&actWindow->WindowTimers);
+        struct GlutTimer *gt = (struct GlutTimer *)nGetHeadext(&actWindow->WindowTimers);
 
 	while(gt) {
-	  struct GlutTimer *new = (struct GlutTimer *)nGetNext(&gt->TimerNode);
+	  struct GlutTimer *new = (struct GlutTimer *)nGetNextext(&gt->TimerNode);
 	  ULONG secs, micros;
 
 	  CurrentTime(&secs, &micros);						/* better for accuracity */
@@ -182,6 +196,10 @@ void glutMainLoop(void)
 	}
       }
 
+/* delete this*/
+	//printf("Main loop iteration: %d\n",wranglercount++);
+	//printf("Step 1, width: %d, height: %d\n",actWindow->winwidth, actWindow->winheight);
+
       /* Hide/Show/Iconify */							/* TODO: workbench.library icons */
       /*  then break if hide or iconify */
       /*  continue if show */
@@ -195,14 +213,20 @@ void glutMainLoop(void)
         actWindow->push = FALSE;
         actWindow->pop = FALSE;
       }
+	printf("Step 2\n");
 
       if (actWindow->needposition) {
 	actWindow->needposition = FALSE;
 	actWindow->needpositiongui = FALSE;
 	/* Let the change be made through the gui */
-	ChangeWindowBox(win, actWindow->winx, actWindow->winy, actWindow->winwidth, actWindow->winheight);
+	int OSw, OSh;
+	OSw = actWindow->winwidth + win->BorderLeft + win->BorderRight;
+	OSh = actWindow->winheight + win->BorderTop + win->BorderBottom;
+	//printf("Needposition, width: %d, height: %d, OSwidth: %d, OSheight: %d\n",actWindow->winwidth, actWindow->winheight, OSw, OSh);
+	ChangeWindowBox(win, actWindow->winx, actWindow->winy, OSw, OSh);
 	actWindow->fullscreen = FALSE;		/* BUG?: could prevent fullscreen-mode */
       }
+	//printf("Step 3\n");
 
       if (actWindow->needpositiongui) {
 	actWindow->needpositiongui = FALSE;
@@ -214,7 +238,11 @@ void glutMainLoop(void)
 	actWindow->needreshapegui = FALSE;				/* Reshaping and redisplaying is useless */
 	actWindow->needredisplay = FALSE;				/* this round. Change is inevitable */
 	/* Let the change be made through the gui */
-	ChangeWindowBox(win, actWindow->winx, actWindow->winy, actWindow->winwidth, actWindow->winheight);
+	int OSw, OSh;
+	OSw = actWindow->winwidth + win->BorderLeft + win->BorderRight;
+	OSh = actWindow->winheight + win->BorderTop + win->BorderBottom;
+	//printf("Needreshape, width: %d, height: %d, OSwidth: %d, OSheight: %d\n",actWindow->winwidth, actWindow->winheight, OSw, OSh);
+	ChangeWindowBox(win, actWindow->winx, actWindow->winy, OSw, OSh);
 	actWindow->fullscreen = FALSE;		/* BUG?: could prevent fullscreen-mode */
       }
 
@@ -237,6 +265,7 @@ void glutMainLoop(void)
 	actWindow->winy = 0;
 	actWindow->winwidth = win->WScreen->Width;
 	actWindow->winheight = win->WScreen->Height;
+printf("Makefullscreen\n");
 	ChangeWindowBox(win, actWindow->winx,
 			     actWindow->winy,
 			     actWindow->winwidth,
@@ -270,21 +299,27 @@ void glutMainLoop(void)
 	actWindow->needrightmenu = FALSE;
 	RedoMenu(GLUT_RIGHT_BUTTON, actWindow->rightmenu);
       }
-    }
+	actWindow = (struct GlutWindow *)nGetNextext(&actWindow->WindowNode);
+	printf("Step 11.7, actWindow: 0x%08x\n",actWindow);
+    } while (actWindow!=NULL);
 
     if (glutstuff.Menues.nodes) {
       actMenu = (struct GlutMenu *)&glutstuff.Menues;
-      while ((actMenu = (struct GlutMenu *)nGetNext(&actMenu->MenuNode))) {
+      while ((actMenu = (struct GlutMenu *)nGetNextext(&actMenu->MenuNode))) {
 	stuffMakeCurrentMenu(actMenu);
 	actMenu->needupdate = FALSE;
       }
     }
 
+	//added
+	if (wanttoquit)
+		return;
+
     /* Wait for something to happen
      */
     if (glutstuff.idlefunc == NULL)
       Wait(1L << glutstuff.msgport->mp_SigBit);
-
+printf("Step 12\n");
     /* Handle all messages (if any)
      */
     while ((msg = (struct IntuiMessage *)GetMsg(glutstuff.msgport))) {
@@ -292,7 +327,7 @@ void glutMainLoop(void)
       struct MenuItem *item;
       UWORD menuNumber;
       struct IntuiMessage cmsg = *msg;
-
+printf("Step 13\n");
       ReplyMsg(&msg->ExecMessage);
 
       stuffMakeCurrent((struct GlutWindow *)cmsg.IDCMPWindow->UserData);
@@ -311,16 +346,22 @@ void glutMainLoop(void)
       actWindow->qualifiers = cmsg.Qualifier;
       switch (cmsg.Class) {
 	case IDCMP_REFRESHWINDOW:							/* received only in DB-mode, non-DB-modes are NoCareRefresh */
+printf("IDCMP_REFRESHWINDOW\n");
 	  BeginRefresh(win);
 	  AmigaMesaSwapBuffers(actWindow->context);					/* put current contents into damaged region */
 	  EndRefresh(win, TRUE);
 	  break;
 	case IDCMP_CHANGEWINDOW:
+printf("IDCMP_CHANGEWINDOW\n");
+	//("Step A, width: %d, height: %d\n",actWindow->winwidth, actWindow->winheight);
+	//printf("Step A.1, OS width: %d, height: %d\n",win->Width, win->Height);
+
 	  idleing = FALSE;
 	  actWindow->winx = win->LeftEdge;
 	  actWindow->winy = win->TopEdge;
-	  actWindow->winwidth = InnerWidth(win);
-	  actWindow->winheight = InnerHeight(win);
+	//printf("Step B, width: %d, height: %d\n",actWindow->winwidth, actWindow->winheight);
+	//printf("Step C, InnerWidth: %d, Innerheight: %d, wincurwidth: %d, wincurheight: %d\n",InnerWidth(win),InnerHeight(win),actWindow->wincurwidth,actWindow->wincurheight);
+
 	  if ((InnerWidth(win) != actWindow->wincurwidth) ||
 	      (InnerHeight(win) != actWindow->wincurheight)) {
 #ifdef USE_CLIP_LAYER_
@@ -328,8 +369,10 @@ void glutMainLoop(void)
 	      DisposeRegion(InstallClipRegion(win->WLayer, NULL));
 	    clipWindowToBorders(win);
 #endif
-	    actWindow->wincurwidth = InnerWidth(win);
-	    actWindow->wincurheight = InnerHeight(win);
+	    actWindow->wincurwidth = InnerWidth(win); // win->Width;
+	    actWindow->wincurheight = InnerHeight(win); // win->Height;
+  	  actWindow->winwidth = InnerWidth(win); //win->Width; 
+	    actWindow->winheight = InnerHeight(win); //win->Height; 
 	    actWindow->needreshapegui = TRUE;
 	    actWindow->needredisplay = TRUE;
 	  }
@@ -341,6 +384,7 @@ void glutMainLoop(void)
 	  }
 	  break;
 	case IDCMP_VANILLAKEY:
+printf("IDCMP_VANILLAKEY\n");
 	  if (cmsg.Code & IECODE_UP_PREFIX) {
 	    if (actWindow->keyboardupfunc) {
 	      if (!((cmsg.Qualifier & IEQUALIFIER_REPEAT) &&
@@ -361,6 +405,7 @@ void glutMainLoop(void)
 	  }
 	  break;
 	case IDCMP_RAWKEY:
+printf("IDCMP_RAWKEY\n");
 	  if (cmsg.Code & IECODE_UP_PREFIX) {
 	    if (actWindow->specialupfunc) {
 	      if (!((cmsg.Qualifier & IEQUALIFIER_REPEAT) &&
@@ -381,6 +426,7 @@ void glutMainLoop(void)
 	  }
 	  break;
 	case IDCMP_MENUPICK:
+printf("IDCMP_MENUPICK\n");
 	  menuNumber = cmsg.Code;
 	  while (menuNumber != MENUNULL) {
 	    item = ItemAddress(actWindow->menu, menuNumber);
@@ -394,6 +440,7 @@ void glutMainLoop(void)
 	  }
 	  break;
 	case IDCMP_CLOSEWINDOW:
+printf("IDCMP_CLOSEWINDOW\n");
 	  if (wanttoquit) {
 	    /* User wants to quit, but ESC doesn't do anything
 	     * Panic, and return in the hope that it will drop
@@ -410,12 +457,14 @@ void glutMainLoop(void)
 	  wanttoquit = TRUE;
 	  break;
 	case IDCMP_MOUSEBUTTONS:
+printf("IDCMP_MOUSEBUTTONS\n");
 	  if (actWindow->mousefunc) {
 	    idleing = FALSE;
 	    (*actWindow->mousefunc) (ConvToButton(cmsg.Code, cmsg.Qualifier), ConvToButtonState(cmsg.Code), cmsg.MouseX, cmsg.MouseY);
 	  }
 	  break;
 	case IDCMP_INTUITICKS:
+printf("IDCMP_INTUITICKS\n");
 	  if ((actWindow->mousex != cmsg.MouseX) ||
 	      (actWindow->mousey != cmsg.MouseY)) {
 	    actWindow->mousex = cmsg.MouseX;
@@ -456,12 +505,11 @@ void glutMainLoop(void)
 	  break;
       }
     }
-
 #if 0    
     if (actWindow->windowstatusfunc) {
       struct GlutWindow *gwo;
       
-      for (gwo = (struct GlutWindow *)nGetHead(&glutstuff.Windows); gwo; gwo = (struct GlutWindow *)nGetNext(&gwo->WindowNode)) {
+      for (gwo = (struct GlutWindow *)nGetHeadext(&glutstuff.Windows); gwo; gwo = (struct GlutWindow *)nGetNextext(&gwo->WindowNode)) {
         /* skip us, compare only others */
         if(gwo != actWindow) {
           /* ... dynamic rectangle list */

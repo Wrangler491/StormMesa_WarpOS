@@ -31,6 +31,8 @@
 
 void glutSwapBuffers(void)
 {
+				       // DEBUGOUT(11, "glutSwapBuffers\n");
+
   if (glutstuff.curwin && glutstuff.curwin->context)
     AmigaMesaSwapBuffers(glutstuff.curwin->context);
 }

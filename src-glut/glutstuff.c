@@ -83,13 +83,17 @@ struct GlutStuff glutstuff;
 
 void glutShutDown(int code)
 {
-  exit(0);
+				        DEBUGOUT(11, "glutShutDown\n");
+
+  return;
+						//exit(0);
 }
 
 void glutConstructor(void)
 {
   char Flag[256];
   short int FlagLen;
+			        DEBUGOUT(11, "glutConstructor\n");
 
   if (!(DOSBase = OpenLibrary("dos.library", 39))) {
     if ((DOSBase = OpenLibrary("dos.library", 0))) {
@@ -209,12 +213,18 @@ void glutConstructor(void)
 void glutDestructor(void)
 {
   struct nnode *act;
+	void *obj;
+			        DEBUGOUT(11, "glutDestructor\n");
 
-  while ((act = nGetTail(&glutstuff.Windows)))
-    glutDestroyWindow(((struct GlutWindow *)act)->WinID);			/* remove something out of the list, so we can't use nGetNext() safely */
+  while ((act = nGetTail(&glutstuff.Windows))) {
+	obj = act->obj;
+    glutDestroyWindow(((struct GlutWindow *)obj)->WinID);			/* remove something out of the list, so we can't use nGetNext() safely */
+	}
 
-  while ((act = nGetTail(&glutstuff.Menues)))
-    glutDestroyMenu(((struct GlutMenu *)act)->MenuID);				/* remove something out of the list, so we can't use nGetNext() safely */
+  while ((act = nGetTail(&glutstuff.Menues))) {
+	obj = act->obj;
+    glutDestroyMenu(((struct GlutMenu *)obj)->MenuID);				/* remove something out of the list, so we can't use nGetNext() safely */
+	}
 
   if (glutstuff.msgport)
     DeleteMsgPort(glutstuff.msgport);
@@ -250,6 +260,9 @@ asm("	.text; 	.stabs \"___CTOR_LIST__\",22,0,0,_constructor");
 asm("	.text; 	.stabs \"___DTOR_LIST__\",22,0,0,_destructor");
 #endif
 
+  __asm__ (".section .init \n .long glutConstructor, 341 \n .section .text\n");
+  __asm__ (".section .fini \n .long glutDestructor, 341 \n .section .text\n");
+
 /******************************************************************************/
 
 void stuffMakeCurrent(struct GlutWindow *gw)
@@ -269,7 +282,7 @@ void stuffMakeCurrent(struct GlutWindow *gw)
     }
   }
 
-  DEBUGOUT(4, "stuffMakeCurrent(0x%08x (%d))\n", gw, gw->WinID);
+  //DEBUGOUT(4, "stuffMakeCurrent(0x%08x (%d))\n", gw, gw->WinID);
 }
 
 int stuffGetNewWinID(void)
@@ -282,12 +295,13 @@ struct GlutWindow *stuffGetWin(int winid)
   struct GlutWindow *act = NULL;
   
   if (glutstuff.Windows.nodes) {
-    act = (struct GlutWindow *)&glutstuff.Windows;
-    while((act = (struct GlutWindow *)nGetNext(&act->WindowNode))) {
-      DEBUGOUT(4, "%d != %d\n", ((struct GlutWindow *)act)->WinID, winid);
+    act = (struct GlutWindow *)nGetHeadext(&glutstuff.Windows);
+    do {
       if (((struct GlutWindow *)act)->WinID == winid)
 	break;
-    }
+      DEBUGOUT(4, "%d != %d\n", ((struct GlutWindow *)act)->WinID, winid);
+	act = (struct GlutWindow *)nGetNextext(&act->WindowNode);
+    } while (act!=NULL);
     if (act && ((struct GlutWindow *)act)->WinID != winid)
       act = NULL;
   }
@@ -301,7 +315,7 @@ void stuffLinkInWin(struct GlutWindow *gw)
   if (gw) {
     gw->WinID = stuffGetNewWinID();
   //dEnqueue(&glutstuff.Windows, &gw->WindowNode);
-    nAddTail(&glutstuff.Windows, &gw->WindowNode);	/* ever growing list */
+    nAddTailext(&glutstuff.Windows, &gw->WindowNode, gw);	/* ever growing list */
     stuffMakeCurrent(gw);
   }
 
@@ -313,7 +327,7 @@ void stuffLinkInSubWin(struct GlutWindow *gw, struct GlutWindow *gwn)
   if (gw && gwn) {
     gwn->SubWindowParent = gw;
   //dEnqueue(&gw->SubWindows, &gwn->SubWindowNode);
-    nAddTail(&gw->SubWindows, &gwn->SubWindowNode);	/* ever growing list */
+    nAddTailext(&gw->SubWindows, &gwn->SubWindowNode, gwn);	/* ever growing list */
   }
 
   DEBUGOUT(4, "%d (of %d) = stuffLinkInSubWin(0x%08x, 0x%08x)\n", gwn->WinID, gw->SubWindows.nodes, gw, gwn);
@@ -364,7 +378,7 @@ void stuffLinkInMenu(struct GlutMenu *gm)
   if (gm) {
     gm->MenuID = stuffGetNewMenuID();
   //dEnqueue(&glutstuff.Menues, &gm->MenuNode);
-    nAddTail(&glutstuff.Menues, &gm->MenuNode);		/* ever growing list */
+    nAddTailext(&glutstuff.Menues, &gm->MenuNode, gm);		/* ever growing list */
     stuffMakeCurrentMenu(gm);
   }
 
@@ -409,7 +423,7 @@ struct GlutMenuEntry *stuffGetMenuEntry(int entry, struct GlutMenu *gm)	/* is 0 
 void stuffLinkInMenuEntry(struct GlutMenuEntry *gme, struct GlutMenu *gm)
 {
   if (gm && gme) {
-    nAddTail(&gm->MenuEntries, &gme->EntryNode);
+    nAddTailext(&gm->MenuEntries, &gme->EntryNode, gme);
     gme->EntryMenu = gm;
   }
 
