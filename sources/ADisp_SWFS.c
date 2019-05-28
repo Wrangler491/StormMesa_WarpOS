@@ -92,7 +92,6 @@ unsigned long getLibBase()
 }
 #endif
 
-#define DBG 1
 
 // misc support functions
 ;// SetBuffer
@@ -1650,7 +1649,7 @@ void SWFSD_write_color_span_ARGB(const GLcontext *ctx, GLuint n, GLint x, GLint 
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_color_span_ARGB\n");
+    /*LibPrintf*/ /*printf("SWFSD_write_color_span_ARGB\n");*/
 #endif
 
     if (mask)

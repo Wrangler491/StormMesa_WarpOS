@@ -186,10 +186,11 @@ void STORMMESA_Init()
 	Libstrcpy(StormMesa.UseDrawArray.name,"Use DrawArray");
 	Libstrcpy(StormMesa.ChangePrimitiveFuncs.name,"Change Primitive Funcs");
 
-	StormMesa.LOCKMODE2.ON=TRUE;
+	//StormMesa.LOCKMODE3.ON=TRUE;
 	StormMesa.VERYFAST.ON=TRUE;
 	//StormMesa.NOHW.ON=FALSE;
-	//StormMesa.UseDrawArray.ON=TRUE;
+	StormMesa.UseDrawArray.ON=TRUE;
+	StormMesa.STATS.ON=TRUE;
 
 }
 /*==================================================================================*/

@@ -196,7 +196,7 @@ const char * checkstrings[] = {
 		};
 ;;//
 
-#define DBG 1
+//#define DBG 1
 
 // misc support
 ;// logbase2
@@ -271,12 +271,17 @@ void HWDriver_resize( GLcontext *ctx,GLuint *width, GLuint *height)
 
 	if (c->flags & FLAG_DIRECTRENDER)
 	{
+	printf("Phase 1\n");
 
 	if(!((c->width  == (c->rp->Layer->bounds.MaxX-c->rp->Layer->bounds.MinX-c->left-c->right+1))
 	&&  (c->height == (c->rp->Layer->bounds.MaxY-c->rp->Layer->bounds.MinY-c->bottom-c->top+1))))
 		{
+	printf("Width: %d, MaxX: %d, MinX: %d, left: %d, right: %d\n",c->width,c->rp->Layer->bounds.MaxX,c->rp->Layer->bounds.MinX,c->left,c->right);
+	printf("Height: %d, MaxY: %d, MinY: %d, bottom: %d, top: %d\n",c->height,c->rp->Layer->bounds.MaxY,c->rp->Layer->bounds.MinY,c->bottom,c->top);
 			c->RealWidth =c->rp->Layer->bounds.MaxX-c->rp->Layer->bounds.MinX+1;
 			c->RealHeight=c->rp->Layer->bounds.MaxY-c->rp->Layer->bounds.MinY+1;
+	printf("RealWidth: %d\n",c->RealWidth);
+	printf("RealHeight: %d\n",c->RealHeight);
 			*width=c->width = c->RealWidth-c->left-c->right;
 			*height=c->height = c->RealHeight-c->bottom-c->top;
 			FreeBitMap(c->back_rp->BitMap);
@@ -640,8 +645,9 @@ GLbitfield HW_clear_generic(GLcontext *ctx, GLbitfield mask,
 	  }
 #endif
   }
-  else
+  else {
 		W3D_Flush(context);
+	}
   return(mask);
 }
 ;;//
@@ -2370,7 +2376,6 @@ printf("GLcontext: 0x%08x, AM context: 0x%08x, HW context: 0x%08x, context: 0x%0
 /* TODO: support 3d textures */
 
    //W3D_WaitIdle(context);
-printf("HWSD step 1\n");
    if (ctx->Texture.Enabled)
    {
 		W3D_SetState(context,W3D_TEXMAPPING,W3D_ENABLE);
@@ -2386,7 +2391,6 @@ printf("HWSD step 1\n");
    }
    else
 		W3D_SetState(context,W3D_TEXMAPPING,W3D_DISABLE);
-printf("HWSD step 2\n");
 
 /* gouraud / flat shading setup */
 
@@ -2394,7 +2398,6 @@ printf("HWSD step 2\n");
 		W3D_SetState(context,W3D_GOURAUD,W3D_ENABLE);
    else
 		W3D_SetState(context,W3D_GOURAUD,W3D_DISABLE);
-printf("HWSD step 3\n");
 
 /* depth buffer setup */
 
@@ -2431,7 +2434,6 @@ printf("HWSD step 3\n");
 		W3D_SetState(context,W3D_ZBUFFER,W3D_DISABLE);
 		W3D_SetState(context,W3D_ZBUFFERUPDATE,W3D_DISABLE);
    }
-printf("HWSD step 4\n");
 
 /* alpha test setup */
 
@@ -2457,7 +2459,6 @@ printf("HWSD step 4\n");
    }
    else
 		W3D_SetState(context,W3D_ALPHATEST,W3D_DISABLE);
-printf("HWSD step 5\n");
 
 /* blending check */
 
@@ -2501,7 +2502,6 @@ printf("HWSD step 5\n");
    }
    else
 		W3D_SetState(context,W3D_BLENDING,W3D_DISABLE);
-printf("HWSD step 6\n");
 
 /* fogging check */
 
@@ -2512,7 +2512,6 @@ printf("HWSD step 6\n");
    }
    else
 		W3D_SetState(context,W3D_FOGGING,W3D_DISABLE);
-printf("HWSD step 7\n");
 
 /* antialiasing setup */
 
@@ -2528,7 +2527,6 @@ printf("HWSD step 7\n");
 		W3D_SetState(context,W3D_ANTI_POLYGON,W3D_ENABLE);
    else
 		W3D_SetState(context,W3D_ANTI_POLYGON,W3D_DISABLE);
-printf("HWSD step 8\n");
 
 /* dithering setup */
 
@@ -2536,7 +2534,6 @@ printf("HWSD step 8\n");
 		W3D_SetState(context,W3D_DITHERING,W3D_ENABLE);
    else
 		W3D_SetState(context,W3D_DITHERING,W3D_DISABLE);
-printf("HWSD step 9\n");
 
 /* scissor setup */
 
@@ -2559,7 +2556,6 @@ printf("HWSD step 9\n");
 		/* small workaround to fix W3DV2 Prototype problem */
 		W3D_SetScissor(context,&hwcontext->scissor);
    }
-printf("HWSD step 10\n");
 
 /* logic op setup */
 
@@ -2591,7 +2587,6 @@ printf("HWSD step 10\n");
    }
    else
 		W3D_SetState(context,W3D_LOGICOP,W3D_DISABLE);
-printf("HWSD step 11\n");
 
 /* masking setup */
 
@@ -2609,7 +2604,6 @@ printf("HWSD step 11\n");
    {
 		W3D_SetPenMask(context,(ULONG)ctx->Color.IndexMask);
    }
-printf("HWSD step 12\n");
 
 /* stencil setup */
 
@@ -2670,7 +2664,6 @@ printf("HWSD step 12\n");
    else
 		W3D_SetState(context,W3D_STENCILBUFFER,W3D_DISABLE);
 */
-printf("HWSD step 13\n");
 
 /* TODO: support specular highlighting as soon as supported by W3D */
 
@@ -4277,10 +4270,8 @@ void HW_DD_pointers( GLcontext *ctx )
 	rc = ((*hwcontext->CompCheck)(ctx));
    if (rc == CHECK_SUCCESS)
    {
-	printf("HWDDP: part 1\n");
 	if(ChangePrimitiveFuncs)
 	{
-		printf("HWDDP: part 2\n");
 		ctx->Driver.PointsFunc = (*hwcontext->ChPoint)(ctx);
 		ctx->Driver.LineFunc = (*hwcontext->ChLine)(ctx);
 		ctx->Driver.TriangleFunc = (*hwcontext->ChTriangle)(ctx);
@@ -4289,7 +4280,6 @@ void HW_DD_pointers( GLcontext *ctx )
 		ctx->Driver.TriStripFunc = (*hwcontext->ChTriStrip)(ctx);
 		ctx->Driver.TriFanFunc = (*hwcontext->ChTriFan)(ctx);
 	}
-		printf("HWDDP: part 3\n");
 		ctx->Driver.GetParameteri = HW_GetParameteri;
 		ctx->Driver.RasterSetup = HW_ChooseRasterSetup(ctx,hwcontext);
 		if (ctx->NewState & (~NEW_LIGHTING))
@@ -4298,13 +4288,11 @@ void HW_DD_pointers( GLcontext *ctx )
    }
    else
    {
-		printf("HWDDP: part 4\n");
 		ctx->Driver.GetParameteri = SW_GetParameteri;
 		ctx->Driver.RasterSetup = NULL;
    }
    if (!(hwcontext->nohw))
    {
-		printf("HWDDP: part 5\n");
 	   ctx->Driver.AllocDepthBuffer = HW_AllocDepthBuffer;
 	   ctx->Driver.DepthTestSpan = HW_DepthTestSpan;
 	   ctx->Driver.DepthTestPixels = HW_DepthTestPixels;
@@ -4313,15 +4301,10 @@ void HW_DD_pointers( GLcontext *ctx )
    }
    else
    {
-		printf("HWDDP: part 6\n");
-
 	   if (ctx->Buffer)
 	   {
-		printf("HWDDP: part 7\n");
-
 		   if (!ctx->Buffer->Depth)
 		   {
-			printf("HWDDP: part 8\n");
 				gl_alloc_depth_buffer(ctx);
 				gl_clear_depth_buffer(ctx);
 		   }
@@ -4329,19 +4312,13 @@ void HW_DD_pointers( GLcontext *ctx )
    }
    if (hwcontext->flags & HWFLAG_STATS)
    {
-		printf("HWDDP: part 9\n");
-
 		if (rc > 0)
 		{
-			printf("HWDDP: part 10\n");
-
 				(hwcontext->statarray[rc-1])++;
 				hwcontext->failed++;
 		}
    }
-	printf("HWDDP: part 11\n");
    W3D_Flush(hwcontext->context);
-	printf("HWDDP: part 12\n");
 }
 ;;//
 
@@ -4355,6 +4332,7 @@ void HW_DD_pointers( GLcontext *ctx )
  */
 void HWDriver_Lock2(GLcontext* ctx)
 {
+printf("HWDriver_Lock2\n");
 		AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
 		W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
 		W3D_Context *context = hwcontext->context;
@@ -4366,6 +4344,7 @@ void HWDriver_Lock2(GLcontext* ctx)
 				W3D_LockHardware(context);
 				hwcontext->flags |= HWFLAG_LOCKED;
 		}
+printf("HWDriver_Lock2 exit\n");
 }
 ;;//
 ;// HWDriver_UnLock2
@@ -4377,6 +4356,7 @@ void HWDriver_Lock2(GLcontext* ctx)
  */
 void HWDriver_UnLock2(GLcontext* ctx)
 {
+printf("HWDriver_UnLock2\n");
 		AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
 		W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
 		W3D_Context *context = hwcontext->context;
@@ -4388,6 +4368,7 @@ void HWDriver_UnLock2(GLcontext* ctx)
 				W3D_UnLockHardware(context);
 				hwcontext->flags &= (~HWFLAG_LOCKED);
 		}
+printf("HWDriver_UnLock2 exit\n");
 }
 ;;//
 ;// HWDriver_Lock3
@@ -4399,6 +4380,7 @@ void HWDriver_UnLock2(GLcontext* ctx)
  */
 void HWDriver_Lock3(struct amigamesa_context *c)
 {
+printf("HWDriver_Lock3\n");
 		W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
 		W3D_Context *context = hwcontext->context;
 
@@ -4416,9 +4398,12 @@ void HWDriver_Lock3(struct amigamesa_context *c)
 				}
 //				W3D_SetState(context,W3D_INDIRECT,W3D_DISABLE);
 //				W3D_SetState(context,W3D_FAST,W3D_DISABLE);
-				W3D_LockHardware(context);
-				hwcontext->flags |= HWFLAG_LOCKED;
+printf("HWDriver_Lock3 locking hardware\n");
+				//W3D_LockHardware(context);
+printf("HWDriver_Lock3 locked hardware\n");
+				//hwcontext->flags |= HWFLAG_LOCKED;
 		}
+printf("HWDriver_Lock3 exit\n");
 }
 ;;//
 ;// HWDriver_UnLock3
@@ -4430,6 +4415,7 @@ void HWDriver_Lock3(struct amigamesa_context *c)
  */
 void HWDriver_UnLock3(struct amigamesa_context *c)
 {
+printf("HWDriver_UnLock3\n");
 		W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
 		W3D_Context *context = hwcontext->context;
 
@@ -4437,11 +4423,13 @@ void HWDriver_UnLock3(struct amigamesa_context *c)
 				return;
 		if (hwcontext->flags & HWFLAG_LOCKED)
 		{
+printf("HWDriver_UnLock3 unlocking\n");
 				W3D_UnLockHardware(context);
 //				W3D_SetState(context,W3D_FAST,W3D_ENABLE);
 //				W3D_SetState(context,W3D_INDIRECT,W3D_ENABLE);
 				hwcontext->flags &= (~HWFLAG_LOCKED);
 		}
+printf("HWDriver_UnLock3 exit\n");
 }
 ;;//
 ;// HWDriver_UnLock4
@@ -4453,6 +4441,7 @@ void HWDriver_UnLock3(struct amigamesa_context *c)
  */
 void HWDriver_UnLock4(GLcontext* ctx)
 {
+printf("HWDriver_UnLock4\n");
 		AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
 		W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
 		W3D_Context *context = hwcontext->context;
@@ -4468,8 +4457,10 @@ void HWDriver_UnLock4(GLcontext* ctx)
 #endif
 		if ((tval2.tv_secs*1000000+tval2.tv_micro) > INTERVAL)
 		{
+printf("HWDriver_UnLock4 unlocking\n");
 				HWDriver_UnLock3(c);
 		}
+printf("HWDriver_UnLock4 exit\n");
 }
 ;;//
 ;// HWDriver_Flush
@@ -5137,8 +5128,16 @@ printf("Depth: %d\n",c->depth);
 
 	if (hwcontext->lockmode >= 2)
 	{
-		W3D_SetState(hwcontext->context,W3D_INDIRECT,W3D_DISABLE);
-		W3D_SetState(hwcontext->context,W3D_FAST,W3D_DISABLE);
+		if(W3D_SetState(hwcontext->context,W3D_INDIRECT,W3D_DISABLE) == W3D_SUCCESS) {
+			printf("W3D_INDIRECT disabled\n");
+		} else {
+			printf("W3D_INCIRECT failed!!\n");
+		}
+		if(W3D_SetState(hwcontext->context,W3D_FAST,W3D_DISABLE) == W3D_SUCCESS) {
+			printf("W3D_FAST disabled\n");
+		} else {
+			printf("W3D_FAST failed!!\n");
+		}
 	}
 
 #ifndef __PPC__
@@ -5160,6 +5159,7 @@ printf("Depth: %d\n",c->depth);
 	hwcontext->lockmode = 2;			/* fall back to full locking */
 #endif
 
+	printf("LWHD: lockmode in use is %d\n",hwcontext->lockmode);
 /* temporary variables */
 
 	if (StormMesa.NOZB.ON)

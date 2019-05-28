@@ -799,7 +799,7 @@ void APIENTRY AmigaMesaSwapBuffers(struct amigamesa_context *amesa)
 #endif
 #endif
 	{                /* copy/swap back buffer to front if applicable */
-	REM(AmigaMesaSwapBuffers);
+	//REM(AmigaMesaSwapBuffers);
 
 	(*amesa->SwapBuffer)( amesa );
 	}
