@@ -1012,7 +1012,7 @@ typedef double          GLclampd;       /* double precision float in [0,1] */
 #pragma export on
 #endif
 
-#if defined(__STORM__) && defined(__PPC__) && !defined(COMPILING_GL)
+#if defined(__STORM__) && defined(__PPC__) && !defined(COMPILING_GL)  && !defined(WARPUP)
 #include <stormprotos/gl_sprotos.h>
 #else
 
