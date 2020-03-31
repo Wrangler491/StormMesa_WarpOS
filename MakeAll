@@ -1,0 +1,9 @@
+cd sources
+make
+cd /src-glu
+make
+cd /src-glut
+make
+cd /demos
+make
+cd /
