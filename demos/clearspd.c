@@ -195,7 +195,7 @@ int main( int argc, char *argv[] )
 
    if (argc==2 && strcmp(argv[1],"-help")==0) {
       Help(argv[0]);
-      return 0;
+      return ;
    }
 
    glutReshapeFunc( Reshape );
@@ -204,5 +204,5 @@ int main( int argc, char *argv[] )
    glutIdleFunc( Idle );
 
    glutMainLoop();
-   return 0;
+   return;
 }

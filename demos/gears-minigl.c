@@ -11,6 +11,8 @@
 #include "../sources/types.h"
 #include "../sources/AmigaMesa.h"
 
+#include "../sources/AmigaIncludes.h"
+
 /*
 #ifdef __VBCC__
 #include <extra.h> //OF
@@ -50,6 +52,7 @@
 
 GLcontext *CC;
 BOOL wanttoquit;
+
 
 static double d_near = 1.0;
 static double d_far = 2000;
@@ -250,7 +253,7 @@ gear(int nt, float wd, float ir, float or, float tp, float tip, int ns, Profile 
 void 
 tooth_side(int nt, float ir, float or, float tp, float tip, float wd)
 {
-
+//LibPrintf("Entered tooth_side\n");
   float i;
   float end = 2.0 * M_PI / nt;
   float x[6], y[6];
@@ -288,6 +291,7 @@ tooth_side(int nt, float ir, float or, float tp, float tip, float wd)
 	glVertex3f(x[1], y[1], wd / 2);
 	glVertex3f(x[3], y[3], wd / 2);
 	glVertex3f(x[4], y[4], wd / 2);
+//LibPrintf("Tooth_side glend\n");
 	glEnd();
 
 	glNormal3f(0.0, 0.0, -1.0);
@@ -364,7 +368,7 @@ tooth_side(int nt, float ir, float or, float tp, float tip, float wd)
 void 
 flat_face(float ir, float or, float wd)
 {
-
+//LibPrintf("Entered flat_face\n");
   int i;
   float w;
 
@@ -390,6 +394,7 @@ flat_face(float ir, float or, float wd)
 		  w);
 	  }
 	  glVertex3f(or, 0.0, w);
+//LibPrintf("flat_face glend\n");
 	  glEnd();
 	} else {
 	  /* draw as tmesh */
@@ -406,6 +411,7 @@ flat_face(float ir, float or, float wd)
 	  }
 	  glVertex3f(or, 0.0, w);
 	  glVertex3f(ir, 0.0, w);
+//LibPrintf("flat_face glend\n");
 	  glEnd();
 
 	}
@@ -422,6 +428,7 @@ draw_inside(float w1, float w2, float rad)
 	printf("Inside: wid=%f..%f rad=%f\n", w1, w2, rad);
   if (w1 == w2)
 	return;
+//LibPrintf("Inside: Start\n");
 
   w1 = w1 / 2;
   w2 = w2 / 2;
@@ -430,10 +437,15 @@ draw_inside(float w1, float w2, float rad)
 	  w1 = -w1;
 	  w2 = -w2;
 	}
+//LibPrintf("Inside: 1\n");
 	glBegin(GL_TRIANGLE_STRIP);
+//LibPrintf("Inside: 2\n");
 	glNormal3f(-1.0, 0.0, 0.0);
+//LibPrintf("Inside: 3\n");
 	glVertex3f(rad, 0.0, w1);
+//LibPrintf("Inside: 4\n");
 	glVertex3f(rad, 0.0, w2);
+//LibPrintf("Inside: 5\n");
 	for (i = 1; i < circle_subdiv; i++) {
 	  c = fcos(2.0 * M_PI * i / circle_subdiv);
 	  s = fsin(2.0 * M_PI * i / circle_subdiv);
@@ -445,11 +457,18 @@ draw_inside(float w1, float w2, float rad)
 		s * rad,
 		w2);
 	}
+//LibPrintf("Inside: 6\n");
 	glNormal3f(-1.0, 0.0, 0.0);
+//LibPrintf("Inside: 7\n");
 	glVertex3f(rad, 0.0, w1);
+//LibPrintf("Inside: 8\n");
 	glVertex3f(rad, 0.0, w2);
+//LibPrintf("Inside: 9\n");
+//LibPrintf("Test of printf.  What is rad: %f\n",rad);
 	glEnd();
+//LibPrintf("Inside: 10\n");
   }
+//LibPrintf("Inside: End\n");
 }
 
 void 
@@ -522,21 +541,30 @@ oneFrame(void)
 #endif
 
   //mglLockDisplay();
+//LibPrintf("Gears: 1\n");
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+//LibPrintf("Gears: 2\n");
   if (show & 1)
   {
 	glPushMatrix();
+//LibPrintf("Gears: 3\n");
 	glTranslatef(0.0, 0.0, -4.0);
+//LibPrintf("Gears: 4\n");
 	glRotatef(a3, 1.0, 1.0, 1.0);
+//LibPrintf("Gears: 5\n");
 	glRotatef(a4, 0.0, 0.0, -1.0);
+//LibPrintf("Gears: 6\n");
 	glTranslatef(0.14, 0.2, 0.0);
+//LibPrintf("Gears: 7\n");
 	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+//LibPrintf("Gears: 8\n");
 	gear(40,
 		0.4, 2.0, 1.1,
 		0.8, 0.4,
 		sizeof(gear_profile) / sizeof(Profile), gear_profile);
+//LibPrintf("Gears: 9\n");
 	glPopMatrix();
+//LibPrintf("Gears: 10\n");
   }
 
   if (show & 2)
@@ -576,7 +604,9 @@ oneFrame(void)
   if (a4 < 0.0)
 	a4 -= 360.0;
   //mglSwitchDisplay();
+//LibPrintf("Gears: 11\n");
   glutSwapBuffers();
+//LibPrintf("Gears: 12\n");
 
 #ifdef __PPC__
   GetSysTimePPC(&end);
@@ -619,9 +649,13 @@ void
 myReshape(int w, int h)
 {
   glViewport(0, 0, w, h);
+//LibPrintf("done viewport\n");
   glMatrixMode(GL_PROJECTION);
+//LibPrintf("done matrixmode\n");
   glLoadIdentity();
+//LibPrintf("done loadidentity\n");
   glFrustum(-1.0, 1.0, -1.0, 1.0, d_near, d_far);
+//LibPrintf("done frustum\n");
   /**
 	use perspective instead:
 
@@ -636,8 +670,11 @@ myReshape(int w, int h)
 	}
    */
   glMatrixMode(GL_MODELVIEW);
+//LibPrintf("done matrixmode2\n");
   glLoadIdentity();
+//LibPrintf("load identity2\n");
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//LibPrintf("done clear\n");
 }
 
 
@@ -646,10 +683,14 @@ myinit(int w, int h)
 {
   float f[20];
   glClearColor(0.0, 0.0, 0.0, 0.0);
+//LibPrintf("done clearcolor\n");
   myReshape(w, h);
+//LibPrintf("done myreshape\n");
   /* glShadeModel(GL_FLAT); */
   glEnable(GL_DEPTH_TEST);
+//LibPrintf("done glenable\n");
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//LibPrintf("done clear\n");
 
 }
 
@@ -750,7 +791,7 @@ int main(int argc, char *argv[])
 */
 	glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
 
-	glutInitWindowPosition(0, 0);
+	glutInitWindowPosition(0 + 1024-680, 0 + 768-520);	//#### change back
 	glutInitWindowSize(width, height);
 	glutCreateWindow("Gears");
 
@@ -762,15 +803,17 @@ int main(int argc, char *argv[])
 
 		glDisable(GL_CULL_FACE);
 		glHint(GL_POLYGON_SMOOTH_HINT, GL_FASTEST);
-
+//LibPrintf("Starting myinit\n");
 		myinit(width, height);
-
+//LibPrintf("Completed myinit\n");
 		//mglLockMode(MGL_LOCK_MANUAL);
 		//mglIdleFunc(oneFrame);
 		//mglKeyFunc(keys);
 		//mglMainLoop();
 		glutIdleFunc(oneFrame);
+//LibPrintf("Set IdleFunc\n");
 		glutKeyboardFunc(keys);
+//LibPrintf("Set keyfunc\n");
 		glutMainLoop();
 	}
 	else

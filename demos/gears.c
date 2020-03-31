@@ -315,12 +315,12 @@ int main(int argc, char *argv[])
     /* do 'n' frames then exit */
     limit = atoi(argv[1]) + 1;
   } else {
-    limit = 0;
+    limit = 200;
   }
   glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
 
   glutInitWindowPosition(0, 0);
-  glutInitWindowSize(300, 300);
+  glutInitWindowSize(205, 220);
   glutCreateWindow("Gears");
   init();
 
