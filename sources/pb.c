@@ -74,8 +74,9 @@
 #include "types.h"
 #endif
 
-void LibPrintf(const char *string, ...);
-#define REM(message) printf(#message"\n");	//LibPrintf(#message"\n");
+//void LibPrintf(const char *string); //, ...);
+#define REM(message) LibPrintf(#message"\n");
+#define LibPrintf(t) ; //printf(t) //SPrintF(t,NULL)
 
 /*
  * Allocate and initialize a new pixel buffer structure.

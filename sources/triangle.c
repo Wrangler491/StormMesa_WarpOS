@@ -81,6 +81,7 @@
 #include "vb.h"
 #endif
 
+#define LibPrintf(t) ; //printf(t) //SPrintF(t,NULL)
 
 /*
  * Put triangle in feedback buffer.
@@ -164,7 +165,7 @@ static void flat_ci_triangle( GLcontext *ctx,
                               GLuint v0, GLuint v1, GLuint v2, GLuint pv )
 {
 #ifdef DBGTRI
-        /*LibPrintf*/ printf("flat_ci_triangle\n");
+        LibPrintf("flat_ci_triangle\n");
 #endif
 #define INTERP_Z 1
 
@@ -201,7 +202,7 @@ static void smooth_ci_triangle( GLcontext *ctx,
                                 GLuint v0, GLuint v1, GLuint v2, GLuint pv )
 {
 #ifdef DBGTRI
-        /*LibPrintf*/ printf("smooth_ci_triangle\n");
+        LibPrintf("smooth_ci_triangle\n");
 #endif
    (void) pv;
 #define INTERP_Z 1
@@ -236,7 +237,7 @@ static void flat_rgba_triangle( GLcontext *ctx,
                                 GLuint v0, GLuint v1, GLuint v2, GLuint pv )
 {
 #ifdef DBGTRI
-        /*LibPrintf*/ printf("flat_rgba_triangle\n");
+        LibPrintf("flat_rgba_triangle\n");
 #endif
 #define INTERP_Z 1
 
@@ -278,7 +279,7 @@ static void smooth_rgba_triangle( GLcontext *ctx,
                                   GLuint v0, GLuint v1, GLuint v2, GLuint pv )
 {
 #ifdef DBGTRI
-        /*LibPrintf*/ printf("smooth_rgba_triangle\n");
+        LibPrintf("smooth_rgba_triangle\n");
 #endif
    (void) pv;
 #define INTERP_Z 1
@@ -320,7 +321,7 @@ static void simple_textured_triangle( GLcontext *ctx, GLuint v0, GLuint v1,
                                       GLuint v2, GLuint pv )
 {
 #ifdef DBGTRI
-        /*LibPrintf*/ printf("simple_textured_triangle\n");
+        LibPrintf("simple_textured_triangle\n");
 #endif
 #define INTERP_INT_ST 1
 #define S_SCALE twidth
@@ -383,7 +384,7 @@ static void simple_z_textured_triangle( GLcontext *ctx, GLuint v0, GLuint v1,
                                         GLuint v2, GLuint pv )
 {
 #ifdef DBGTRI
-        /*LibPrintf*/ printf("simple_z_textured_triangle\n");
+        LibPrintf("simple_z_textured_triangle\n");
 #endif
 #define INTERP_Z 1
 #define INTERP_INT_ST 1
@@ -442,7 +443,7 @@ static void affine_textured_triangle( GLcontext *ctx, GLuint v0, GLuint v1,
                                       GLuint v2, GLuint pv )
 {
 #ifdef DBGTRI
-        /*LibPrintf*/ printf("affine_textured_triangle\n");
+        LibPrintf("affine_textured_triangle\n");
 #endif
 #define INTERP_Z 1
 #define INTERP_RGB 1
@@ -733,7 +734,7 @@ static void persp_textured_triangle( GLcontext *ctx, GLuint v0, GLuint v1,
 {
 
 #ifdef DBGTRI
-        /*LibPrintf*/ printf("persp_textured_triangle\n");
+        LibPrintf("persp_textured_triangle\n");
 #endif
 #define INTERP_Z 1
 #define INTERP_RGB 1
@@ -960,7 +961,7 @@ static void general_textured_triangle( GLcontext *ctx, GLuint v0, GLuint v1,
                                        GLuint v2, GLuint pv )
 {
 #ifdef DBGTRI
-        /*LibPrintf*/ printf("general_textured_triangle\n");
+        LibPrintf("general_textured_triangle\n");
 #endif
 #define INTERP_Z 1
 #define INTERP_RGB 1
@@ -1046,7 +1047,7 @@ static void general_textured_spec_triangle1( GLcontext *ctx, GLuint v0,
                                              GLubyte spec[MAX_WIDTH][4] )
 {
 #ifdef DBGTRI
-        /*LibPrintf*/ printf("general_textured_spec_triangle1\n");
+        LibPrintf("general_textured_spec_triangle1\n");
 #endif
 #define INTERP_Z 1
 #define INTERP_RGB 1
@@ -1174,7 +1175,7 @@ static void lambda_textured_triangle1( GLcontext *ctx, GLuint v0, GLuint v1,
                                        GLfloat u[MAX_WIDTH] )
 {
 #ifdef DBGTRI
-        /*LibPrintf*/ printf("lambda_textured_triangle1\n");
+        LibPrintf("lambda_textured_triangle1\n");
 #endif
 #define INTERP_Z 1
 #define INTERP_RGB 1
@@ -1285,7 +1286,7 @@ static void lambda_textured_spec_triangle1( GLcontext *ctx, GLuint v0,
                                             GLfloat u[MAX_WIDTH] )
 {
 #ifdef DBGTRI
-        /*LibPrintf*/ printf("lambda_textured_spec_triangle1\n");
+        LibPrintf("lambda_textured_spec_triangle1\n");
 #endif
 #define INTERP_Z 1
 #define INTERP_RGB 1
@@ -1407,7 +1408,7 @@ static void lambda_multitextured_triangle1( GLcontext *ctx, GLuint v0,
                                       GLfloat t[MAX_TEX_COORD_SETS][MAX_WIDTH] )
 {
 #ifdef DBGTRI
-        /*LibPrintf*/ printf("lambda_multitextured_triangle1\n");
+        LibPrintf("lambda_multitextured_triangle1\n");
 #endif
 #define INTERP_Z 1
 #define INTERP_RGB 1

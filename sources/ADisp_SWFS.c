@@ -70,7 +70,7 @@
 #pragma pack(pop)
 #endif
 
-//#define DBG
+#define DBG
 
 #define TC_RGBA(r,g,b,a) ((((((a<<8)|r)<<8)|g)<<8)|b)
 #define TC_BGRA(r,g,b,a) ((((((b<<8)|g)<<8)|r)<<8)|a)
@@ -143,7 +143,7 @@ GLboolean SWFSDriver_set_buffer( GLcontext *ctx,GLenum mode )
 {
     AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSDriver_set_buffer\n");
+    LibPrintf("SWFSDriver_set_buffer\n");
 #endif
 
     if (c->flags & FLAG_TWOBUFFERS)
@@ -174,7 +174,7 @@ void SWFSDriver_resize( GLcontext *ctx,GLuint *width, GLuint *height)
 	return;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSDriver_resize: %d %d\n",c->width,c->height);
+    LibPrintf("SWFSDriver_resize: \n"); //%d %d\n",c->width,c->height);
 #endif
 
     if (c->flags & FLAG_DIRECTRENDER)
@@ -190,7 +190,7 @@ void SWFSDriver_resize( GLcontext *ctx,GLuint *width, GLuint *height)
 	    FreeBitMap(c->back_rp->BitMap);
 	    if (!(c->back_rp->BitMap = AllocBitMap(c->width,c->height,c->depth,BMF_MINPLANES|BMF_DISPLAYABLE,c->rp->BitMap)))
 	    {
-		/*LibPrintf*/ printf("Panic! Not enough memory for resizing!\n");
+		LibPrintf("Panic! Not enough memory for resizing!\n");
 		exit(0);
 	    }
 	    SetAPen(c->back_rp,0);
@@ -200,7 +200,7 @@ void SWFSDriver_resize( GLcontext *ctx,GLuint *width, GLuint *height)
 		FreeBitMap(c->back2_rp->BitMap);
 		if (!(c->back2_rp->BitMap = AllocBitMap(c->width,c->height,c->depth,BMF_MINPLANES|BMF_DISPLAYABLE,c->rp->BitMap)))
 		{
-			/*LibPrintf*/ printf("Panic! Not enough memory for resizing!\n");
+			LibPrintf("Panic! Not enough memory for resizing!\n");
 			exit(0);
 		}
 		SetAPen(c->back2_rp,0);
@@ -235,7 +235,7 @@ void SWFSD_clear_index_LUT8(GLcontext *ctx, GLuint index)
     c->clearpixel = c->penconv[index];
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_clear_index_LUT8 %ld %ld\n",c->clearpixel,index);
+    LibPrintf("SWFSD_clear_index_LUT8 \n"); //%ld %ld\n",c->clearpixel,index);
 #endif
 
 }
@@ -246,7 +246,7 @@ void SWFSD_clear_index_RGB(GLcontext *ctx, GLuint index)
     AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_clear_index_RGB\n");
+    LibPrintf("SWFSD_clear_index_RGB\n");
 #endif
     c->clearpixel = c->ColorTable2[index];
 }
@@ -260,7 +260,7 @@ void SWFSD_set_index_LUT8(GLcontext *ctx, GLuint index)
     c->pixel = c->penconv[index];
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_set_index_LUT8 %ld\n",c->pixel);
+    LibPrintf("SWFSD_set_index_LUT8 \n"); //%ld\n",c->pixel);
 #endif
 
 }
@@ -271,7 +271,7 @@ void SWFSD_set_index_RGB(GLcontext *ctx, GLuint index)
     AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_set_index_RGB\n");
+    LibPrintf("SWFSD_set_index_RGB\n");
 #endif
 
     c->pixel = c->ColorTable2[index];
@@ -286,7 +286,7 @@ void SWFSD_clear_color_LUT8(GLcontext *ctx,
     AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
 /*    c->clearpixel = EvalPen(c,r,g,b); */
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_clear_color_LUT8: %ld\n",c->clearpixel);
+    LibPrintf("SWFSD_clear_color_LUT8: \n"); //%ld\n",c->clearpixel);
 #endif
     if (c->specialalloc)
 	ReleasePen(c->Screen->ViewPort.ColorMap, c->clearpixel);
@@ -304,7 +304,7 @@ void SWFSD_clear_color_RGB15(GLcontext *ctx,
     AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_clear_color_RGB15\n");
+    LibPrintf("SWFSD_clear_color_RGB15\n");
 #endif
 
     c->clearpixel = TC_RGB15(r,g,b);
@@ -317,7 +317,7 @@ void SWFSD_clear_color_RGB15PC(GLcontext *ctx,
     AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_clear_color_RGB15PC\n");
+    LibPrintf("SWFSD_clear_color_RGB15PC\n");
 #endif
 
     c->clearpixel = TC_RGB15PC(r,g,b);
@@ -330,7 +330,7 @@ void SWFSD_clear_color_RGB16(GLcontext *ctx,
     AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_clear_color_RGB16\n");
+    LibPrintf("SWFSD_clear_color_RGB16\n");
 #endif
 
     c->clearpixel = TC_RGB16(r,g,b);
@@ -343,7 +343,7 @@ void SWFSD_clear_color_RGB16PC(GLcontext *ctx,
     AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_clear_color_RGB16PC\n");
+    LibPrintf("SWFSD_clear_color_RGB16PC\n");
 #endif
 
     c->clearpixel = TC_RGB16PC(r,g,b);
@@ -356,7 +356,7 @@ void SWFSD_clear_color_BGR15PC(GLcontext *ctx,
     AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_clear_color_BGR15PC\n");
+    LibPrintf("SWFSD_clear_color_BGR15PC\n");
 #endif
 
     c->clearpixel = TC_BGR15PC(r,g,b);
@@ -369,7 +369,7 @@ void SWFSD_clear_color_BGR16PC(GLcontext *ctx,
     AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_clear_color_BGR16PC\n");
+    LibPrintf("SWFSD_clear_color_BGR16PC\n");
 #endif
 
     c->clearpixel = TC_BGR16PC(r,g,b);
@@ -382,7 +382,7 @@ void SWFSD_clear_color_RGB(GLcontext *ctx,
     AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_clear_color_RGB\n");
+    LibPrintf("SWFSD_clear_color_RGB\n");
 #endif
 
     c->clearpixel = b | (g << 8) | (r << 16);
@@ -395,7 +395,7 @@ void SWFSD_clear_color_BGR(GLcontext *ctx,
     AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_clear_color_BGR\n");
+    LibPrintf("SWFSD_clear_color_BGR\n");
 #endif
 
     c->clearpixel = r | (g << 8) | (b << 16);
@@ -408,7 +408,7 @@ void SWFSD_clear_color_ARGB(GLcontext *ctx,
     AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_clear_color_ARGB\n");
+    LibPrintf("SWFSD_clear_color_ARGB\n");
 #endif
 
     c->clearpixel = b | (g << 8) | (r << 16) + (a << 24);
@@ -421,7 +421,7 @@ void SWFSD_clear_color_BGRA(GLcontext *ctx,
     AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_clear_color_BGRA\n");
+    LibPrintf("SWFSD_clear_color_BGRA\n");
 #endif
 
     c->clearpixel = a | (r << 8) | (g << 16) + (b << 24);
@@ -434,7 +434,7 @@ void SWFSD_clear_color_RGBA(GLcontext *ctx,
     AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_clear_color_RGBA\n");
+    LibPrintf("SWFSD_clear_color_RGBA\n");
 #endif
 
     c->clearpixel = a | (b << 8) | (g << 16) + (r << 24);
@@ -448,7 +448,7 @@ void SWFSD_set_color_LUT8(GLcontext *ctx,
 {
     AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_set_color_LUT8: %d %d %d %d\n",r,g,b,a);
+    LibPrintf("SWFSD_set_color_LUT8: \n"); //%d %d %d %d\n",r,g,b,a);
 #endif
     c->pixel = EvalPen(c,r,g,b);
     c->pixelargb[0] = r;
@@ -456,7 +456,7 @@ void SWFSD_set_color_LUT8(GLcontext *ctx,
     c->pixelargb[2] = b;
     c->pixelargb[3] = a;
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_set_color_LUT8: %ld\n",c->pixel);
+    LibPrintf("SWFSD_set_color_LUT8: \n"); // %ld\n",c->pixel);
 #endif
 }
 ;;//
@@ -467,7 +467,7 @@ void SWFSD_set_color_RGB15(GLcontext *ctx,
     AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_set_color_RGB15\n");
+    LibPrintf("SWFSD_set_color_RGB15\n");
 #endif
 
     c->pixel = TC_RGB15(r,g,b);
@@ -480,7 +480,7 @@ void SWFSD_set_color_RGB15PC(GLcontext *ctx,
     AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_set_color_RGB15PC\n");
+    LibPrintf("SWFSD_set_color_RGB15PC\n");
 #endif
 
     c->pixel = TC_RGB15PC(r,g,b);
@@ -493,7 +493,7 @@ void SWFSD_set_color_RGB16(GLcontext *ctx,
     AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_set_color_RGB16\n");
+    LibPrintf("SWFSD_set_color_RGB16\n");
 #endif
 
     c->pixel = TC_RGB16(r,g,b);
@@ -506,7 +506,7 @@ void SWFSD_set_color_RGB16PC(GLcontext *ctx,
     AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_set_color_RGB16PC\n");
+    LibPrintf("SWFSD_set_color_RGB16PC\n");
 #endif
 
     c->pixel = TC_RGB16PC(r,g,b);
@@ -519,7 +519,7 @@ void SWFSD_set_color_BGR15PC(GLcontext *ctx,
     AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_set_color_BGR15PC\n");
+    LibPrintf("SWFSD_set_color_BGR15PC\n");
 #endif
 
     c->pixel = TC_BGR15PC(r,g,b);
@@ -532,7 +532,7 @@ void SWFSD_set_color_BGR16PC(GLcontext *ctx,
     AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_set_color_BGR16PC\n");
+    LibPrintf("SWFSD_set_color_BGR16PC\n");
 #endif
 
     c->pixel = TC_BGR16PC(r,g,b);
@@ -545,7 +545,7 @@ void SWFSD_set_color_RGB(GLcontext *ctx,
     AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_set_color_RGB\n");
+    LibPrintf("SWFSD_set_color_RGB\n");
 #endif
 
     c->pixel = b | (g << 8) | (r << 16);
@@ -558,7 +558,7 @@ void SWFSD_set_color_BGR(GLcontext *ctx,
     AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_set_color_BGR\n");
+    LibPrintf("SWFSD_set_color_BGR\n");
 #endif
 
     c->pixel = r | (g << 8) | (b << 16);
@@ -571,7 +571,7 @@ void SWFSD_set_color_ARGB(GLcontext *ctx,
     AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_set_color_ARGB\n");
+    LibPrintf("SWFSD_set_color_ARGB\n");
 #endif
 
     c->pixel = b | (g << 8) | (r << 16) + (a << 24);
@@ -584,7 +584,7 @@ void SWFSD_set_color_BGRA(GLcontext *ctx,
     AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_set_color_BGRA\n");
+    LibPrintf("SWFSD_set_color_BGRA\n");
 #endif
 
     c->pixel = a | (r << 8) | (g << 16) + (b << 24);
@@ -597,7 +597,7 @@ void SWFSD_set_color_RGBA(GLcontext *ctx,
     AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_set_color_RGBA\n");
+    LibPrintf("SWFSD_set_color_RGBA\n");
 #endif
 
     c->pixel = a | (b << 8) | (g << 16) + (r << 24);
@@ -614,7 +614,7 @@ GLbitfield SWFSD_clear_LUT8(GLcontext *ctx, GLbitfield mask,
     GLboolean masking = GL_FALSE;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_clear_LUT8 %ld\n",c->clearpixel);
+    LibPrintf("SWFSD_clear_LUT8 \n"); //%ld\n",c->clearpixel);
 #endif
 
    if (!(((*(GLuint *)ctx->Color.ColorMask == 0xffffffff) ||
@@ -698,7 +698,7 @@ GLbitfield SWFSD_clear_RGB15(GLcontext *ctx, GLbitfield mask,
     unsigned long color = c->clearpixel;
     GLboolean masking = GL_FALSE;
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_clear_RGB15\n");
+    LibPrintf("SWFSD_clear_RGB15\n");
 #endif
 
    if (!(((*(GLuint *)ctx->Color.ColorMask == 0xffffffff) ||
@@ -739,7 +739,7 @@ GLbitfield SWFSD_clear_RGB15PC(GLcontext *ctx, GLbitfield mask,
     GLboolean masking = GL_FALSE;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_clear_RGB15PC %08lx\n",c->clearpixel);
+    LibPrintf("SWFSD_clear_RGB15PC \n"); //%08lx\n",c->clearpixel);
 #endif
 
    if (!(((*(GLuint *)ctx->Color.ColorMask == 0xffffffff) ||
@@ -781,7 +781,7 @@ GLbitfield SWFSD_clear_RGB16(GLcontext *ctx, GLbitfield mask,
     GLboolean masking = GL_FALSE;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_clear_RGB16\n");
+    LibPrintf("SWFSD_clear_RGB16\n");
 #endif
 
    if (!(((*(GLuint *)ctx->Color.ColorMask == 0xffffffff) ||
@@ -821,7 +821,7 @@ GLbitfield SWFSD_clear_RGB16PC(GLcontext *ctx, GLbitfield mask,
     GLboolean masking = GL_FALSE;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_clear_RGB16PC %08lx\n",c->clearpixel);
+    LibPrintf("SWFSD_clear_RGB16PC \n"); //%08lx\n",c->clearpixel);
 #endif
 
    if (!(((*(GLuint *)ctx->Color.ColorMask == 0xffffffff) ||
@@ -863,7 +863,7 @@ GLbitfield SWFSD_clear_BGR15PC(GLcontext *ctx, GLbitfield mask,
     GLboolean masking = GL_FALSE;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_clear_BGR15PC %08lx\n",c->clearpixel);
+    LibPrintf("SWFSD_clear_BGR15PC \n"); //%08lx\n",c->clearpixel);
 #endif
 
    if (!(((*(GLuint *)ctx->Color.ColorMask == 0xffffffff) ||
@@ -905,7 +905,7 @@ GLbitfield SWFSD_clear_BGR16PC(GLcontext *ctx, GLbitfield mask,
     GLboolean masking = GL_FALSE;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_clear_BGR16PC %08lx\n",c->clearpixel);
+    LibPrintf("SWFSD_clear_BGR16PC \n"); // %08lx\n",c->clearpixel);
 #endif
 
    if (!(((*(GLuint *)ctx->Color.ColorMask == 0xffffffff) ||
@@ -947,7 +947,7 @@ GLbitfield SWFSD_clear_RGB(GLcontext *ctx, GLbitfield mask,
     GLboolean masking = GL_FALSE;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_clear_RGB\n");
+    LibPrintf("SWFSD_clear_RGB\n");
 #endif
 
    if (!(((*(GLuint *)ctx->Color.ColorMask == 0xffffffff) ||
@@ -982,7 +982,7 @@ GLbitfield SWFSD_clear_BGR(GLcontext *ctx, GLbitfield mask,
     GLboolean masking = GL_FALSE;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_clear_BGR\n");
+    LibPrintf("SWFSD_clear_BGR\n");
 #endif
 
    if (!(((*(GLuint *)ctx->Color.ColorMask == 0xffffffff) ||
@@ -1022,7 +1022,7 @@ GLbitfield SWFSD_clear_ARGB(GLcontext *ctx, GLbitfield mask,
     GLboolean masking = GL_FALSE;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_clear_ARGB\n");
+    LibPrintf("SWFSD_clear_ARGB\n");
 #endif
 
    if (!(((*(GLuint *)ctx->Color.ColorMask == 0xffffffff) ||
@@ -1057,7 +1057,7 @@ GLbitfield SWFSD_clear_BGRA(GLcontext *ctx, GLbitfield mask,
     GLboolean masking = GL_FALSE;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_clear_BGRA\n");
+    LibPrintf("SWFSD_clear_BGRA\n");
 #endif
 
    if (!(((*(GLuint *)ctx->Color.ColorMask == 0xffffffff) ||
@@ -1099,7 +1099,7 @@ GLbitfield SWFSD_clear_RGBA(GLcontext *ctx, GLbitfield mask,
     GLboolean masking = GL_FALSE;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_clear_RGBA\n");
+    LibPrintf("SWFSD_clear_RGBA\n");
 #endif
 
    if (!(((*(GLuint *)ctx->Color.ColorMask == 0xffffffff) ||
@@ -1145,7 +1145,7 @@ void SWFSD_write_color_span_LUT8(const GLcontext *ctx, GLuint n, GLint x, GLint 
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_color_span_LUT8\n");
+    LibPrintf("SWFSD_write_color_span_LUT8\n");
 #endif
 
     if (mask)
@@ -1204,7 +1204,7 @@ void SWFSD_write_color_span_RGB15(const GLcontext *ctx, GLuint n, GLint x, GLint
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_color_span_RGB15\n");
+    LibPrintf("SWFSD_write_color_span_RGB15\n");
 #endif
 
     if (mask)
@@ -1254,7 +1254,7 @@ void SWFSD_write_color_span_RGB15PC(const GLcontext *ctx, GLuint n, GLint x, GLi
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_color_span_RGB15PC\n");
+    LibPrintf("SWFSD_write_color_span_RGB15PC\n");
 #endif
 
     if (mask)
@@ -1304,7 +1304,7 @@ void SWFSD_write_color_span_RGB16(const GLcontext *ctx, GLuint n, GLint x, GLint
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_color_span_RGB16\n");
+    LibPrintf("SWFSD_write_color_span_RGB16\n");
 #endif
 
     if (mask)
@@ -1354,7 +1354,7 @@ void SWFSD_write_color_span_RGB16PC(const GLcontext *ctx, GLuint n, GLint x, GLi
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_color_span_RGB16PC\n");
+    LibPrintf("SWFSD_write_color_span_RGB16PC\n");
 #endif
 
     if (mask)
@@ -1403,7 +1403,7 @@ void SWFSD_write_color_span_BGR15PC(const GLcontext *ctx, GLuint n, GLint x, GLi
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_color_span_BGR15PC\n");
+    LibPrintf("SWFSD_write_color_span_BGR15PC\n");
 #endif
 
     if (mask)
@@ -1451,7 +1451,7 @@ void SWFSD_write_color_span_BGR16PC(const GLcontext *ctx, GLuint n, GLint x, GLi
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_color_span_BGR16PC\n");
+    LibPrintf("SWFSD_write_color_span_BGR16PC\n");
 #endif
 
     if (mask)
@@ -1500,7 +1500,7 @@ void SWFSD_write_color_span_RGB(const GLcontext *ctx, GLuint n, GLint x, GLint y
 
 REM(SWFSD_write_color_span_RGB);
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_color_span_RGB\n");
+    LibPrintf("SWFSD_write_color_span_RGB\n");
 #endif
 
     if (mask)
@@ -1574,7 +1574,7 @@ void SWFSD_write_color_span_BGR(const GLcontext *ctx, GLuint n, GLint x, GLint y
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_color_span_BGR\n");
+    LibPrintf("SWFSD_write_color_span_BGR\n");
 #endif
 
     if (mask)
@@ -1649,7 +1649,7 @@ void SWFSD_write_color_span_ARGB(const GLcontext *ctx, GLuint n, GLint x, GLint 
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ /*printf("SWFSD_write_color_span_ARGB\n");*/
+    LibPrintf("SWFSD_write_color_span_ARGB\n");
 #endif
 
     if (mask)
@@ -1685,7 +1685,7 @@ void SWFSD_write_color_span_BGRA(const GLcontext *ctx, GLuint n, GLint x, GLint 
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_color_span_BGRA\n");
+    LibPrintf("SWFSD_write_color_span_BGRA\n");
 #endif
 
     if (mask)
@@ -1720,7 +1720,7 @@ void SWFSD_write_color_span_RGBA(const GLcontext *ctx, GLuint n, GLint x, GLint 
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_color_span_RGBA\n");
+    LibPrintf("SWFSD_write_color_span_RGBA\n");
 #endif
 
     if (mask)
@@ -1754,7 +1754,7 @@ void SWFSD_write_color_span3_LUT8(const GLcontext *ctx, GLuint n, GLint x, GLint
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_color_span3_LUT8\n");
+    LibPrintf("SWFSD_write_color_span3_LUT8\n");
 #endif
 
     if (mask)
@@ -1811,7 +1811,7 @@ void SWFSD_write_color_span3_RGB15(const GLcontext *ctx, GLuint n, GLint x, GLin
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_color_span3_RGB15\n");
+    LibPrintf("SWFSD_write_color_span3_RGB15\n");
 #endif
 
     if (mask)
@@ -1861,7 +1861,7 @@ void SWFSD_write_color_span3_RGB15PC(const GLcontext *ctx, GLuint n, GLint x, GL
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_color_span3_RGB15PC\n");
+    LibPrintf("SWFSD_write_color_span3_RGB15PC\n");
 #endif
 
     if (mask)
@@ -1911,7 +1911,7 @@ void SWFSD_write_color_span3_RGB16(const GLcontext *ctx, GLuint n, GLint x, GLin
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_color_span3_RGB16\n");
+    LibPrintf("SWFSD_write_color_span3_RGB16\n");
 #endif
 
     if (mask)
@@ -1961,7 +1961,7 @@ void SWFSD_write_color_span3_RGB16PC(const GLcontext *ctx, GLuint n, GLint x, GL
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_color_span3_RGB16PC\n");
+    LibPrintf("SWFSD_write_color_span3_RGB16PC\n");
 #endif
 
     if (mask)
@@ -2010,7 +2010,7 @@ void SWFSD_write_color_span3_BGR15PC(const GLcontext *ctx, GLuint n, GLint x, GL
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_color_span3_BGR15PC\n");
+    LibPrintf("SWFSD_write_color_span3_BGR15PC\n");
 #endif
 
     if (mask)
@@ -2058,7 +2058,7 @@ void SWFSD_write_color_span3_BGR16PC(const GLcontext *ctx, GLuint n, GLint x, GL
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_color_span3_BGR16PC\n");
+    LibPrintf("SWFSD_write_color_span3_BGR16PC\n");
 #endif
 
     if (mask)
@@ -2106,7 +2106,7 @@ void SWFSD_write_color_span3_RGB(const GLcontext *ctx, GLuint n, GLint x, GLint 
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_color_span3_RGB\n");
+    LibPrintf("SWFSD_write_color_span3_RGB\n");
 #endif
 
     if (mask)
@@ -2180,7 +2180,7 @@ void SWFSD_write_color_span3_BGR(const GLcontext *ctx, GLuint n, GLint x, GLint 
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_color_span3_BGR\n");
+    LibPrintf("SWFSD_write_color_span3_BGR\n");
 #endif
 
     if (mask)
@@ -2255,7 +2255,7 @@ void SWFSD_write_color_span3_ARGB(const GLcontext *ctx, GLuint n, GLint x, GLint
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_color_span3_ARGB\n");
+    LibPrintf("SWFSD_write_color_span3_ARGB\n");
 #endif
 
     if (mask)
@@ -2291,7 +2291,7 @@ void SWFSD_write_color_span3_BGRA(const GLcontext *ctx, GLuint n, GLint x, GLint
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_color_span3_BGRA\n");
+    LibPrintf("SWFSD_write_color_span3_BGRA\n");
 #endif
 
     if (mask)
@@ -2326,7 +2326,7 @@ void SWFSD_write_color_span3_RGBA(const GLcontext *ctx, GLuint n, GLint x, GLint
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_color_span3_RGBA\n");
+    LibPrintf("SWFSD_write_color_span3_RGBA\n");
 #endif
 
     if (mask)
@@ -2362,7 +2362,7 @@ void SWFSD_write_monorgba_span_LUT8(const GLcontext *ctx, GLuint n, GLint x, GLi
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_monorgba_span_LUT8\n");
+    LibPrintf("SWFSD_write_monorgba_span_LUT8\n");
 #endif
 
     GetPensDithered((int *)c->ColorTable,bptr,c->pixelargb[0],c->pixelargb[1],c->pixelargb[2],x,y);
@@ -2409,7 +2409,7 @@ void SWFSD_write_monoci_span_LUT8(const GLcontext *ctx, GLuint n, GLint x, GLint
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_monoci_span_LUT8 %ld\n",c->pixel);
+    LibPrintf("SWFSD_write_monoci_span_LUT8 \n"); // %ld\n",c->pixel);
 #endif
 
     if (mask)
@@ -2457,7 +2457,7 @@ void SWFSD_write_mono_span_RGB16(const GLcontext *ctx, GLuint n, GLint x, GLint 
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_mono_span_RGB16 %ld\n",c->pixel);
+    LibPrintf("SWFSD_write_mono_span_RGB16 \n"); // %ld\n",c->pixel);
 #endif
 
     if (mask)
@@ -2507,7 +2507,7 @@ void SWFSD_write_mono_span_RGB(const GLcontext *ctx, GLuint n, GLint x, GLint y,
     colptr++;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_mono_span_RGB\n");
+    LibPrintf("SWFSD_write_mono_span_RGB\n");
 #endif
 
     if (mask)
@@ -2577,7 +2577,7 @@ void SWFSD_write_mono_span_ARGB(const GLcontext *ctx, GLuint n, GLint x, GLint y
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_mono_span_ARGB\n");
+    LibPrintf("SWFSD_write_mono_span_ARGB\n");
 #endif
 
     if (mask)
@@ -2613,7 +2613,7 @@ void SWFSD_write_color_pixels_LUT8(const GLcontext *ctx, GLuint n, const GLint x
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_color_pixels_LUT8\n");
+    LibPrintf("SWFSD_write_color_pixels_LUT8\n");
 #endif
 
     for (i=0;i<n;i++)
@@ -2640,7 +2640,7 @@ void SWFSD_write_color_pixels_RGB15(const GLcontext *ctx, GLuint n, const GLint 
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_color_pixels_RGB15\n");
+    LibPrintf("SWFSD_write_color_pixels_RGB15\n");
 #endif
 
     for (i=0;i<n;i++)
@@ -2667,7 +2667,7 @@ void SWFSD_write_color_pixels_RGB15PC(const GLcontext *ctx, GLuint n, const GLin
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_color_pixels_RGB15PC\n");
+    LibPrintf("SWFSD_write_color_pixels_RGB15PC\n");
 #endif
 
     for (i=0;i<n;i++)
@@ -2694,7 +2694,7 @@ void SWFSD_write_color_pixels_RGB16(const GLcontext *ctx, GLuint n, const GLint 
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_color_pixels_RGB16\n");
+    LibPrintf("SWFSD_write_color_pixels_RGB16\n");
 #endif
 
     for (i=0;i<n;i++)
@@ -2721,7 +2721,7 @@ void SWFSD_write_color_pixels_RGB16PC(const GLcontext *ctx, GLuint n, const GLin
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_color_pixels_RGB16PC\n");
+    LibPrintf("SWFSD_write_color_pixels_RGB16PC\n");
 #endif
 
     for (i=0;i<n;i++)
@@ -2747,7 +2747,7 @@ void SWFSD_write_color_pixels_BGR15PC(const GLcontext *ctx, GLuint n, const GLin
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_color_pixels_BGR15PC\n");
+    LibPrintf("SWFSD_write_color_pixels_BGR15PC\n");
 #endif
 
     for (i=0;i<n;i++)
@@ -2772,7 +2772,7 @@ void SWFSD_write_color_pixels_BGR16PC(const GLcontext *ctx, GLuint n, const GLin
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_color_pixels_BGR16PC\n");
+    LibPrintf("SWFSD_write_color_pixels_BGR16PC\n");
 #endif
 
     for (i=0;i<n;i++)
@@ -2797,7 +2797,7 @@ void SWFSD_write_color_pixels_RGB(const GLcontext *ctx, GLuint n, const GLint x[
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_color_pixels_RGB\n");
+    LibPrintf("SWFSD_write_color_pixels_RGB\n");
 #endif
 
     for (i=0;i<n;i++)
@@ -2826,7 +2826,7 @@ void SWFSD_write_color_pixels_BGR(const GLcontext *ctx, GLuint n, const GLint x[
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_color_pixels_BGR\n");
+    LibPrintf("SWFSD_write_color_pixels_BGR\n");
 #endif
 
     for (i=0;i<n;i++)
@@ -2856,7 +2856,7 @@ void SWFSD_write_color_pixels_ARGB(const GLcontext *ctx, GLuint n, const GLint x
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_color_pixels_ARGB\n");
+    LibPrintf("SWFSD_write_color_pixels_ARGB\n");
 #endif
 
     for (i=0;i<n;i++)
@@ -2883,7 +2883,7 @@ void SWFSD_write_color_pixels_BGRA(const GLcontext *ctx, GLuint n, const GLint x
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_color_pixels_BGRA\n");
+    LibPrintf("SWFSD_write_color_pixels_BGRA\n");
 #endif
 
     for (i=0;i<n;i++)
@@ -2909,7 +2909,7 @@ void SWFSD_write_color_pixels_RGBA(const GLcontext *ctx, GLuint n, const GLint x
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_color_pixels_RGBA\n");
+    LibPrintf("SWFSD_write_color_pixels_RGBA\n");
 #endif
 
     for (i=0;i<n;i++)
@@ -2938,7 +2938,7 @@ void SWFSD_write_monorgba_pixels_LUT8(const GLcontext *ctx, GLuint n, const GLin
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_monorgba_pixels_LUT8\n");
+    LibPrintf("SWFSD_write_monorgba_pixels_LUT8\n");
 #endif
 
     for (i=0;i<n;i++)
@@ -2964,7 +2964,7 @@ void SWFSD_write_monoci_pixels_LUT8(const GLcontext *ctx, GLuint n, const GLint 
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_monoci_pixels_LUT8: %ld\n",(unsigned long)color);
+    LibPrintf("SWFSD_write_monoci_pixels_LUT8: \n"); //%ld\n",(unsigned long)color);
 #endif
 
     for (i=0;i<n;i++)
@@ -2990,7 +2990,7 @@ void SWFSD_write_mono_pixels_RGB16(const GLcontext *ctx, GLuint n, const GLint x
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_mono_pixels_RGB16\n");
+    LibPrintf("SWFSD_write_mono_pixels_RGB16\n");
 #endif
 
     for (i=0;i<n;i++)
@@ -3017,7 +3017,7 @@ void SWFSD_write_mono_pixels_RGB(const GLcontext *ctx, GLuint n, const GLint x[]
     colptr++;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_mono_pixels_RGB\n");
+    LibPrintf("SWFSD_write_mono_pixels_RGB\n");
 #endif
 
     for (i=0;i<n;i++)
@@ -3047,7 +3047,7 @@ void SWFSD_write_mono_pixels_ARGB(const GLcontext *ctx, GLuint n, const GLint x[
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_mono_pixels_ARGB\n");
+    LibPrintf("SWFSD_write_mono_pixels_ARGB\n");
 #endif
 
     for (i=0;i<n;i++)
@@ -3075,7 +3075,7 @@ void SWFSD_write_index_span32_LUT8(const GLcontext *ctx, GLuint n, GLint x, GLin
     unsigned char* pc = c->penconv;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_index_span32_LUT8\n");
+    LibPrintf("SWFSD_write_index_span32_LUT8\n");
 #endif
 
     if (mask)
@@ -3126,7 +3126,7 @@ void SWFSD_write_index_span32_RGB16(const GLcontext *ctx, GLuint n, GLint x, GLi
     long* coltab = c->ColorTable2;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_index_span32_RGB16\n");
+    LibPrintf("SWFSD_write_index_span32_RGB16\n");
 #endif
 
     if (mask)
@@ -3177,7 +3177,7 @@ void SWFSD_write_index_span32_RGB(const GLcontext *ctx, GLuint n, GLint x, GLint
     colptr++;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_index_span32_RGB\n");
+    LibPrintf("SWFSD_write_index_span32_RGB\n");
 #endif
 
     if (mask)
@@ -3255,7 +3255,7 @@ void SWFSD_write_index_span32_ARGB(const GLcontext *ctx, GLuint n, GLint x, GLin
     long* coltab = c->ColorTable2;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_index_span32_ARGB\n");
+    LibPrintf("SWFSD_write_index_span32_ARGB\n");
 #endif
 
     if (mask)
@@ -3291,7 +3291,7 @@ void SWFSD_write_index_span_LUT8(const GLcontext *ctx, GLuint n, GLint x, GLint 
     unsigned char* pc = c->penconv;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_index_span_LUT8\n");
+    LibPrintf("SWFSD_write_index_span_LUT8\n");
 #endif
 
     if (mask)
@@ -3342,7 +3342,7 @@ void SWFSD_write_index_span_RGB16(const GLcontext *ctx, GLuint n, GLint x, GLint
     long* coltab = c->ColorTable2;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_index_span_RGB16\n");
+    LibPrintf("SWFSD_write_index_span_RGB16\n");
 #endif
 
     if (mask)
@@ -3393,7 +3393,7 @@ void SWFSD_write_index_span_RGB(const GLcontext *ctx, GLuint n, GLint x, GLint y
     colptr++;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_index_span_RGB\n");
+    LibPrintf("SWFSD_write_index_span_RGB\n");
 #endif
 
     if (mask)
@@ -3471,7 +3471,7 @@ void SWFSD_write_index_span_ARGB(const GLcontext *ctx, GLuint n, GLint x, GLint 
     long* coltab = c->ColorTable2;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_index_span_ARGB\n");
+    LibPrintf("SWFSD_write_index_span_ARGB\n");
 #endif
 
     if (mask)
@@ -3510,7 +3510,7 @@ void SWFSD_write_index_pixels_LUT8(const GLcontext *ctx, GLuint n, const GLint x
     int z;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_index_pixels_LUT8\n");
+    LibPrintf("SWFSD_write_index_pixels_LUT8\n");
 #endif
 
     for (z=0;z<n;z++)
@@ -3538,7 +3538,7 @@ void SWFSD_write_index_pixels_RGB16(const GLcontext *ctx, GLuint n, const GLint 
     int z;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_index_pixels_RGB16\n");
+    LibPrintf("SWFSD_write_index_pixels_RGB16\n");
 #endif
 
     for (z=0;z<n;z++)
@@ -3568,7 +3568,7 @@ void SWFSD_write_index_pixels_RGB(const GLcontext *ctx, GLuint n, const GLint x[
     colptr++;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_index_pixels_RGB16\n");
+    LibPrintf("SWFSD_write_index_pixels_RGB16\n");
 #endif
 
     for (z=0;z<n;z++)
@@ -3601,7 +3601,7 @@ void SWFSD_write_index_pixels_ARGB(const GLcontext *ctx, GLuint n, const GLint x
     int z;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_write_index_pixels_ARGB\n");
+    LibPrintf("SWFSD_write_index_pixels_ARGB\n");
 #endif
 
     for (z=0;z<n;z++)
@@ -3633,7 +3633,7 @@ void SWFSD_read_color_span_LUT8(const GLcontext *ctx, GLuint n, GLint x, GLint y
     int n2 = (n & 0x03);
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_color_span_LUT8\n");
+    LibPrintf("SWFSD_read_color_span_LUT8\n");
 #endif
 
     for (i=0;i<n1;i++)
@@ -3672,7 +3672,7 @@ void SWFSD_read_color_span_RGB15(const GLcontext *ctx, GLuint n, GLint x, GLint 
     int n2 = (n & 0x01);
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_color_span_RGB15\n");
+    LibPrintf("SWFSD_read_color_span_RGB15\n");
 #endif
 
     for (i=0;i<n1;i++)
@@ -3719,7 +3719,7 @@ void SWFSD_read_color_span_RGB15PC(const GLcontext *ctx, GLuint n, GLint x, GLin
     int n2 = (n & 0x01);
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_color_span_RGB15PC\n");
+    LibPrintf("SWFSD_read_color_span_RGB15PC\n");
 #endif
 
     for (i=0;i<n1;i++)
@@ -3766,7 +3766,7 @@ void SWFSD_read_color_span_RGB16(const GLcontext *ctx, GLuint n, GLint x, GLint 
     int n2 = (n & 0x01);
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_color_span_RGB16\n");
+    LibPrintf("SWFSD_read_color_span_RGB16\n");
 #endif
 
     for (i=0;i<n1;i++)
@@ -3813,7 +3813,7 @@ void SWFSD_read_color_span_RGB16PC(const GLcontext *ctx, GLuint n, GLint x, GLin
     int n2 = (n & 0x01);
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_color_span_RGB16PC\n");
+    LibPrintf("SWFSD_read_color_span_RGB16PC\n");
 #endif
 
     for (i=0;i<n1;i++)
@@ -3859,7 +3859,7 @@ void SWFSD_read_color_span_BGR15PC(const GLcontext *ctx, GLuint n, GLint x, GLin
     int n2 = (n & 0x01);
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_color_span_BGR15PC\n");
+    LibPrintf("SWFSD_read_color_span_BGR15PC\n");
 #endif
 
     for (i=0;i<n1;i++)
@@ -3904,7 +3904,7 @@ void SWFSD_read_color_span_BGR16PC(const GLcontext *ctx, GLuint n, GLint x, GLin
     int n2 = (n & 0x01);
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_color_span_BGR16PC\n");
+    LibPrintf("SWFSD_read_color_span_BGR16PC\n");
 #endif
 
     for (i=0;i<n1;i++)
@@ -3945,7 +3945,7 @@ void SWFSD_read_color_span_RGB(const GLcontext *ctx, GLuint n, GLint x, GLint y,
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_color_span_RGB\n");
+    LibPrintf("SWFSD_read_color_span_RGB\n");
 #endif
 
     char tempbuffer[12];
@@ -4007,7 +4007,7 @@ void SWFSD_read_color_span_BGR(const GLcontext *ctx, GLuint n, GLint x, GLint y,
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_color_span_BGR\n");
+    LibPrintf("SWFSD_read_color_span_BGR\n");
 #endif
 
     char tempbuffer[12];
@@ -4071,7 +4071,7 @@ void SWFSD_read_color_span_ARGB(const GLcontext *ctx, GLuint n, GLint x, GLint y
     unsigned long color;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_color_span_ARGB\n");
+    LibPrintf("SWFSD_read_color_span_ARGB\n");
 #endif
 
     for (i=0;i<n;i++)
@@ -4098,7 +4098,7 @@ void SWFSD_read_color_span_BGRA(const GLcontext *ctx, GLuint n, GLint x, GLint y
     unsigned long color;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_color_span_BGRA\n");
+    LibPrintf("SWFSD_read_color_span_BGRA\n");
 #endif
 
     for (i=0;i<n;i++)
@@ -4123,7 +4123,7 @@ void SWFSD_read_color_span_RGBA(const GLcontext *ctx, GLuint n, GLint x, GLint y
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_color_span_RGBA\n");
+    LibPrintf("SWFSD_read_color_span_RGBA\n");
 #endif
 
     for (i=0;i<n;i++)
@@ -4149,7 +4149,7 @@ void SWFSD_read_index_span_LUT8(const GLcontext *ctx, GLuint n, GLint x, GLint y
     int n2 = (n & 0x03);
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_index_span_LUT8\n");
+    LibPrintf("SWFSD_read_index_span_LUT8\n");
 #endif
 
     for (z=0;z<n1;z++)
@@ -4182,7 +4182,7 @@ void SWFSD_read_index_span_RGB15(const GLcontext *ctx, GLuint n, GLint x, GLint 
     int n2 = (n & 0x01);
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_index_span_RGB15\n");
+    LibPrintf("SWFSD_read_index_span_RGB15\n");
 #endif
 
     for (z=0;z<n1;z++)
@@ -4227,7 +4227,7 @@ void SWFSD_read_index_span_RGB15PC(const GLcontext *ctx, GLuint n, GLint x, GLin
     int n2 = (n & 0x01);
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_index_span_RGB15PC\n");
+    LibPrintf("SWFSD_read_index_span_RGB15PC\n");
 #endif
 
     for (z=0;z<n1;z++)
@@ -4272,7 +4272,7 @@ void SWFSD_read_index_span_RGB16(const GLcontext *ctx, GLuint n, GLint x, GLint 
     int n2 = (n & 0x01);
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_index_span_RGB16\n");
+    LibPrintf("SWFSD_read_index_span_RGB16\n");
 #endif
 
     for (z=0;z<n1;z++)
@@ -4317,7 +4317,7 @@ void SWFSD_read_index_span_RGB16PC(const GLcontext *ctx, GLuint n, GLint x, GLin
     int n2 = (n & 0x01);
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_index_span_RGB16PC\n");
+    LibPrintf("SWFSD_read_index_span_RGB16PC\n");
 #endif
 
     for (z=0;z<n1;z++)
@@ -4362,7 +4362,7 @@ void SWFSD_read_index_span_BGR15PC(const GLcontext *ctx, GLuint n, GLint x, GLin
     int n2 = (n & 0x01);
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_index_span_BGR15PC\n");
+    LibPrintf("SWFSD_read_index_span_BGR15PC\n");
 #endif
 
     for (z=0;z<n1;z++)
@@ -4407,7 +4407,7 @@ void SWFSD_read_index_span_BGR16PC(const GLcontext *ctx, GLuint n, GLint x, GLin
     int n2 = (n & 0x01);
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_index_span_BGR16PC\n");
+    LibPrintf("SWFSD_read_index_span_BGR16PC\n");
 #endif
 
     for (z=0;z<n1;z++)
@@ -4448,7 +4448,7 @@ void SWFSD_read_index_span_RGB(const GLcontext *ctx, GLuint n, GLint x, GLint y,
     int z;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_index_span_RGB\n");
+    LibPrintf("SWFSD_read_index_span_RGB\n");
 #endif
 
     char tempbuffer[12];
@@ -4516,7 +4516,7 @@ void SWFSD_read_index_span_BGR(const GLcontext *ctx, GLuint n, GLint x, GLint y,
     int z;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_index_span_BGR\n");
+    LibPrintf("SWFSD_read_index_span_BGR\n");
 #endif
 
     char tempbuffer[12];
@@ -4585,7 +4585,7 @@ void SWFSD_read_index_span_ARGB(const GLcontext *ctx, GLuint n, GLint x, GLint y
     int z;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_index_span_ARGB\n");
+    LibPrintf("SWFSD_read_index_span_ARGB\n");
 #endif
 
     for (z=0;z<n;z++)
@@ -4610,7 +4610,7 @@ void SWFSD_read_index_span_BGRA(const GLcontext *ctx, GLuint n, GLint x, GLint y
     int z;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_index_span_ARGB\n");
+    LibPrintf("SWFSD_read_index_span_ARGB\n");
 #endif
 
     for (z=0;z<n;z++)
@@ -4635,7 +4635,7 @@ void SWFSD_read_index_span_RGBA(const GLcontext *ctx, GLuint n, GLint x, GLint y
     int z;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_index_span_RGBA\n");
+    LibPrintf("SWFSD_read_index_span_RGBA\n");
 #endif
 
     for (z=0;z<n;z++)
@@ -4665,7 +4665,7 @@ void SWFSD_read_color_pixels_LUT8(const GLcontext *ctx, GLuint n, const GLint x[
     unsigned long color;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_color_pixels_LUT8\n");
+    LibPrintf("SWFSD_read_color_pixels_LUT8\n");
 #endif
 
     for (i=0;i<n;i++)
@@ -4695,7 +4695,7 @@ void SWFSD_read_color_pixels_RGB15(const GLcontext *ctx, GLuint n, const GLint x
     unsigned short color;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_color_pixels_RGB15\n");
+    LibPrintf("SWFSD_read_color_pixels_RGB15\n");
 #endif
 
     for (i=0;i<n;i++)
@@ -4728,7 +4728,7 @@ void SWFSD_read_color_pixels_RGB15PC(const GLcontext *ctx, GLuint n, const GLint
     unsigned short color;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_color_pixels_RGB15PC\n");
+    LibPrintf("SWFSD_read_color_pixels_RGB15PC\n");
 #endif
 
     for (i=0;i<n;i++)
@@ -4761,7 +4761,7 @@ void SWFSD_read_color_pixels_RGB16(const GLcontext *ctx, GLuint n, const GLint x
     unsigned short color;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_color_pixels_RGB16\n");
+    LibPrintf("SWFSD_read_color_pixels_RGB16\n");
 #endif
 
     for (i=0;i<n;i++)
@@ -4794,7 +4794,7 @@ void SWFSD_read_color_pixels_RGB16PC(const GLcontext *ctx, GLuint n, const GLint
     unsigned short color;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_color_pixels_RGB16PC\n");
+    LibPrintf("SWFSD_read_color_pixels_RGB16PC\n");
 #endif
 
     for (i=0;i<n;i++)
@@ -4826,7 +4826,7 @@ void SWFSD_read_color_pixels_BGR15PC(const GLcontext *ctx, GLuint n, const GLint
     unsigned short color;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_color_pixels_BGR15PC\n");
+    LibPrintf("SWFSD_read_color_pixels_BGR15PC\n");
 #endif
 
     for (i=0;i<n;i++)
@@ -4857,7 +4857,7 @@ void SWFSD_read_color_pixels_BGR16PC(const GLcontext *ctx, GLuint n, const GLint
     unsigned short color;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_color_pixels_BGR16PC\n");
+    LibPrintf("SWFSD_read_color_pixels_BGR16PC\n");
 #endif
 
     for (i=0;i<n;i++)
@@ -4887,7 +4887,7 @@ void SWFSD_read_color_pixels_RGB(const GLcontext *ctx, GLuint n, const GLint x[]
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_color_pixels_RGB\n");
+    LibPrintf("SWFSD_read_color_pixels_RGB\n");
 #endif
 
     for (i=0;i<n;i++)
@@ -4917,7 +4917,7 @@ void SWFSD_read_color_pixels_BGR(const GLcontext *ctx, GLuint n, const GLint x[]
     int i;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_color_pixels_BGR\n");
+    LibPrintf("SWFSD_read_color_pixels_BGR\n");
 #endif
 
     for (i=0;i<n;i++)
@@ -4949,7 +4949,7 @@ void SWFSD_read_color_pixels_ARGB(const GLcontext *ctx, GLuint n, const GLint x[
     unsigned long color;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_color_pixels_ARGB\n");
+    LibPrintf("SWFSD_read_color_pixels_ARGB\n");
 #endif
 
     for (i=0;i<n;i++)
@@ -4982,7 +4982,7 @@ void SWFSD_read_color_pixels_BGRA(const GLcontext *ctx, GLuint n, const GLint x[
     unsigned long color;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_color_pixels_BGRA\n");
+    LibPrintf("SWFSD_read_color_pixels_BGRA\n");
 #endif
 
     for (i=0;i<n;i++)
@@ -5014,7 +5014,7 @@ void SWFSD_read_color_pixels_RGBA(const GLcontext *ctx, GLuint n, const GLint x[
     unsigned long color;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_color_pixels_RGBA\n");
+    LibPrintf("SWFSD_read_color_pixels_RGBA\n");
 #endif
 
     for (i=0;i<n;i++)
@@ -5046,7 +5046,7 @@ void SWFSD_read_index_pixels_LUT8(const GLcontext *ctx,GLuint n, const GLint x[]
     int z;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_index_pixels_LUT8\n");
+    LibPrintf("SWFSD_read_index_pixels_LUT8\n");
 #endif
 
     for (z=0;z<n;z++)
@@ -5072,7 +5072,7 @@ void SWFSD_read_index_pixels_RGB15(const GLcontext *ctx,GLuint n, const GLint x[
     unsigned long color;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_index_pixels_RGB15\n");
+    LibPrintf("SWFSD_read_index_pixels_RGB15\n");
 #endif
 
     for (z=0;z<n;z++)
@@ -5104,7 +5104,7 @@ void SWFSD_read_index_pixels_RGB15PC(const GLcontext *ctx,GLuint n, const GLint 
     unsigned long color;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_index_pixels_RGB15PC\n");
+    LibPrintf("SWFSD_read_index_pixels_RGB15PC\n");
 #endif
 
     for (z=0;z<n;z++)
@@ -5136,7 +5136,7 @@ void SWFSD_read_index_pixels_RGB16(const GLcontext *ctx,GLuint n, const GLint x[
     unsigned long color;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_index_pixels_RGB16\n");
+    LibPrintf("SWFSD_read_index_pixels_RGB16\n");
 #endif
 
     for (z=0;z<n;z++)
@@ -5168,7 +5168,7 @@ void SWFSD_read_index_pixels_RGB16PC(const GLcontext *ctx,GLuint n, const GLint 
     unsigned long color;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_index_pixels_RGB16PC\n");
+    LibPrintf("SWFSD_read_index_pixels_RGB16PC\n");
 #endif
 
     for (z=0;z<n;z++)
@@ -5200,7 +5200,7 @@ void SWFSD_read_index_pixels_BGR15PC(const GLcontext *ctx,GLuint n, const GLint 
     unsigned long color;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_index_pixels_BGR15PC\n");
+    LibPrintf("SWFSD_read_index_pixels_BGR15PC\n");
 #endif
 
     for (z=0;z<n;z++)
@@ -5232,7 +5232,7 @@ void SWFSD_read_index_pixels_BGR16PC(const GLcontext *ctx,GLuint n, const GLint 
     unsigned long color;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_index_pixels_BGR16PC\n");
+    LibPrintf("SWFSD_read_index_pixels_BGR16PC\n");
 #endif
 
     for (z=0;z<n;z++)
@@ -5263,7 +5263,7 @@ void SWFSD_read_index_pixels_RGB(const GLcontext *ctx,GLuint n, const GLint x[],
     int z;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_index_pixels_RGB\n");
+    LibPrintf("SWFSD_read_index_pixels_RGB\n");
 #endif
 
     for (z=0;z<n;z++)
@@ -5294,7 +5294,7 @@ void SWFSD_read_index_pixels_BGR(const GLcontext *ctx,GLuint n, const GLint x[],
     int z;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_index_pixels_BGR\n");
+    LibPrintf("SWFSD_read_index_pixels_BGR\n");
 #endif
 
     for (z=0;z<n;z++)
@@ -5326,7 +5326,7 @@ void SWFSD_read_index_pixels_ARGB(const GLcontext *ctx,GLuint n, const GLint x[]
     unsigned long color;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_index_pixels_ARGB\n");
+    LibPrintf("SWFSD_read_index_pixels_ARGB\n");
 #endif
 
     for (z=0;z<n;z++)
@@ -5358,7 +5358,7 @@ void SWFSD_read_index_pixels_BGRA(const GLcontext *ctx,GLuint n, const GLint x[]
     unsigned long color;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_index_pixels_BGRA\n");
+    LibPrintf("SWFSD_read_index_pixels_BGRA\n");
 #endif
 
     for (z=0;z<n;z++)
@@ -5390,7 +5390,7 @@ void SWFSD_read_index_pixels_RGBA(const GLcontext *ctx,GLuint n, const GLint x[]
     unsigned long color;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWFSD_read_index_pixels_RGBA\n");
+    LibPrintf("SWFSD_read_index_pixels_RGBA\n");
 #endif
 
     for (z=0;z<n;z++)
@@ -5425,6 +5425,10 @@ void SWFSDriver_flush( GLcontext *ctx )
 {
     struct BitMap* bm;
     AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
+
+#ifdef DBG
+    LibPrintf("SWFSDriver_flush\n");
+#endif
 
     if (c->flags & FLAG_TWOBUFFERS)
     {
@@ -5699,7 +5703,7 @@ void SWFSDriver_DD_pointers( GLcontext *ctx )
    AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
 
 #ifdef DBG
-   /*LibPrintf*/ printf("SWFSDriver_DD_pointers\n");
+   LibPrintf("SWFSDriver_DD_pointers\n");
 #endif
 
    ctx->Driver.RendererString = SWFSDriver_rendererstring;
@@ -5790,6 +5794,10 @@ void SWFSDriver_SwapBuffer_FS(struct amigamesa_context *c)
 	struct PPCArgs CallArgs;
 #endif
 
+#ifdef DBG
+    LibPrintf("SWFSDriver_SwapBuffer_FS\n");
+#endif
+
 #ifndef __PPC__
 	c->sbuf2->sb_DBufInfo->dbi_SafeMessage.mn_ReplyPort = c->dbport;
 	while (!(ChangeScreenBuffer(c->Screen,c->sbuf2)))
@@ -5834,6 +5842,10 @@ void SWFSDriver_SwapBuffer_FS3(struct amigamesa_context *c)
 #else
 	extern void SwapBuffer_FS3(void);
 	struct PPCArgs CallArgs;
+#endif
+
+#ifdef DBG
+    LibPrintf("SWFSDriver_SwapBuffer_FS3\n");
 #endif
 
 #ifndef __PPC__
@@ -5911,6 +5923,10 @@ void SWFSDriver_SwapBuffer_AGA(struct amigamesa_context *c)
 	struct PPCArgs CallArgs;
 #endif
 
+#ifdef DBG
+    LibPrintf("SWFSDriver_SwapBuffer_AGA\n");
+#endif
+
 	ChunkyToPlanar(c->BackArray,c->back_rp->BitMap,c->width,c->height);
 #ifndef __PPC__
 	c->sbuf2->sb_DBufInfo->dbi_SafeMessage.mn_ReplyPort = c->dbport;
@@ -5949,6 +5965,9 @@ void SWFSDriver_SwapBuffer_AGA(struct amigamesa_context *c)
 
 void SWFSDriver_Dispose(struct amigamesa_context *c)
 {
+#ifdef DBG
+    LibPrintf("SWFSDriver_Dispose\n");
+#endif
     if (c->depth <= 8)
     {
 	if (c->flags & FLAG_RGBA)
@@ -6036,6 +6055,9 @@ void SWFSDriver_Dispose(struct amigamesa_context *c)
 
 static BOOL LaunchGfxboardDriver(struct amigamesa_context *c,struct TagItem *tagList)
 {
+#ifdef DBG
+    LibPrintf("LaunchGfxboardDriver\n");
+#endif
     if (c->flags & FLAG_DIRECTRENDER)
     {
 	c->depth = GetCyberMapAttr(c->rp->BitMap,CYBRMATTR_DEPTH);
@@ -6161,6 +6183,9 @@ static BOOL LaunchGfxboardDriver(struct amigamesa_context *c,struct TagItem *tag
 
 static BOOL LaunchAGADriver(struct amigamesa_context *c,struct TagItem *tagList)
 {
+#ifdef DBG
+    LibPrintf("LaunchAGADruver\n");
+#endif
     if ((c->depth = GetBitMapAttr(c->rp->BitMap,BMA_DEPTH)) < 8)
 	return(FALSE);
     c->RealWidth = c->Screen->Width;
@@ -6245,6 +6270,9 @@ static BOOL LaunchAGADriver(struct amigamesa_context *c,struct TagItem *tagList)
 
 BOOL SWFSDriver_init(struct amigamesa_context *c,struct TagItem *tagList)
     {
+#ifdef DBG
+    LibPrintf("SWFSDriver_init\n");
+#endif
     c->front_rp = c->rp;
     if (c->flags & FLAG_FULLSCREEN)
     {

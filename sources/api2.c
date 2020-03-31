@@ -66,12 +66,12 @@
  * Part 2 of API functions
  */
 
-#define STORMMESADEBUG 1
+//#define STORMMESADEBUG 1
 /*==================================================================================*/
 #ifdef STORMMESADEBUG
-void LibPrintf(const char *string, ...);
+//void LibPrintf(const char *string); //, ...);
 void STORMMESA_Function(const char *func);
-#define VAR(var)	 /*LibPrintf*/ printf(#var ": %d \n",var);
+//#define VAR(var)	 LibPrintf(#var ": %d \n",var);
 #define SFUNCTION(func) STORMMESA_Function(#func);
 /*==================================================================================*/
 #else
@@ -1090,7 +1090,7 @@ void APIENTRY aglTexImage2D(void* cc,GLenum target, GLint level, GLint internalf
 		newheight=height/2;		
 		leveldif++;		
 				
-		/*LibPrintf*/ printf("Scaling: (%d) %dx%d -> %dx%d\n",internalformat,width,height,newwidth,newheight);		
+		LibPrintf("Scaling: \n"); //(%d) %dx%d -> %dx%d\n",internalformat,width,height,newwidth,newheight);		
 				
 		for(y=0;y<newheight;y++)		
 	for(x=0;x<newwidth;x++) {		

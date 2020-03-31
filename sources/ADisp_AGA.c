@@ -45,10 +45,10 @@
 // TrueColor-RGBA
 #define TC_RGBA(r,g,b,a) ((((((a<<8)|r)<<8)|g)<<8)|b)
 
-//#define DEBUGPRINT
+#define DEBUGPRINT
 
 #ifdef DEBUGPRINT
-#define DEBUGOUT(x) /*LibPrintf*/ printf(x);
+#define DEBUGOUT(x) LibPrintf(x);
 #else
 #define DEBUGOUT(x) /*LibPrintf(x);*/
 #endif
@@ -151,7 +151,7 @@ static GLbitfield aclear( GLcontext *ctx,GLbitfield mask, GLboolean all, GLint x
 			RectFill(amesa->rp,FIXx(x),FIXy(y)-height,width,FIXy(y));
 			}
 		else
-			/*LibPrintf*/ printf("Serius error amesa->rp=0 detected in aclear() in file amigamesa.c\n");
+			LibPrintf("Serius error amesa->rp=0 detected in aclear() in file amigamesa.c\n");
 		}
 	
 	mask &= (~GL_COLOR_BUFFER_BIT);
@@ -891,7 +891,7 @@ BOOL alloc_temp_rastport(struct amigamesa_context * c) {
 		}
 		FreeVec(temprp);
 	}
-	/*LibPrintf*/ printf("Error allocating temporary rastport");
+	LibPrintf("Error allocating temporary rastport");
 	return FALSE;
 }
 
@@ -988,7 +988,7 @@ BOOL make_temp_raster( struct RastPort *rp ) {
 	struct TmpRas *tmpras;
 
 	if(rp==0) {
-		/*LibPrintf*/ printf("Zero rp\n");
+		LibPrintf("Zero rp\n");
 		return(FALSE);
 	}
 		width = rp->BitMap->BytesPerRow*8;
@@ -1010,7 +1010,7 @@ BOOL make_temp_raster( struct RastPort *rp ) {
 	if (OK)
 		return(TRUE);
 	else {
-		/*LibPrintf*/ printf("Error when allocationg TmpRas\n");
+		LibPrintf("Error when allocationg TmpRas\n");
 		if (tmpras)
 			FreeVec(tmpras);
 		if (p)
@@ -1050,7 +1050,7 @@ static BOOL allocarea(struct RastPort *rp ) {
 	if (OK)
 		return (OK);
 	else {
-		/*LibPrintf*/ printf("Error when allocationg AreaBuffers\n");
+		LibPrintf("Error when allocationg AreaBuffers\n");
 		if (vbuffer)
 			FreeVec(vbuffer);
 		if (pattern)
@@ -1166,7 +1166,7 @@ DEBUGOUT("Amiga_Standard_resize\n")
 			}
 			if((amesa->back_rp = make_rastport(amesa->RealWidth,amesa->RealHeight,amesa->depth,amesa->rp->BitMap))==NULL) {
 				amesa->rp = amesa->front_rp;
-				/*LibPrintf*/ printf("To little mem free. Couldn't allocate Dubblebuffer in this size.\n");
+				LibPrintf("To little mem free. Couldn't allocate Dubblebuffer in this size.\n");
 			} else {
 				amesa->rp=amesa->back_rp;
 			}
@@ -1202,7 +1202,7 @@ DEBUGOUT("Amiga_Standard_Dispose\n")
 		{
 		if (c->rgb_buffer)
 			{
-			/*LibPrintf*/ printf("free(c->rgb_buffer)\n");
+			LibPrintf("free(c->rgb_buffer)\n");
 			free( c->rgb_buffer );
 			}
 		}
@@ -1284,7 +1284,7 @@ Amiga_Standard_init(struct amigamesa_context *c,struct TagItem *tagList)
 			}
 		else
 			{
-			/*LibPrintf*/ printf("make_rastport Faild\n");
+			LibPrintf("make_rastport Faild\n");
 			((GLcontext *)c->gl_ctx)->Color.DrawBuffer = GL_FRONT;
 			}
 		}

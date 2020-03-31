@@ -112,7 +112,7 @@ void * MesaGetTSD(MesaTSD * tsd) {
 void MesaSetTSD(MesaTSD * tsd, void * ptr, void (*initfunc)(void)) {
   /* the following code assumes that the MesaTSD has been initialized
      to zero at creation */
-  /*LibPrintf*/ printf( "initfuncCalled = %d\n", tsd->initfuncCalled);
+  LibPrintf( "initfuncCalled = \n"); //%d\n", tsd->initfuncCalled);
   if (tsd->initfuncCalled != INITFUNC_CALLED_MAGIC) {
     initfunc();
     tsd->initfuncCalled = INITFUNC_CALLED_MAGIC;

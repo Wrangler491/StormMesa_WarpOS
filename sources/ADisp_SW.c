@@ -57,7 +57,7 @@
 #include "ADisp_SWFS.h"
 #include "htnew_color.h"
 
-//#define DBG
+#define DBG
 
 #define TC_RGBA(r,g,b,a) ((((((a<<8)|r)<<8)|g)<<8)|b)
 
@@ -78,7 +78,7 @@ static void SWDriver_resize( GLcontext *ctx,GLuint *width, GLuint *height)
     if (c->rp == NULL)
       return;
 #ifdef DBG
-    /*LibPrintf*/ printf("SWDriver_resize: %d %d\n",c->width,c->height);
+    LibPrintf("SWDriver_resize:\n"); // %d %d\n",c->width,c->height);
 #endif
 
     if(!((c->width  == (c->rp->Layer->bounds.MaxX-c->rp->Layer->bounds.MinX-c->left-c->right+1))
@@ -112,7 +112,7 @@ static void SWDriver_resize( GLcontext *ctx,GLuint *width, GLuint *height)
 #endif
 #endif
 		{
-		    /*LibPrintf*/ printf("Panic! Not enough memory for resizing!\n");
+		    LibPrintf("Panic! Not enough memory for resizing!\n");
 		    exit(0);
 		}
 		if (c->flags & FLAG_TWOBUFFERS)
@@ -135,7 +135,7 @@ static void SWDriver_resize( GLcontext *ctx,GLuint *width, GLuint *height)
 #endif
 #endif
 			{
-				/*LibPrintf*/ printf("Panic! Not enough memory for resizing!\n");
+				LibPrintf("Panic! Not enough memory for resizing!\n");
 				exit(0);
 			}
 		}
@@ -143,7 +143,7 @@ static void SWDriver_resize( GLcontext *ctx,GLuint *width, GLuint *height)
 			c->FrontArray = c->BackArray;
 		if (!(c->temprp->BitMap = AllocBitMap((((c->width+15)>>4)<<4),1,c->depth,0,c->rp->BitMap)))
 		{
-		    /*LibPrintf*/ printf("Panic! Not enough memory for resizing!\n");
+		    LibPrintf("Panic! Not enough memory for resizing!\n");
 		    exit(0);
 		}
 	    }
@@ -160,7 +160,7 @@ static void SWDriver_resize( GLcontext *ctx,GLuint *width, GLuint *height)
 		if (!(c->BackArray = AllocVecPPC(c->width*c->height*4,MEMF_PUBLIC|MEMF_CLEAR,0)))
 #endif
 		{
-		    /*LibPrintf*/ printf("Panic! Not enough memory for resizing!\n");
+		    LibPrintf("Panic! Not enough memory for resizing!\n");
 		    exit(0);
 		}
 		if (c->flags & FLAG_TWOBUFFERS)
@@ -173,7 +173,7 @@ static void SWDriver_resize( GLcontext *ctx,GLuint *width, GLuint *height)
 			if (!(c->FrontArray = AllocVecPPC(c->width*c->height*4,MEMF_PUBLIC|MEMF_CLEAR,0)))
 #endif
 			{
-				/*LibPrintf*/ printf("Panic! Not enough memory for resizing!\n");
+				LibPrintf("Panic! Not enough memory for resizing!\n");
 				exit(0);
 			}
 		}
@@ -196,7 +196,7 @@ GLbitfield SWD_clear_LUT8(GLcontext *ctx, GLbitfield mask, GLboolean all, GLint 
     unsigned long color = c->clearpixel;
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWD_clear_LUT8 %ld\n",c->clearpixel);
+    LibPrintf("SWD_clear_LUT8 \n"); //%ld\n",c->clearpixel);
 #endif
 
   if ((mask & GL_COLOR_BUFFER_BIT) && (!(ctx->Color.SWmasking)) )
@@ -254,7 +254,7 @@ GLbitfield SWD_clear_ARGB(GLcontext *ctx, GLbitfield mask, GLboolean all, GLint 
 
 
 #ifdef DBG
-    /*LibPrintf*/ printf("SWD_clear_ARGB\n");
+    LibPrintf("SWD_clear_ARGB\n");
 #endif
 
   if (mask & GL_COLOR_BUFFER_BIT)
@@ -304,6 +304,11 @@ void SWDriver_flush( GLcontext *ctx )
 {
     UBYTE* array;
     AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
+
+
+#ifdef DBG
+    LibPrintf("SWDriver_flush\n");
+#endif
 
     if (c->flags & FLAG_TWOBUFFERS)
     {
@@ -377,6 +382,11 @@ void SWDriver_DD_pointers( GLcontext *ctx )
 {
    AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
 
+#ifdef DBG
+    LibPrintf("SWDdriver_DD_pointers\n");
+#endif
+
+
    ctx->Driver.RendererString = SWDriver_rendererstring;
    ctx->Driver.Flush = SWDriver_flush;
    ctx->Driver.UpdateState = SWDriver_DD_pointers;
@@ -441,6 +451,10 @@ void SWDriver_SwapBuffer_LUT8(struct amigamesa_context *c)
 {
 	UBYTE* array;
 
+#ifdef DBG
+    LibPrintf("SWDriver_SwapBuffer_LUT8\n");
+#endif
+
 	c->backarrayflag ^= 1;
 	SetBuffer(c);
 	if (c->rp == NULL)
@@ -471,6 +485,10 @@ void SWDriver_SwapBuffer_LUT8(struct amigamesa_context *c)
 void SWDriver_SwapBuffer_AGA(struct amigamesa_context *c)
 {
 	UBYTE* array;
+
+#ifdef DBG
+    LibPrintf("SWDricer_SwapBuffer_AGA\n");
+#endif
 
 	c->backarrayflag ^= 1;
 	SetBuffer(c);
@@ -513,6 +531,10 @@ void SWDriver_SwapBuffer_AGA(struct amigamesa_context *c)
 void SWDriver_SwapBuffer_ARGB(struct amigamesa_context *c)
 {
 	UBYTE* array;
+
+#ifdef DBG
+    LibPrintf("SWDriver_SwapBuffer_ARGB\n");
+#endif
 
 	c->backarrayflag ^= 1;
 	SetBuffer(c);
@@ -560,6 +582,11 @@ long EvalPen_D(struct amigamesa_context *c,unsigned char r, unsigned char g,unsi
 long EvalPen_D(struct amigamesa_context *c, unsigned char r, unsigned char g, unsigned char b, int x, int y)
 #endif
 {
+
+#ifdef DBG
+    LibPrintf("EvalPen_D\n");
+#endif
+
 	return (GetPenDithered((int *)c->ColorTable,r,g,b,x,y));
 }
 ;;//
@@ -579,6 +606,10 @@ long FindNearestPen(struct amigamesa_context *c, unsigned long r, unsigned long 
 	long dist=0x7ffffff;
 
 	unsigned long col,pr,pg,pb;
+
+#ifdef DBG
+    LibPrintf("FindNearestPen\n");
+#endif
 
 	for (i=0;i<=256;i++)
 	{
@@ -600,7 +631,7 @@ long FindNearestPen(struct amigamesa_context *c, unsigned long r, unsigned long 
 		}
 	    }
 	}
-//        LibPrintf("Returned pen no: %ld Col r: %ld g: %ld b: %ld | dist: %ld\n",cn,r,g,b,dist);
+//        LibPrintf("Returned pen no: \n"); //%ld Col r: %ld g: %ld b: %ld | dist: %ld\n",cn,r,g,b,dist);
 	return cn;
 }
 ;;//
@@ -645,6 +676,9 @@ REM(CreateTransTable);
 
 void DisposeTransTable(struct amigamesa_context* c)
 {
+#ifdef DBG
+    LibPrintf("DisposeTransTable\n");
+#endif
 	FreeColors((int *)c->ColorTable,c->Screen);
 }
 ;;//
@@ -683,7 +717,7 @@ REM(InitTransTable);
 void FreeTransTable(struct amigamesa_context* c)
 {
 #ifdef DBG
-	/*LibPrintf*/ printf("FreeTransTable\n");
+	LibPrintf("FreeTransTable\n");
 #endif
 	if ( (!(c->visual->rgb_flag)) && (c->depth <= 8) )
 	{
@@ -714,7 +748,11 @@ void FreeTransTable(struct amigamesa_context* c)
 
 void SWDriver_Dispose(struct amigamesa_context *c)
 {
-    if (c->depth <= 8)
+#ifdef DBG
+    LibPrintf("SWDriver_Dispose\n");
+#endif
+
+	if (c->depth <= 8)
     {
 	if (c->flags & FLAG_RGBA)
 	{
@@ -759,18 +797,22 @@ void SWDriver_Dispose(struct amigamesa_context *c)
 
 static BOOL LaunchGfxboardDriver(struct amigamesa_context *c,struct TagItem *tagList)
 {
+#ifdef DBG
+    LibPrintf("LaunchGfxboardDriver\n");
+#endif
+
     c->depth = GetCyberMapAttr(c->rp->BitMap,CYBRMATTR_DEPTH);
     c->RealWidth =c->rp->Layer->bounds.MaxX-c->rp->Layer->bounds.MinX+1;
     c->RealHeight=c->rp->Layer->bounds.MaxY-c->rp->Layer->bounds.MinY+1;
 #ifdef DBG
-    /*LibPrintf*/ printf("realwidth, realheight %d %d\n",c->RealWidth,c->RealHeight);
+    LibPrintf("realwidth, realheight \n"); //%d %d\n",c->RealWidth,c->RealHeight);
 #endif
 #ifdef DBG
-    /*LibPrintf*/ printf("MaxX, MinX, MaxY, MinY %d %d %d %d\n",
+    LibPrintf("MaxX, MinX, MaxY, MinY \n"); /*%d %d %d %d\n",
 	    c->rp->Layer->bounds.MaxX,
 	    c->rp->Layer->bounds.MinX,
 	    c->rp->Layer->bounds.MaxY,
-	    c->rp->Layer->bounds.MinY);
+	    c->rp->Layer->bounds.MinY); */
 #endif
     c->left = GetTagData(AMA_Left,0,tagList);
     c->bottom = GetTagData(AMA_Bottom,0,tagList);
@@ -871,6 +913,10 @@ static BOOL LaunchGfxboardDriver(struct amigamesa_context *c,struct TagItem *tag
 
 static BOOL LaunchAGADriver(struct amigamesa_context *c,struct TagItem *tagList)
 {
+#ifdef DBG
+    LibPrintf("LaunchAGADriver\n");
+#endif
+
     c->depth = GetBitMapAttr(c->rp->BitMap,BMA_DEPTH);
     c->RealWidth =c->rp->Layer->bounds.MaxX-c->rp->Layer->bounds.MinX+1;
     c->RealHeight=c->rp->Layer->bounds.MaxY-c->rp->Layer->bounds.MinY+1;
@@ -967,6 +1013,9 @@ static BOOL LaunchAGADriver(struct amigamesa_context *c,struct TagItem *tagList)
 
 BOOL SWDriver_init(struct amigamesa_context *c,struct TagItem *tagList)
     {
+#ifdef DBG
+    LibPrintf("SWDriver_init\n");
+#endif
     if (CyberGfxBase)
 	if (IsCyberModeID(GetVPModeID(&c->Screen->ViewPort)))
 	    return(LaunchGfxboardDriver(c,tagList));

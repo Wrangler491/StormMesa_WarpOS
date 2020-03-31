@@ -52,10 +52,10 @@
 
 #define TC_RGBA(r,g,b,a) ((((((a<<8)|r)<<8)|g)<<8)|b)
 
-//#define DEBUGPRINT
+#define DEBUGPRINT
 
 #ifdef DEBUGPRINT
-#define DEBUGOUT(x) /*LibPrintf*/ printf(x);
+#define DEBUGOUT(x) LibPrintf; /* printf(x);*/
 #else
 #define DEBUGOUT(x) /*LibPrintf(x);*/
 #endif
@@ -140,7 +140,7 @@ static GLbitfield cyb_clear( GLcontext *ctx, GLbitfield mask, GLboolean all, GLi
 	    FillPixelArray (amesa->rp,FIXx(x),FIXy(y)-height+1,width,height,amesa->clearpixel);
 	    }
 	else
-	    /*LibPrintf*/ printf("Serius error amesa->rp=0 detected in cyb_clear() in file cybmesa.c\n");
+	    LibPrintf("Serius error amesa->rp=0 detected in cyb_clear() in file cybmesa.c\n");
 	}
 	mask &= (~GL_COLOR_BUFFER_BIT);
    }
@@ -277,7 +277,7 @@ static void cyb_write_color_span( const GLcontext *ctx,GLuint n, GLint x, GLint 
     ULONG *dp;
 
     register struct RastPort * rp = amesa->rp;
-	//REM(cyb_write_color_span);
+	REM(cyb_write_color_span);
     y=FIXy(y);
     x=FIXx(x);
 
@@ -506,7 +506,7 @@ static void cyb_read_index_span( const GLcontext *ctx,GLuint n, GLint x, GLint y
     int i;
     unsigned long color;
 
-
+	REM(cyb_read_index_span);
     y=FIXy(y);
     x=FIXx(x);
 
@@ -542,7 +542,7 @@ static void cyb_read_color_span( const GLcontext *ctx,GLuint n, GLint x, GLint y
     int i;
     ULONG col;
 
-
+	REM(cyb_read_color_span);
     y=FIXy(y);
     x=FIXx(x);
 
@@ -613,7 +613,7 @@ static void cyb_write_color_pixels( const GLcontext *ctx,GLuint n, const GLint x
     int i;
     register struct RastPort * rp = amesa->rp;
 	REM(cyb_write_color_pixels);
-printf("Writing %d pixels!\n",n);
+//LibPrintf("Writing %d pixels!\n",n);
 
     for (i=0; i<n; i++) {
 	if (mask[i]) {
@@ -658,7 +658,7 @@ static void cyb_read_index_pixels( const GLcontext *ctx,GLuint n, const GLint x[
     unsigned long color;
     register struct RastPort * rp = amesa->rp;
 
-
+	REM(cyb_read_index_pixels);
   for (i=0; i<n; i++) {
       if (mask[i]) {
 /*       index[i] = read_pixel x[i], y[i] */
@@ -679,7 +679,7 @@ static void cyb_read_color_pixels( const GLcontext *ctx,GLuint n, const GLint x[
     int i,col;
     register struct RastPort * rp = amesa->rp;
 
-
+	REM(cyb_read_color_pixels);
     for (i=0; i<n; i++)
 	{
 	if (mask[i])
@@ -780,6 +780,8 @@ Cyb_Standard_resize( GLcontext *ctx,GLuint *width, GLuint *height)
     {
    AmigaMesaContext amesa = (AmigaMesaContext) ctx->DriverCtx;
 
+	REM(Cyb_Standard_resize);
+
     *width=amesa->width;
     *height=amesa->height;
 	if (amesa->rp == NULL)
@@ -803,7 +805,7 @@ Cyb_Standard_resize( GLcontext *ctx,GLuint *width, GLuint *height)
 	    }
 	    if((amesa->back_rp = make_rastport(amesa->RealWidth,amesa->RealHeight,amesa->depth,amesa->rp->BitMap))==NULL) {
 		amesa->rp = amesa->front_rp;
-		/*LibPrintf*/ printf("To little mem free. Couldn't allocate Dubblebuffer in this size.\n");
+		LibPrintf("To little mem free. Couldn't allocate Dubblebuffer in this size.\n");
 	    } else {
 		amesa->rp=amesa->back_rp;
 	    }
@@ -821,6 +823,7 @@ Cyb_Standard_resize( GLcontext *ctx,GLuint *width, GLuint *height)
 BOOL
 Cyb_Standard_init(struct amigamesa_context *c,struct TagItem *tagList)
     {
+	REM(Cyb_Standard_init);
 /*	Wrangler 27/4/19 MaxX and MinX return 0 if no window! */
 	c->left = GetTagData(AMA_Left,0,tagList);
 	c->bottom= GetTagData(AMA_Bottom,0,tagList);
@@ -845,29 +848,39 @@ Cyb_Standard_init(struct amigamesa_context *c,struct TagItem *tagList)
 		c->RealHeight = c->FixedHeight = c->height + c->top + c->bottom;
 	}
 
-printf("FWxFH: %dx%d, RWxRH: %dx%d, WxH: %dx%d, top: %d, bottom %d, l %d, r %d\n", \
+//LibPrintf("FWxFH: %dx%d, RWxRH: %dx%d, WxH: %dx%d, top: %d, bottom %d, l %d, r %d\n", \
 	c->FixedWidth, c->FixedHeight, c->RealWidth, c->RealHeight, c->width, c->height, \
 	c->top, c->bottom, c->left, c->right);
+//VAR(c->FixedWidth);
+//VAR(c->FixedHeight);
+//VAR(c->RealWidth);
+//VAR(c->RealHeight);
+//VAR(c->width);
+//VAR(c->height);
+//VAR(c->top);
+//VAR(c->bottom);
+//VAR(c->left);
+//VAR(c->right);
 
     if (CyberGfxBase) {
 		if(IsCyberModeID(GetVPModeID(&c->Screen->ViewPort)))
 		{
-printf("Cyber screen found\n");
+LibPrintf("Cyber screen found\n");
 		c->depth = GetCyberMapAttr(c->rp->BitMap,CYBRMATTR_DEPTH);
 		} 
     	else
 		{
-printf("Cyber screen not found\n");
+LibPrintf("Cyber screen not found\n");
 		c->depth = GetBitMapAttr(c->rp->BitMap,BMA_DEPTH);
 		}
 	} else {
 		c->depth = GetBitMapAttr(c->rp->BitMap,BMA_DEPTH);
 	}
-printf("Depth: %d\n",c->depth);
+//LibPrintf("Depth: %d\n",c->depth);
 if(!c->depth) return NULL;
     c->pixel = 0;   /* current drawing pen */
 
-printf("CSI: phase 1\n");
+LibPrintf("CSI: phase 1\n");
     if (c->depth<=8)
     {
 	if (c->visual->rgb_flag)
@@ -881,7 +894,7 @@ printf("CSI: phase 1\n");
 		return(FALSE);
 	}
     }
-printf("CSI: phase 2\n");
+LibPrintf("CSI: phase 2\n");
 
     if (c->visual->db_flag==GL_TRUE)
 	{
@@ -892,7 +905,7 @@ printf("CSI: phase 2\n");
 	    }
 	else
 	    {
-	    /*LibPrintf*/ printf("make_rastport Faild\n");
+	    LibPrintf("make_rastport Faild\n");
 	    ((GLcontext *)c->gl_ctx)->Color.DrawBuffer = GL_FRONT;
 	    }
 	}
@@ -901,13 +914,13 @@ printf("CSI: phase 2\n");
 	((GLcontext *)c->gl_ctx)->Color.DrawBuffer = GL_FRONT;
 	}
     AllocOneLine(c); /* A linebuffer for WritePixelLine */
-printf("CSI: phase 3\n");
+LibPrintf("CSI: phase 3\n");
 
     if (c->depth<=8) {
 	/* JAM: Added alloc_temp_rastport */
 	alloc_temp_rastport(c);
     }
-printf("CSI: phase 4\n");
+LibPrintf("CSI: phase 4\n");
 
     c->InitDD=c->depth<=8 ? (void(*)(void *))amiga_standard_DD_pointers : (void(*)(void *))cyb_standard_DD_pointers;  /*standard drawing*/
     c->Dispose=Amiga_Standard_Dispose;
@@ -929,7 +942,7 @@ printf("CSI: phase 4\n");
 	    c->ColorTable2[i] = -1;
       }
     }
-printf("CSI: phase 5\n");
+LibPrintf("CSI: phase 5\n");
 
     return(TRUE);
     }

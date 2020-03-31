@@ -85,7 +85,7 @@
 #include "winpos.h"
 #endif
 
-
+#define LibPrintf(t) ; //printf(t) //SPrintF(t,NULL)
 
 /*
  * For debugging
@@ -100,7 +100,7 @@ static void check_pointers( struct gl_api_table *table )
 
    for (i=0;i<numentries;i++) {
       if (!entry[i]) {
-         /*LibPrintf*/ printf("found uninitialized function pointer at %d\n", i );
+         LibPrintf("found uninitialized function pointer at \n"); //%d\n", i );
          gl_problem(NULL, "Missing pointer in pointers.c");
          /*abort()*/
       }

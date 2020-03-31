@@ -194,17 +194,17 @@ GLcontext *ctx;
 	LibBase=GetTaskLibBase();
 	if(LibBase==NULL) return(NULL);
 	ctx=AmigaGetGLcontext(LibBase);
-	/*LibPrintf*/ printf("gl_get_task_context LibBase: %ld ctx: %ld \n",LibBase,ctx);
+	LibPrintf("gl_get_task_context LibBase: \n"); //%ld ctx: %ld \n",LibBase,ctx);
 	return (ctx);
 }
 static void set_task_context( GLcontext *ctx ) 
 {
 void *LibBase;
-	/*LibPrintf*/ printf(" ctx: %ld \n",ctx);
+	LibPrintf(" ctx: \n"); //%ld \n",ctx);
 	LibBase=GetTaskLibBase();
 	if(LibBase==NULL) return(NULL);
 	AmigaSetGLcontext(LibBase,ctx);
-	/*LibPrintf*/ printf("set_task_context LibBase: %ld ctx: %ld \n",LibBase,ctx);
+	LibPrintf("set_task_context LibBase: \n"); //%ld ctx: %ld \n",LibBase,ctx);
 }
 
 #else
@@ -377,36 +377,36 @@ static void print_timings( GLcontext *ctx )
 			 - ctx->LineTime - ctx->PolygonTime;
 
 
-	/*LibPrintf*/ printf("								  Count	Time (s)	 Rate (/s) \n");
-	/*LibPrintf*/ printf("--------------------------------------------------------\n");
-	/*LibPrintf*/ printf("glBegin/glEnd			  %7d  %8.3f	%10.3f\n",
+	LibPrintf("								  Count	Time (s)	 Rate (/s) \n");
+	LibPrintf("--------------------------------------------------------\n");
+	LibPrintf("glBegin/glEnd			  %7d  %8.3f	%10.3f\n"); /*,
 		ctx->BeginEndCount, ctx->BeginEndTime, beginendrate);
-	/*LibPrintf*/ printf("  vertexes transformed  %7d  %8.3f	%10.3f\n",
+	LibPrintf("  vertexes transformed  %7d  %8.3f	%10.3f\n",
 		ctx->VertexCount, ctx->VertexTime, vertexrate );
-	/*LibPrintf*/ printf("	 transformation			  %8.3f\n",prof1_time);
-	/*LibPrintf*/ printf("	 clipping					  %8.3f\n",prof2_time);
-	/*LibPrintf*/ printf("	 projection					%8.3f\n",prof3_time);
-	/*LibPrintf*/ printf("	 lighting					  %8.3f\n",prof4_time);
-	/*LibPrintf*/ printf("	 per-vertex fogging		 %8.3f\n",prof5_time);
-	/*LibPrintf*/ printf("	 texcoord transformation  %8.3f\n",prof6_time);
-	/*LibPrintf*/ printf("	 viewport calculations	 %8.3f\n",prof7_time);
-	/*LibPrintf*/ printf("	 raster setup				 %8.3f\n",prof8_time);
-	/*LibPrintf*/ printf("  render vertex buffer		 %8.3f\n",profrender_time);
+	LibPrintf("	 transformation			  %8.3f\n",prof1_time);
+	LibPrintf("	 clipping					  %8.3f\n",prof2_time);
+	LibPrintf("	 projection					%8.3f\n",prof3_time);
+	LibPrintf("	 lighting					  %8.3f\n",prof4_time);
+	LibPrintf("	 per-vertex fogging		 %8.3f\n",prof5_time);
+	LibPrintf("	 texcoord transformation  %8.3f\n",prof6_time);
+	LibPrintf("	 viewport calculations	 %8.3f\n",prof7_time);
+	LibPrintf("	 raster setup				 %8.3f\n",prof8_time);
+	LibPrintf("  render vertex buffer		 %8.3f\n",profrender_time);
 
-	/*LibPrintf*/ printf("  points rasterized	  %7d  %8.3f	%10.3f\n",
+	LibPrintf("  points rasterized	  %7d  %8.3f	%10.3f\n",
 		ctx->PointCount, ctx->PointTime, pointrate );
-	/*LibPrintf*/ printf("  lines rasterized		%7d  %8.3f	%10.3f\n",
+	LibPrintf("  lines rasterized		%7d  %8.3f	%10.3f\n",
 		ctx->LineCount, ctx->LineTime, linerate );
-	/*LibPrintf*/ printf("  polygons rasterized	%7d  %8.3f	%10.3f\n",
+	LibPrintf("  polygons rasterized	%7d  %8.3f	%10.3f\n",
 		ctx->PolygonCount, ctx->PolygonTime, polygonrate );
-	/*LibPrintf*/ printf("  overhead							  %8.3f\n", overhead );
-	/*LibPrintf*/ printf("glClear					  %7d  %8.3f	%10.3f\n",
+	LibPrintf("  overhead							  %8.3f\n", overhead );
+	LibPrintf("glClear					  %7d  %8.3f	%10.3f\n",
 		ctx->ClearCount, ctx->ClearTime, clearrate );
-	/*LibPrintf*/ printf("SwapBuffers				 %7d  %8.3f	%10.3f\n",
-		ctx->SwapCount, ctx->SwapTime, swaprate );
-	/*LibPrintf*/ printf("\n");
+	LibPrintf("SwapBuffers				 %7d  %8.3f	%10.3f\n",
+		ctx->SwapCount, ctx->SwapTime, swaprate );*/
+	LibPrintf("\n");
 
-	/*LibPrintf*/ printf("Average number of vertices per begin/end: %8.3f\n", avgvertices );
+	LibPrintf("Average number of vertices per begin/end:\n"); // %8.3f\n", avgvertices );
 }
 #endif
 
@@ -1047,7 +1047,7 @@ static void initialize_context( GLcontext *ctx )
 		if (ctx->NoDither) {
 	  if (StormMesa.DebugStormMesa.ON) 
 	 {
-		  /*LibPrintf*/ printf("MESA_NO_DITHER set - dithering disabled\n");
+		  LibPrintf("MESA_NO_DITHER set - dithering disabled\n");
 	  }
 	  ctx->Color.DitherFlag = GL_FALSE;
 		}
@@ -1458,7 +1458,7 @@ void gl_make_current( GLcontext *ctx, GLframebuffer *buffer )
 	CC = ctx;
 #else
 #ifdef AMIGA
-	/*LibPrintf*/ printf("gl_make_current ctx: %ld buffer: %ld\n",ctx,buffer);
+	LibPrintf("gl_make_current ctx: \n"); //%ld buffer: %ld\n",ctx,buffer);
 	set_task_context( ctx );
 #else
 	if (CC && CC->Buffer) 
@@ -1608,8 +1608,8 @@ void gl_set_api_table( GLcontext *ctx, const struct gl_api_table *api )
  */
 void gl_problem( const GLcontext *ctx, const char *s )
 {
-	/*LibPrintf*/ printf( "Mesa implementation error: %s\n", s );
-	/*LibPrintf*/ printf( "Report to Mesa author.\n" );
+	LibPrintf( "Mesa implementation error: \n"); //%s\n", s );
+	LibPrintf( "Report to Mesa author.\n" );
 	(void) ctx;
 }
 
@@ -1635,7 +1635,7 @@ void gl_warning( const GLcontext *ctx, const char *s )
 	}
 #endif
 	if (debug) {
-		/*LibPrintf*/ printf( "Mesa warning: %s\n", s );
+		LibPrintf( "Mesa warning: \n"); //%s\n", s );
 	}
 	(void) ctx;
 }
@@ -1694,7 +1694,7 @@ void gl_error( GLcontext *ctx, GLenum error, const char *s )
 		  strcpy( errstr, "unknown" );
 		  break;
 		}
-		/*LibPrintf*/ printf( "Mesa user error: %s in %s\n", errstr, s );
+		LibPrintf( "Mesa user error: \n"); // %s in %s\n", errstr, s );
 	}
 
 	if (ctx->ErrorValue==GL_NO_ERROR) {

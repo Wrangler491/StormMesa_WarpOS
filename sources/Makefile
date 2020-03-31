@@ -51,9 +51,9 @@ SHELL = /bin/sh
 # System environment
 CC = gcc
 
-CODEGEN = --specs=warpup -woslibs -DWARPUP #-m68020-40 -m68881 -noixemul
+CODEGEN = --specs=warpup -woslibs -DWARPUP #-save-temps #-m68020-40 -m68881 -noixemul
 
-OPTIMIZATION = -O3
+OPTIMIZATION = -g -O3
 
 OPTIONS = -nostartfiles -s -w -I.
 

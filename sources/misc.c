@@ -66,7 +66,7 @@
  * initial rev
  *
  */
-
+#include "AmigaIncludes.h"
 
 #ifdef PC_HEADER
 #include "all.h"
@@ -243,7 +243,6 @@ void gl_Clear( GLcontext *ctx, GLbitfield mask )
 #ifdef PROFILE
    GLdouble t0 = gl_time();
 #endif
-
    if (INSIDE_BEGIN_END(ctx)) {
       gl_error( ctx, GL_INVALID_OPERATION, "glClear" );
       return;
@@ -265,6 +264,7 @@ void gl_Clear( GLcontext *ctx, GLbitfield mask )
       /* let device driver try to clear the buffers */
       newMask = (*ctx->Driver.Clear)( ctx, mask, !ctx->Scissor.Enabled,
 				      x, y, width, height );
+
 #ifdef BUGFIX
       if ( (mask & GL_COLOR_BUFFER_BIT) &&
 	   (!(newMask & GL_COLOR_BUFFER_BIT)) &&
@@ -273,6 +273,7 @@ void gl_Clear( GLcontext *ctx, GLbitfield mask )
 	 gl_clear_alpha_buffers( ctx );
       }
 #endif
+
       if ((mask & GL_COLOR_BUFFER_BIT)
 	  && ctx->RasterMask & FRONT_AND_BACK_BIT) {
 	 /*** Also clear the back color buffer ***/

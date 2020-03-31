@@ -1,4 +1,5 @@
 
+
 #ifdef WARPUP
 #pragma pack(push,2)
 #endif
@@ -16,12 +17,12 @@ struct glBase
 
 #pragma libbase glBase
 
-#define STORMMESADEBUG 1
+//#define STORMMESADEBUG 1
 
-void LibPrintf(const char *string, ...);
+//void LibPrintf(const char *string); //, ...);
 /*==================================================================================*/
 #ifdef STORMMESADEBUG
-#define REM(message) printf(#message"\n");	//LibPrintf(#message"\n");
+#define REM(message) LibPrintf(#message"\n");
 #define SFUNCTION(n) STORMMESA_Function(n);
 /*==================================================================================*/
 #else

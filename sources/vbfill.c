@@ -70,12 +70,12 @@
 #include "xform.h"
 #endif
 
-#define STORMMESADEBUG 1
+//#define STORMMESADEBUG 1
 
-void LibPrintf(const char *string, ...);
+//void LibPrintf(const char *string); //, ...);
 /*==================================================================================*/
 #ifdef STORMMESADEBUG
-#define REM(message) printf(#message"\n");	//LibPrintf(#message"\n");
+#define REM(message) LibPrintf(#message"\n");
 #define SFUNCTION(n) STORMMESA_Function(n);
 /*==================================================================================*/
 #else

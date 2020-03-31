@@ -94,7 +94,7 @@ static void print_matrix( const GLfloat m[16] )
 
    for (i=0;i<4;i++) 
 	{
-	pf(m[i]); pf(m[4+i]); pf(m[8+i]); pf(m[12+i]); /*LibPrintf*/ printf("\n"); 
+	pf(m[i]); pf(m[4+i]); pf(m[8+i]); pf(m[12+i]); LibPrintf("\n"); 
 	}
 }
 #endif

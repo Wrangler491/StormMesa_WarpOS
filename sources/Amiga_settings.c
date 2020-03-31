@@ -21,13 +21,13 @@ struct Library *GadToolsBase;
 static struct TextAttr MyFont = { "topaz.font", 8, 0, 0, };
 #define LIBCLOSE(Lbase)	 if(Lbase!=NULL)	{CloseLibrary( ((struct Library *)Lbase) );Lbase=NULL;}
 #define NLOOP(nbre) for(n=0;n<nbre;n++)
-#define STORMMESADEBUG 1
+//#define STORMMESADEBUG 1
 /*=================================================================*/
 void STORMMESA_Function(const char *func)
 {
 #ifdef STORMMESADEBUG
 	if(StormMesa.DebugFunction.ON)
-		printf("AGL: %s\n" ,func);	//was LibPrintf
+		//LibPrintf("AGL: %s\n" ,func);
 	if(StormMesa.StepFunction.ON)
 		LibAlert(func);
 #endif
@@ -186,11 +186,11 @@ void STORMMESA_Init()
 	Libstrcpy(StormMesa.UseDrawArray.name,"Use DrawArray");
 	Libstrcpy(StormMesa.ChangePrimitiveFuncs.name,"Change Primitive Funcs");
 
-	//StormMesa.LOCKMODE3.ON=TRUE;
-	StormMesa.VERYFAST.ON=TRUE;
+	StormMesa.LOCKMODE3.ON=TRUE;
+	//StormMesa.VERYFAST.ON=TRUE;
 	//StormMesa.NOHW.ON=FALSE;
-	StormMesa.UseDrawArray.ON=TRUE;
-	StormMesa.STATS.ON=TRUE;
+	//StormMesa.UseDrawArray.ON=TRUE;
+	//StormMesa.STATS.ON=TRUE;
 
 }
 /*==================================================================================*/

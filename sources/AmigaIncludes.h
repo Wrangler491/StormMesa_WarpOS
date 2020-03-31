@@ -43,16 +43,18 @@ ULONG STACKW3D_UpdateTexSubImage(W3D_Context *context, W3D_Texture *texture, voi
 void STACKWritePixelArray(APTR image,UWORD  SrcX, UWORD  SrcY, UWORD  SrcMod, struct RastPort *  RastPort, UWORD  DestX, UWORD  DestY, UWORD  SizeX, UWORD  SizeY, UBYTE  SrcFormat );
 ULONG STACKReadPixelArray(APTR  destRect, UWORD  destX,UWORD  destY, UWORD  destMod, struct RastPort *  RastPort, UWORD  SrcX, UWORD  SrcY, UWORD  SizeX, UWORD  SizeY, UBYTE  DestFormat );
 
-#define STORMMESADEBUG 1
+//#define STORMMESADEBUG 1
 
-void LibPrintf(const char *string, ...);
+//void LibPrintf(const char *string); //, ...);
 /*==================================================================================*/
 #ifdef STORMMESADEBUG
-#define REM(message) printf(#message"\n");	//was LibPrintf
+#define REM(message) LibPrintf(#message"\n");	//was printf
 #define SFUNCTION(n) STORMMESA_Function(n);
+#define LibPrintf(t) SPrintF(t,NULL)
 /*==================================================================================*/
 #else
 #define REM(message) ;
 #define SFUNCTION(n) ;
+#define LibPrintf(t) ;
 #endif  
 /*==================================================================================*/

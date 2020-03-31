@@ -3491,13 +3491,13 @@ static void print_list( GLcontext *ctx,GLuint list )
    OpCode opcode;
 
    if (!glIsList(list)) {
-      /*LibPrintf*/ printf("%d is not a display list ID\n",list);
+      //LibPrintf("%d is not a display list ID\n",list);
       return;
    }
 
    n = (Node *) HashLookup(ctx->Shared->DisplayList, list);
 
-   /*LibPrintf*/ printf("START-LIST %d, address %p\n", list, (void*)n );
+   LibPrintf("START-LIST \n"); //%d, address %p\n", list, (void*)n );
 
    done = n ? GL_FALSE : GL_TRUE;
    while (!done) {
@@ -3505,144 +3505,144 @@ static void print_list( GLcontext *ctx,GLuint list )
 
       switch (opcode) {
      case OPCODE_ACCUM:
-        /*LibPrintf*/ printf("accum %d %g\n", n[1].e, n[2].f );
+        LibPrintf("accum \n"); //%d %g\n", n[1].e, n[2].f );
         break;
      case OPCODE_BEGIN:
-        /*LibPrintf*/ printf("Begin %s\n", enum_string(n[1].e) );
+        LibPrintf("Begin \n"); //%s\n", enum_string(n[1].e) );
         break;
      case OPCODE_BITMAP:
-        /*LibPrintf*/ printf("Bitmap %d %d %g %g %g %g %p\n", n[1].i, n[2].i,
-               n[3].f, n[4].f, n[5].f, n[6].f, (void *) n[7].data );
+        LibPrintf("Bitmap \n"); /*%d %d %g %g %g %g %p\n", n[1].i, n[2].i,
+               n[3].f, n[4].f, n[5].f, n[6].f, (void *) n[7].data );*/
         break;
      case OPCODE_CALL_LIST:
-        /*LibPrintf*/ printf("CallList %d\n", (int) n[1].ui );
+        LibPrintf("CallList \n"); //%d\n", (int) n[1].ui );
         break;
      case OPCODE_CALL_LIST_OFFSET:
-        /*LibPrintf*/ printf("CallList %d + offset %d = %d\n", (int) n[1].ui,
-            ctx->List.ListBase, ctx->List.ListBase + n[1].ui );
+        LibPrintf("CallList \n"); /* %d + offset %d = %d\n", (int) n[1].ui,
+            ctx->List.ListBase, ctx->List.ListBase + n[1].ui ); */
         break;
      case OPCODE_COLOR_3F:
-        /*LibPrintf*/ printf("Color3f %g %g %gn", n[1].f, n[2].f, n[3].f );
+        LibPrintf("Color3f \n"); //%g %g %gn", n[1].f, n[2].f, n[3].f );
         break;
      case OPCODE_COLOR_4F:
-        /*LibPrintf*/ printf("Color4f %g %g %g %g\n", n[1].f, n[2].f, n[3].f, n[4].f);
+        LibPrintf("Color4f  \n"); //%g %g %g %g\n", n[1].f, n[2].f, n[3].f, n[4].f);
         break;
      case OPCODE_COLOR_4UB:
-        /*LibPrintf*/ printf("Color4ub %d %d %d %d\n", n[1].ub, n[2].ub,
-                        n[3].ub, n[4].ub );
+        LibPrintf("Color4ub  \n"); /*%d %d %d %d\n", n[1].ub, n[2].ub,
+                        n[3].ub, n[4].ub );*/
         break;
      case OPCODE_DISABLE:
-        /*LibPrintf*/ printf("Disable %s\n", enum_string(n[1].e));
+        LibPrintf("Disable \n"); //%s\n", enum_string(n[1].e));
         break;
      case OPCODE_ENABLE:
-        /*LibPrintf*/ printf("Enable %s\n", enum_string(n[1].e));
+        LibPrintf("Enable \n"); // %s\n", enum_string(n[1].e));
         break;
      case OPCODE_END:
-        /*LibPrintf*/ printf("End\n");
+        LibPrintf("End\n");
         break;
      case OPCODE_FRUSTUM:
-        /*LibPrintf*/ printf("Frustum %g %g %g %g %g %g\n",
-            n[1].f, n[2].f, n[3].f, n[4].f, n[5].f, n[6].f );
+        LibPrintf("Frustum \n"); /* %g %g %g %g %g %g\n",
+            n[1].f, n[2].f, n[3].f, n[4].f, n[5].f, n[6].f ); */
         break;
      case OPCODE_INDEX:
-        /*LibPrintf*/ printf("Index %d\n", (int) n[1].ui );
+        LibPrintf("Index \n"); //%d\n", (int) n[1].ui );
         break;
      case OPCODE_LINE_STIPPLE:
-        /*LibPrintf*/ printf("LineStipple %d %x\n", n[1].i, (int) n[2].us );
+        LibPrintf("LineStipple \n"); //%d %x\n", n[1].i, (int) n[2].us );
         break;
      case OPCODE_LOAD_IDENTITY:
-        /*LibPrintf*/ printf("LoadIdentity\n");
+        LibPrintf("LoadIdentity\n");
         break;
      case OPCODE_LOAD_MATRIX:
-        /*LibPrintf*/ printf("LoadMatrix\n");
-        /*LibPrintf*/ printf("  %8f %8f %8f %8f\n", n[1].f, n[5].f,  n[9].f, n[13].f);
-        /*LibPrintf*/ printf("  %8f %8f %8f %8f\n", n[2].f, n[6].f, n[10].f, n[14].f);
-        /*LibPrintf*/ printf("  %8f %8f %8f %8f\n", n[3].f, n[7].f, n[11].f, n[15].f);
-        /*LibPrintf*/ printf("  %8f %8f %8f %8f\n", n[4].f, n[8].f, n[12].f, n[16].f);
+        LibPrintf("LoadMatrix\n");
+        //LibPrintf("  %8f %8f %8f %8f\n", n[1].f, n[5].f,  n[9].f, n[13].f);
+        //LibPrintf("  %8f %8f %8f %8f\n", n[2].f, n[6].f, n[10].f, n[14].f);
+        //LibPrintf("  %8f %8f %8f %8f\n", n[3].f, n[7].f, n[11].f, n[15].f);
+        //LibPrintf("  %8f %8f %8f %8f\n", n[4].f, n[8].f, n[12].f, n[16].f);
         break;
      case OPCODE_MATERIAL:
-        /*LibPrintf*/ printf("Material %s %s %g %g %g %g\n", enum_string(n[1].e),
-            enum_string(n[2].e), n[3].f, n[4].f, n[5].f, n[6].f );
+        LibPrintf("Material \n"); /*%s %s %g %g %g %g\n", enum_string(n[1].e),
+            enum_string(n[2].e), n[3].f, n[4].f, n[5].f, n[6].f ); */
         break;
      case OPCODE_MULT_MATRIX:
-        /*LibPrintf*/ printf("MultMatrix (or Rotate)\n");
-        /*LibPrintf*/ printf("  %8f %8f %8f %8f\n", n[1].f, n[5].f,  n[9].f, n[13].f);
-        /*LibPrintf*/ printf("  %8f %8f %8f %8f\n", n[2].f, n[6].f, n[10].f, n[14].f);
-        /*LibPrintf*/ printf("  %8f %8f %8f %8f\n", n[3].f, n[7].f, n[11].f, n[15].f);
-        /*LibPrintf*/ printf("  %8f %8f %8f %8f\n", n[4].f, n[8].f, n[12].f, n[16].f);
+        LibPrintf("MultMatrix (or Rotate)\n");
+        //LibPrintf("  %8f %8f %8f %8f\n", n[1].f, n[5].f,  n[9].f, n[13].f);
+        //LibPrintf("  %8f %8f %8f %8f\n", n[2].f, n[6].f, n[10].f, n[14].f);
+        //LibPrintf("  %8f %8f %8f %8f\n", n[3].f, n[7].f, n[11].f, n[15].f);
+        //LibPrintf("  %8f %8f %8f %8f\n", n[4].f, n[8].f, n[12].f, n[16].f);
         break;
      case OPCODE_NORMAL:
-        /*LibPrintf*/ printf("Normal %g %g %g\n", n[1].f, n[2].f, n[3].f );
+        LibPrintf("Normal \n"); //%g %g %g\n", n[1].f, n[2].f, n[3].f );
         break;
      case OPCODE_ORTHO:
-        /*LibPrintf*/ printf("Ortho %g %g %g %g %g %g\n",
-            n[1].f, n[2].f, n[3].f, n[4].f, n[5].f, n[6].f );
+        LibPrintf("Ortho \n"); /*%g %g %g %g %g %g\n",
+            n[1].f, n[2].f, n[3].f, n[4].f, n[5].f, n[6].f ); */
         break;
      case OPCODE_POP_ATTRIB:
-        /*LibPrintf*/ printf("PopAttrib\n");
+        LibPrintf("PopAttrib\n");
         break;
      case OPCODE_POP_MATRIX:
-        /*LibPrintf*/ printf("PopMatrix\n");
+        LibPrintf("PopMatrix\n");
         break;
      case OPCODE_POP_NAME:
-        /*LibPrintf*/ printf("PopName\n");
+        LibPrintf("PopName\n");
         break;
      case OPCODE_PUSH_ATTRIB:
-        /*LibPrintf*/ printf("PushAttrib %x\n", n[1].bf );
+        LibPrintf("PushAttrib \n"); //%x\n", n[1].bf );
         break;
      case OPCODE_PUSH_MATRIX:
-        /*LibPrintf*/ printf("PushMatrix\n");
+        LibPrintf("PushMatrix\n");
         break;
      case OPCODE_PUSH_NAME:
-        /*LibPrintf*/ printf("PushName %d\n", (int) n[1].ui );
+        LibPrintf("PushName \n"); //%d\n", (int) n[1].ui );
         break;
      case OPCODE_RASTER_POS:
-        /*LibPrintf*/ printf("RasterPos %g %g %g %g\n", n[1].f, n[2].f,n[3].f,n[4].f);
+        LibPrintf("RasterPos \n"); //%g %g %g %g\n", n[1].f, n[2].f,n[3].f,n[4].f);
         break;
      case OPCODE_RECTF:
-        /*LibPrintf*/ printf("Rectf %g %g %g %g\n", n[1].f, n[2].f, n[3].f, n[4].f);
+        LibPrintf("Rectf \n"); //%g %g %g %g\n", n[1].f, n[2].f, n[3].f, n[4].f);
         break;
      case OPCODE_SCALE:
-        /*LibPrintf*/ printf("Scale %g %g %g\n", n[1].f, n[2].f, n[3].f );
+        LibPrintf("Scale \n"); //%g %g %g\n", n[1].f, n[2].f, n[3].f );
         break;
      case OPCODE_TEXCOORD2:
-        /*LibPrintf*/ printf("TexCoord %g %g\n", n[1].f, n[2].f);
+        LibPrintf("TexCoord \n"); //%g %g\n", n[1].f, n[2].f);
         break;
      case OPCODE_TEXCOORD4:
-        /*LibPrintf*/ printf("TexCoord %g %g %g %g\n", n[1].f, n[2].f, n[3].f,n[4].f);
+        LibPrintf("TexCoord \n"); // %g %g %g %g\n", n[1].f, n[2].f, n[3].f,n[4].f);
         break;
      case OPCODE_TRANSLATE:
-        /*LibPrintf*/ printf("Translate %g %g %g\n", n[1].f, n[2].f, n[3].f );
+        LibPrintf("Translate \n"); //%g %g %g\n", n[1].f, n[2].f, n[3].f );
         break;
      case OPCODE_VERTEX2:
-        /*LibPrintf*/ printf("Vertex %g %g\n", n[1].f, n[2].f );
+        LibPrintf("Vertex \n"); //%g %g\n", n[1].f, n[2].f );
         break;
      case OPCODE_VERTEX3:
-        /*LibPrintf*/ printf("Vertex %g %g %g\n", n[1].f, n[2].f, n[3].f );
+        LibPrintf("Vertex \n"); //%g %g %g\n", n[1].f, n[2].f, n[3].f );
         break;
      case OPCODE_VERTEX4:
-        /*LibPrintf*/ printf("Vertex %g %g %g %g\n", n[1].f, n[2].f, n[3].f, n[4].f );
+        LibPrintf("Vertex\n"); // %g %g %g %g\n", n[1].f, n[2].f, n[3].f, n[4].f );
         break;
 
      /*
       * meta opcodes/commands
       */
      case OPCODE_CONTINUE:
-        /*LibPrintf*/ printf("DISPLAY-LIST-CONTINUE\n");
+        LibPrintf("DISPLAY-LIST-CONTINUE\n");
         n = (Node *) n[1].next;
         break;
      case OPCODE_END_OF_LIST:
-        /*LibPrintf*/ printf("END-LIST %d\n", list);
+        LibPrintf("END-LIST \n"); // %d\n", list);
         done = GL_TRUE;
         break;
      default:
         if (opcode < 0 || opcode > OPCODE_END_OF_LIST) {
-           /*LibPrintf*/ printf("ERROR IN DISPLAY LIST: opcode = %d, address = %p\n",
-               opcode, (void*) n);
+           LibPrintf("ERROR IN DISPLAY LIST: \n"); /*opcode = %d, address = %p\n",
+               opcode, (void*) n); */
            return;
         }
         else {
-           /*LibPrintf*/ printf("command %d, %d operands\n",opcode,InstSize[opcode]);
+           LibPrintf("command \n"); //%d, %d operands\n",opcode,InstSize[opcode]);
         }
       }
 

@@ -122,10 +122,10 @@ void HWDriver_UnLock3(struct amigamesa_context* c);
 #endif
 struct timeval tval1,tval2;
 
-#define STORMMESADEBUG 1
+//#define STORMMESADEBUG 1
 #ifdef STORMMESADEBUG
-void LibPrintf(const char *string, ...);
-#define VAR(var)	 /*LibPrintf*/ printf(#var ": %d \n",var);
+//void LibPrintf(const char *string); //, ...);
+//#define VAR(var)	 LibPrintf(#var ": %d \n",var);
 #else
 #define VAR(var) ;
 #endif
@@ -196,7 +196,7 @@ const char * checkstrings[] = {
 		};
 ;;//
 
-//#define DBG 1
+#define DBG 1
 
 // misc support
 ;// logbase2
@@ -229,7 +229,7 @@ GLboolean HWDriver_set_buffer( GLcontext *ctx,GLenum mode )
 	W3D_Context *context = hwcontext->context;
 
 #ifdef DBG
-	/*LibPrintf*/ printf("HWDriver_set_buffer\n");
+	LibPrintf("HWDriver_set_buffer\n");
 #endif
 
 	if (c->flags & FLAG_TWOBUFFERS)
@@ -266,22 +266,22 @@ void HWDriver_resize( GLcontext *ctx,GLuint *width, GLuint *height)
 		return;
 
 #ifdef DBG
-	/*LibPrintf*/ printf("HWDriver_resize: %d %d\n",c->width,c->height);
+	LibPrintf("HWDriver_resize: \n"); //,c->width,c->height);
 #endif
 
 	if (c->flags & FLAG_DIRECTRENDER)
 	{
-	printf("Phase 1\n");
+	LibPrintf("Phase 1\n");
 
 	if(!((c->width  == (c->rp->Layer->bounds.MaxX-c->rp->Layer->bounds.MinX-c->left-c->right+1))
 	&&  (c->height == (c->rp->Layer->bounds.MaxY-c->rp->Layer->bounds.MinY-c->bottom-c->top+1))))
 		{
-	printf("Width: %d, MaxX: %d, MinX: %d, left: %d, right: %d\n",c->width,c->rp->Layer->bounds.MaxX,c->rp->Layer->bounds.MinX,c->left,c->right);
-	printf("Height: %d, MaxY: %d, MinY: %d, bottom: %d, top: %d\n",c->height,c->rp->Layer->bounds.MaxY,c->rp->Layer->bounds.MinY,c->bottom,c->top);
+	LibPrintf("Width:\n"); // %d, MaxX: %d, MinX: %d, left: %d, right: %d\n",c->width,c->rp->Layer->bounds.MaxX,c->rp->Layer->bounds.MinX,c->left,c->right);
+	LibPrintf("Height:\n"); // %d, MaxY: %d, MinY: %d, bottom: %d, top: %d\n",c->height,c->rp->Layer->bounds.MaxY,c->rp->Layer->bounds.MinY,c->bottom,c->top);
 			c->RealWidth =c->rp->Layer->bounds.MaxX-c->rp->Layer->bounds.MinX+1;
 			c->RealHeight=c->rp->Layer->bounds.MaxY-c->rp->Layer->bounds.MinY+1;
-	printf("RealWidth: %d\n",c->RealWidth);
-	printf("RealHeight: %d\n",c->RealHeight);
+	LibPrintf("RealWidth: \n"); //%d\n",c->RealWidth);
+	LibPrintf("RealHeight: \n"); //%d\n",c->RealHeight);
 			*width=c->width = c->RealWidth-c->left-c->right;
 			*height=c->height = c->RealHeight-c->bottom-c->top;
 			FreeBitMap(c->back_rp->BitMap);
@@ -291,7 +291,7 @@ void HWDriver_resize( GLcontext *ctx,GLuint *width, GLuint *height)
 			if (!(c->back_rp->BitMap = AllocBitMap(((c->width+63)&0xffffffc0),c->height,c->depth,BMF_MINPLANES|BMF_DISPLAYABLE,c->rp->BitMap)))
 #endif
 			{
-				/*LibPrintf*/ printf("Panic! Not enough memory for resizing!\n");
+				LibPrintf("Panic! Not enough memory for resizing!\n");
 				exit(0);
 			}
 			SetAPen(c->back_rp,0);
@@ -305,7 +305,7 @@ void HWDriver_resize( GLcontext *ctx,GLuint *width, GLuint *height)
 				if (!(c->back2_rp->BitMap = AllocBitMap(((c->width+63)&0xffffffc0),c->height,c->depth,BMF_MINPLANES|BMF_DISPLAYABLE,c->rp->BitMap)))
 #endif
 				{
-						/*LibPrintf*/ printf("Panic! Not enough memory for resizing!\n");
+						LibPrintf("Panic! Not enough memory for resizing!\n");
 						exit(0);
 				}
 				SetAPen(c->back2_rp,0);
@@ -366,7 +366,7 @@ void HW_set_color_LUT8(GLcontext *ctx,
 	W3D_Float* colf = hwcontext->colconv;
 	W3D_Color co;
 #ifdef DBG
-	/*LibPrintf*/ printf("HW_set_color_LUT8: %d %d %d %d\n",r,g,b,a);
+	LibPrintf("HW_set_color_LUT8: \n"); //%d %d %d %d\n",r,g,b,a);
 #endif
 	co.r = colf[r];
 	co.g = colf[g];
@@ -387,7 +387,7 @@ void HW_set_color_RGB15(GLcontext *ctx,
 	W3D_Color co;
 
 #ifdef DBG
-	/*LibPrintf*/ printf("HW_set_color_RGB15\n");
+	LibPrintf("HW_set_color_RGB15\n");
 #endif
 	co.r = colf[r];
 	co.g = colf[g];
@@ -408,7 +408,7 @@ void HW_set_color_RGB15PC(GLcontext *ctx,
 	W3D_Color co;
 
 #ifdef DBG
-	/*LibPrintf*/ printf("HW_set_color_RGB15PC\n");
+	LibPrintf("HW_set_color_RGB15PC\n");
 #endif
 	co.r = colf[r];
 	co.g = colf[g];
@@ -429,7 +429,7 @@ void HW_set_color_RGB16(GLcontext *ctx,
 	W3D_Color co;
 
 #ifdef DBG
-	/*LibPrintf*/ printf("HW_set_color_RGB16\n");
+	LibPrintf("HW_set_color_RGB16\n");
 #endif
 	co.r = colf[r];
 	co.g = colf[g];
@@ -450,7 +450,7 @@ void HW_set_color_RGB16PC(GLcontext *ctx,
 	W3D_Color co;
 
 #ifdef DBG
-	/*LibPrintf*/ printf("HW_set_color_RGB16PC\n");
+	LibPrintf("HW_set_color_RGB16PC\n");
 #endif
 	co.r = colf[r];
 	co.g = colf[g];
@@ -471,7 +471,7 @@ void HW_set_color_BGR15PC(GLcontext *ctx,
 	W3D_Color co;
 
 #ifdef DBG
-	/*LibPrintf*/ printf("HW_set_color_BGR15PC\n");
+	LibPrintf("HW_set_color_BGR15PC\n");
 #endif
 	co.r = colf[r];
 	co.g = colf[g];
@@ -492,7 +492,7 @@ void HW_set_color_BGR16PC(GLcontext *ctx,
 	W3D_Color co;
 
 #ifdef DBG
-	/*LibPrintf*/ printf("HW_set_color_BGR16PC\n");
+	LibPrintf("HW_set_color_BGR16PC\n");
 #endif
 	co.r = colf[r];
 	co.g = colf[g];
@@ -513,7 +513,7 @@ void HW_set_color_RGB(GLcontext *ctx,
 	W3D_Color co;
 
 #ifdef DBG
-	/*LibPrintf*/ printf("HW_set_color_RGB\n");
+	LibPrintf("HW_set_color_RGB\n");
 #endif
 	co.r = colf[r];
 	co.g = colf[g];
@@ -534,7 +534,7 @@ void HW_set_color_BGR(GLcontext *ctx,
 	W3D_Color co;
 
 #ifdef DBG
-	/*LibPrintf*/ printf("HW_set_color_BGR\n");
+	LibPrintf("HW_set_color_BGR\n");
 #endif
 	co.r = colf[r];
 	co.g = colf[g];
@@ -555,7 +555,7 @@ void HW_set_color_ARGB(GLcontext *ctx,
 	W3D_Color co;
 
 #ifdef DBG
-	/*LibPrintf*/ printf("HW_set_color_ARGB\n");
+	LibPrintf("HW_set_color_ARGB\n");
 #endif
 	co.r = colf[r];
 	co.g = colf[g];
@@ -576,7 +576,7 @@ void HW_set_color_BGRA(GLcontext *ctx,
 	W3D_Color co;
 
 #ifdef DBG
-	/*LibPrintf*/ printf("HW_set_color_BGRA\n");
+	LibPrintf("HW_set_color_BGRA\n");
 #endif
 	co.r = colf[r];
 	co.g = colf[g];
@@ -597,7 +597,7 @@ void HW_set_color_RGBA(GLcontext *ctx,
 	W3D_Color co;
 
 #ifdef DBG
-	/*LibPrintf*/ printf("HW_set_color_RGBA\n");
+	LibPrintf("HW_set_color_RGBA\n");
 #endif
 	co.r = colf[r];
 	co.g = colf[g];
@@ -617,6 +617,10 @@ GLbitfield HW_clear_generic(GLcontext *ctx, GLbitfield mask,
   W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
   W3D_Context *context = hwcontext->context;
 
+#ifdef DBG
+    LibPrintf("HW_clear_generic\n");
+#endif
+
   if ((hwcontext->flags & HWFLAG_ACTIVE) &&
 	  (hwcontext->flags & (HWFLAG_ZBUFFER|HWFLAG_SBUFFER)))
   {
@@ -627,7 +631,9 @@ GLbitfield HW_clear_generic(GLcontext *ctx, GLbitfield mask,
 		  if (!(ctx->Visual->DepthBits==0 || !ctx->Depth.Mask))
 		  {
 			  W3D_Double clearvalue = (W3D_Double)ctx->Depth.Clear;
+	LibPrintf("About to call W3D_ClearZBuffer\n");
 			  W3D_ClearZBuffer(context,&clearvalue);
+	LibPrintf("Completed W3D_ClearZBuffer\n");
 			  hwcontext->flags |= HWFLAG_DIRTY;
 			  mask &= (~GL_DEPTH_BUFFER_BIT);
 		  }
@@ -660,7 +666,7 @@ GLbitfield HW_clear_LUT8(GLcontext *ctx, GLbitfield mask,
 	W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
 
 #ifdef DBG
-	/*LibPrintf*/ printf("HWD_clear_LUT8 %ld\n",c->clearpixel);
+	LibPrintf("HWD_clear_LUT8 \n"); //%ld\n",c->clearpixel);
 #endif
 	if (hwcontext->lockmode >= 2)
 		HWDriver_UnLock3(c);
@@ -677,7 +683,7 @@ GLbitfield HW_clear_RGB15(GLcontext *ctx, GLbitfield mask,
 	W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
 
 #ifdef DBG
-	/*LibPrintf*/ printf("HWD_clear_RGB15 %ld\n",c->clearpixel);
+	LibPrintf("HWD_clear_RGB15 \n"); // %ld\n",c->clearpixel);
 #endif
 	if (hwcontext->lockmode >= 2)
 		HWDriver_UnLock3(c);
@@ -694,7 +700,7 @@ GLbitfield HW_clear_RGB15PC(GLcontext *ctx, GLbitfield mask,
 	W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
 
 #ifdef DBG
-	/*LibPrintf*/ printf("HWD_clear_RGB15PC %ld\n",c->clearpixel);
+	LibPrintf("HWD_clear_RGB15PC \n"); //%ld\n",c->clearpixel);
 #endif
 	if (hwcontext->lockmode >= 2)
 		HWDriver_UnLock3(c);
@@ -711,7 +717,7 @@ GLbitfield HW_clear_RGB16(GLcontext *ctx, GLbitfield mask,
 	W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
 
 #ifdef DBG
-	/*LibPrintf*/ printf("HWD_clear_RGB16 %ld\n",c->clearpixel);
+	LibPrintf("HWD_clear_RGB16 \n"); //%ld\n",c->clearpixel);
 #endif
 	if (hwcontext->lockmode >= 2)
 		HWDriver_UnLock3(c);
@@ -728,7 +734,7 @@ GLbitfield HW_clear_RGB16PC(GLcontext *ctx, GLbitfield mask,
 	W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
 
 #ifdef DBG
-	/*LibPrintf*/ printf("HWD_clear_RGB16PC %ld\n",c->clearpixel);
+	LibPrintf("HWD_clear_RGB16PC \n"); // %ld\n",c->clearpixel);
 #endif
 	if (hwcontext->lockmode >= 2)
 		HWDriver_UnLock3(c);
@@ -745,7 +751,7 @@ GLbitfield HW_clear_BGR15PC(GLcontext *ctx, GLbitfield mask,
 	W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
 
 #ifdef DBG
-	/*LibPrintf*/ printf("HWD_clear_BGR15PC %ld\n",c->clearpixel);
+	LibPrintf("HWD_clear_BGR15PC \n"); // %ld\n",c->clearpixel);
 #endif
 	if (hwcontext->lockmode >= 2)
 		HWDriver_UnLock3(c);
@@ -762,7 +768,7 @@ GLbitfield HW_clear_BGR16PC(GLcontext *ctx, GLbitfield mask,
 	W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
 
 #ifdef DBG
-	/*LibPrintf*/ printf("HWD_clear_BGR16PC %ld\n",c->clearpixel);
+	LibPrintf("HWD_clear_BGR16PC \n"); //%ld\n",c->clearpixel);
 #endif
 	if (hwcontext->lockmode >= 2)
 		HWDriver_UnLock3(c);
@@ -779,7 +785,7 @@ GLbitfield HW_clear_RGB24(GLcontext *ctx, GLbitfield mask,
 	W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
 
 #ifdef DBG
-	/*LibPrintf*/ printf("HWD_clear_RGB24 %ld\n",c->clearpixel);
+	LibPrintf("HWD_clear_RGB24 \n"); // %ld\n",c->clearpixel);
 #endif
 	if (hwcontext->lockmode >= 2)
 		HWDriver_UnLock3(c);
@@ -796,7 +802,7 @@ GLbitfield HW_clear_BGR24(GLcontext *ctx, GLbitfield mask,
 	W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
 
 #ifdef DBG
-	/*LibPrintf*/ printf("HWD_clear_BGR24 %ld\n",c->clearpixel);
+	LibPrintf("HWD_clear_BGR24 \n"); //%ld\n",c->clearpixel);
 #endif
 	if (hwcontext->lockmode >= 2)
 		HWDriver_UnLock3(c);
@@ -813,7 +819,7 @@ GLbitfield HW_clear_ARGB(GLcontext *ctx, GLbitfield mask,
 	W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
 
 #ifdef DBG
-	/*LibPrintf*/ printf("HWD_clear_ARGB %ld\n",c->clearpixel);
+	LibPrintf("HWD_clear_ARGB \n"); //%ld\n",c->clearpixel);
 #endif
 	if (hwcontext->lockmode >= 2)
 		HWDriver_UnLock3(c);
@@ -830,7 +836,7 @@ GLbitfield HW_clear_BGRA(GLcontext *ctx, GLbitfield mask,
 	W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
 
 #ifdef DBG
-	/*LibPrintf*/ printf("HWD_clear_BGRA %ld\n",c->clearpixel);
+	LibPrintf("HWD_clear_BGRA \n"); //%ld\n",c->clearpixel);
 #endif
 	if (hwcontext->lockmode >= 2)
 		HWDriver_UnLock3(c);
@@ -847,7 +853,7 @@ GLbitfield HW_clear_RGBA(GLcontext *ctx, GLbitfield mask,
 	W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
 
 #ifdef DBG
-	/*LibPrintf*/ printf("HWD_clear_RGBA %ld\n",c->clearpixel);
+	LibPrintf("HWD_clear_RGBA \n"); //%ld\n",c->clearpixel);
 #endif
 	if (hwcontext->lockmode >= 2)
 		HWDriver_UnLock3(c);
@@ -875,31 +881,32 @@ void HW_PrintStats(W3Ddriver* hwcontext)
 {
 	int i;
 
-	/*LibPrintf*/ printf("\n");
-	/*LibPrintf*/ printf("3D hardware operation statistics\n");
-	/*LibPrintf*/ printf("--------------------------------\n");
-	/*LibPrintf*/ printf("\n");
+	LibPrintf("\n");
+	LibPrintf("3D hardware operation statistics\n");
+	LibPrintf("--------------------------------\n");
+	LibPrintf("\n");
 	if (hwcontext->failed)
 	{
-		/*LibPrintf*/ printf("Rasterization compatibility check failed due to the\n");
-		/*LibPrintf*/ printf("following reasons:\n");
+		LibPrintf("Rasterization compatibility check failed due to the\n");
+		LibPrintf("following reasons:\n");
 
 		for (i=0;i<CHECK_MAX;i++)
 		{
 			if (hwcontext->statarray[i])
-				/*LibPrintf*/ printf("%5d: %s\n",hwcontext->statarray[i],checkstrings[i]);
+				LibPrintf("missing data!\n");
+				//LibPrintf("%5d: %s\n",hwcontext->statarray[i],checkstrings[i]);
 		}
 
-		/*LibPrintf*/ printf("\n");
+		LibPrintf("\n");
 	}
 
-	/*LibPrintf*/ printf("Rasterization statistics\n");
-	/*LibPrintf*/ printf("\n");
+	LibPrintf("Rasterization statistics\n");
+	LibPrintf("\n");
 
 	for (i=0;i<DRAW_MAX;i++)
-		/*LibPrintf*/ printf("%s %d\n",drawstrings[i],hwcontext->statarray2[i]);
+		//LibPrintf("%s %d\n",drawstrings[i],hwcontext->statarray2[i]);
 
-	/*LibPrintf*/ printf("\n");
+	LibPrintf("\n");
 }
 ;;//
 
@@ -933,6 +940,10 @@ GLuint HW_DepthTestSpan( GLcontext *ctx,
    GLubyte *m = mask;
    GLuint i;
    GLuint passed = 0;
+
+#ifdef DBG
+    LibPrintf("HW_DepthTestSpan\n");
+#endif
 
    if (hwcontext->flags & HWFLAG_DIRTY)
    {
@@ -1191,6 +1202,10 @@ void HW_DepthTestPixels( GLcontext *ctx,
    register GLdepth *zptr;
    register GLuint i;
 
+#ifdef DBG
+    LibPrintf("HW_DepthTestPixels\n");
+#endif
+
    if (hwcontext->flags & HWFLAG_DIRTY)
    {
 		W3D_Flush(context);
@@ -1427,6 +1442,10 @@ void HW_ReadDepthSpanFloat( GLcontext *ctx,
 	W3D_Double z[MAX_WIDTH];
 	int i;
 
+#ifdef DBG
+    LibPrintf("HW_ReadDepthSpanFloat\n");
+#endif
+
 	if (hwcontext->flags & HWFLAG_DIRTY)
 	{
 		W3D_Flush(context);
@@ -1452,6 +1471,11 @@ void HW_ReadDepthSpanInt( GLcontext *ctx,
 	W3D_Context *context = hwcontext->context;
 	W3D_Double z[MAX_WIDTH];
 	int i;
+
+#ifdef DBG
+    LibPrintf("HW_ReadDepthSpanInt\n");
+#endif
+
 
 	if (hwcontext->flags & HWFLAG_DIRTY)
 	{
@@ -1482,6 +1506,11 @@ void HW_SetupFog( GLcontext *ctx )
 	W3D_Fog fog;
 	ULONG fogmode;
 	W3D_Float wscale = hwcontext->wscale;
+
+#ifdef DBG
+    LibPrintf("HW_SetupFog\n");
+#endif
+
 
 	if ((ctx->Fog.Mode == GL_LINEAR) || (!(c->flags & (FLAG_FAST|FLAG_VERYFAST))))
 	{
@@ -1547,6 +1576,10 @@ void HW_DeleteTexture( GLcontext *ctx, struct gl_texture_object *tObj )
    W3Dtexobj* to = (W3Dtexobj *)tObj->DriverData;
    W3Dteximg* ti;
    int i;
+
+#ifdef DBG
+    LibPrintf("HW_DeleteTexture\n");
+#endif
 
    if (to && to->texture)
    {
@@ -1685,7 +1718,7 @@ REM(no to->texture);
 		if (to->MipMapFilter || to->hasMipmaps)
 		{
 		REM(w3d_alloctex with mipmaps);
-		VAR(mask);
+		//VAR(mask);
 				if (!(to->texture = W3D_AllocTexObjTags(context,&hwcontext->error,
 							W3D_ATO_IMAGE,teximage,
 							W3D_ATO_FORMAT,to->W3Dformat,
@@ -1749,6 +1782,9 @@ void HW_TexParameter( GLcontext *ctx, GLenum target,
    GLboolean newFilter = GL_FALSE;
    GLboolean newWrap = GL_FALSE;
 
+#ifdef DBG
+    LibPrintf("HW_TexParameter\n");
+#endif
 
    if (target != GL_TEXTURE_2D)
 		return;
@@ -1888,6 +1924,11 @@ GLboolean HW_ConvertTexture(W3D_Context* context, W3Dtexobj *to,
 							GLint internalformat,GLint xoffset,GLint yoffset,
 							GLsizei width,GLsizei height,int* bppix)
 {
+
+#ifdef DBG
+    LibPrintf("HW_ConvertTexture\n");
+#endif
+
    switch (internalformat)
    {
 		case GL_ALPHA:
@@ -2000,6 +2041,11 @@ void HW_TexImage_generic( GLcontext *ctx, GLenum target,
    W3Dteximg* ti;
    ULONG wlevel = 0;
    int i,bppix;
+
+#ifdef DBG
+    LibPrintf("HW_TexImage_generic\n");
+#endif
+
 
    if(target!=GL_TEXTURE_2D)
 		return;
@@ -2214,6 +2260,10 @@ void HW_TexSubImage( GLcontext *ctx, GLenum target,
 						GLint internalFormat,
 						const struct gl_texture_image *image )
 {
+#ifdef DBG
+    LibPrintf("HW_TexSubImage\n");
+#endif
+
    HW_TexImage_generic(ctx,target,tObj,level,xoffset,yoffset,width,height,
 				  internalFormat,image,GL_FALSE);
 
@@ -2246,6 +2296,10 @@ void HW_TexEnv( GLcontext *ctx, GLenum pname, const GLfloat *param )
    W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
    W3D_Context *context = hwcontext->context;
    GLenum mode;
+
+#ifdef DBG
+    LibPrintf("HW_TexEnv\n");
+#endif
 
    switch (pname)
    {
@@ -2285,6 +2339,10 @@ void HW_TexEnv( GLcontext *ctx, GLenum pname, const GLfloat *param )
  */
 GLint HW_GetParameteri( const GLcontext *ctx, GLint param )
 {
+#ifdef DBG
+    LibPrintf("HW_GetParameteri\n");
+#endif
+
    switch (param)
    {
 		case DD_MAX_TEXTURE_SIZE:
@@ -2306,6 +2364,10 @@ GLint HW_GetParameteri( const GLcontext *ctx, GLint param )
  */
 GLint SW_GetParameteri( const GLcontext *ctx, GLint param )
 {
+#ifdef DBG
+    LibPrintf("SW_GetParameteri\n");
+#endif
+
    switch (param)
    {
 		case DD_MAX_TEXTURE_SIZE:
@@ -2330,6 +2392,10 @@ void HW_Dither(GLcontext *ctx, GLboolean enable )
    AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
    W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
    W3D_Context *context = hwcontext->context;
+
+#ifdef DBG
+    LibPrintf("HW_Dither\n");
+#endif
 
    if (enable)
 		W3D_SetState(context,W3D_DITHERING,W3D_ENABLE);
@@ -2371,7 +2437,7 @@ void HW_SetupDriver( GLcontext *ctx )
    W3D_Context *context = hwcontext->context;
 
 	REM(HW_SetupDriver);
-printf("GLcontext: 0x%08x, AM context: 0x%08x, HW context: 0x%08x, context: 0x%08x\n",ctx,c,hwcontext,context);
+LibPrintf("GLcontext:\n"); // 0x%08x, AM context: 0x%08x, HW context: 0x%08x, context: 0x%08x\n",ctx,c,hwcontext,context);
 /* texmapping setup */
 /* TODO: support 3d textures */
 
@@ -2684,6 +2750,10 @@ points_func HW_ChoosePoint_VeryFast(GLcontext *ctx)
    W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
    W3D_Context *context = hwcontext->context;
 
+#ifdef DBG
+    LibPrintf("HW_ChoosePoint_VeryFast\n");
+#endif
+
    if (QUERY3D(W3D_Q_DRAW_POINT) == W3D_NOT_SUPPORTED)
 		return NULL;
    if (ctx->Light.ShadeModel==GL_SMOOTH)
@@ -2708,6 +2778,10 @@ points_func HW_ChoosePoint_Fast(GLcontext *ctx)
    AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
    W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
    W3D_Context *context = hwcontext->context;
+
+#ifdef DBG
+    LibPrintf("HW_ChoosePoint_Fast\n");
+#endif
 
    if (QUERY3D(W3D_Q_DRAW_POINT) == W3D_NOT_SUPPORTED)
 		return NULL;
@@ -2746,6 +2820,11 @@ points_func HW_ChoosePoint(GLcontext *ctx)
    AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
    W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
    W3D_Context *context = hwcontext->context;
+
+#ifdef DBG
+    LibPrintf("HW_ChoosePoint\n");
+#endif
+
 
    if (QUERY3D(W3D_Q_DRAW_POINT) != W3D_FULLY_SUPPORTED)
 		return NULL;
@@ -2801,6 +2880,10 @@ line_func HW_ChooseLine_VeryFast(GLcontext *ctx)
    W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
    W3D_Context *context = hwcontext->context;
 
+#ifdef DBG
+    LibPrintf("HW_ChooseLine_VeryFast\n");
+#endif
+
    if (hwcontext->flags & HWFLAG_NOHWLINES)
 		return NULL;
 
@@ -2829,6 +2912,10 @@ line_func HW_ChooseLine_Fast(GLcontext *ctx)
    AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
    W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
    W3D_Context *context = hwcontext->context;
+
+#ifdef DBG
+    LibPrintf("HW_ChooseLine_Fast\n");
+#endif
 
    if (hwcontext->flags & HWFLAG_NOHWLINES)
 		return NULL;
@@ -2871,6 +2958,11 @@ line_func HW_ChooseLine(GLcontext *ctx)
    AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
    W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
    W3D_Context *context = hwcontext->context;
+
+
+#ifdef DBG
+    LibPrintf("HW_ChooseLine\n");
+#endif
 
    if (hwcontext->flags & HWFLAG_NOHWLINES)
 		return NULL;
@@ -2930,6 +3022,11 @@ triangle_func HW_ChooseTriangle_Fast(GLcontext *ctx)
    W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
    W3D_Context *context = hwcontext->context;
 
+#ifdef DBG
+    LibPrintf("HW_ChooseTriangle_Fast\n");
+#endif
+
+
    if (QUERY3D(W3D_Q_DRAW_TRIANGLE) == W3D_NOT_SUPPORTED)
 		return NULL;
    if (ctx->Light.ShadeModel==GL_SMOOTH)
@@ -2954,6 +3051,11 @@ triangle_func HW_ChooseTriangle(GLcontext *ctx)
    AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
    W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
    W3D_Context *context = hwcontext->context;
+
+#ifdef DBG
+    LibPrintf("HW_ChooseTriangle\n");
+#endif
+
 
    if (QUERY3D(W3D_Q_DRAW_TRIANGLE) != W3D_FULLY_SUPPORTED)
 		return NULL;
@@ -2996,6 +3098,10 @@ quad_func HW_ChooseQuad_Fast(GLcontext *ctx)
    W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
    W3D_Context *context = hwcontext->context;
 
+#ifdef DBG
+    LibPrintf("HW_ChooseQuad_Fast\n");
+#endif
+
    if (QUERY3D(W3D_Q_DRAW_TRIANGLE) == W3D_NOT_SUPPORTED)
 		return NULL;
 
@@ -3021,6 +3127,11 @@ quad_func HW_ChooseQuad(GLcontext *ctx)
    AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
    W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
    W3D_Context *context = hwcontext->context;
+
+#ifdef DBG
+    LibPrintf("HW_ChooseQuad\n");
+#endif
+
 
    if (QUERY3D(W3D_Q_DRAW_TRIANGLE) != W3D_FULLY_SUPPORTED)
 		return NULL;
@@ -3064,6 +3175,10 @@ linestrip_func HW_ChooseLineStrip_VeryFast(GLcontext *ctx)
    W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
    W3D_Context *context = hwcontext->context;
 
+#ifdef DBG
+    LibPrintf("HW_ChooseKineStrip_VeryFast\n");
+#endif
+
    if (hwcontext->flags & HWFLAG_NOHWLINES)
 		return NULL;
 
@@ -3087,6 +3202,11 @@ linestrip_func HW_ChooseLineStrip_Fast(GLcontext *ctx)
    AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
    W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
    W3D_Context *context = hwcontext->context;
+
+
+#ifdef DBG
+    LibPrintf("HW_ChooseLineStrip_Fast\n");
+#endif
 
    if (hwcontext->flags & HWFLAG_NOHWLINES)
 		return NULL;
@@ -3123,6 +3243,10 @@ linestrip_func HW_ChooseLineStrip(GLcontext *ctx)
    AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
    W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
    W3D_Context *context = hwcontext->context;
+
+#ifdef DBG
+    LibPrintf("HW_ChooseLineStrip\n");
+#endif
 
    if (hwcontext->flags & HWFLAG_NOHWLINES)
 		return NULL;
@@ -3197,6 +3321,11 @@ tristrip_func HW_ChooseTriStrip(GLcontext *ctx)
    W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
    W3D_Context *context = hwcontext->context;
 
+#ifdef DBG
+    LibPrintf("HW_ChooseTriStrip\n");
+#endif
+
+
    if (QUERY3D(W3D_Q_DRAW_TRIANGLE) != W3D_FULLY_SUPPORTED)
 		return NULL;
    if ((ctx->Polygon.OffsetAny) || (ctx->RasterMask & FRONT_AND_BACK_BIT))
@@ -3233,6 +3362,10 @@ trifan_func HW_ChooseTriFan_Fast(GLcontext *ctx)
    W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
    W3D_Context *context = hwcontext->context;
 
+#ifdef DBG
+    LibPrintf("HW_ChooseTriFan_Fast\n");
+#endif
+
    if (QUERY3D(W3D_Q_DRAW_TRIANGLE) == W3D_NOT_SUPPORTED)
 		return NULL;
    if(ctx->Light.Model.TwoSide)
@@ -3252,6 +3385,11 @@ trifan_func HW_ChooseTriFan(GLcontext *ctx)
    AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
    W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
    W3D_Context *context = hwcontext->context;
+
+#ifdef DBG
+    LibPrintf("HW_ChooseTriFan\n");
+#endif
+
 
    if (QUERY3D(W3D_Q_DRAW_TRIANGLE) != W3D_FULLY_SUPPORTED)
 		return NULL;
@@ -3285,6 +3423,9 @@ trifan_func HW_ChooseTriFan(GLcontext *ctx)
 typedef void(*rastersetupfunc)(GLcontext *,GLuint,GLuint);
 rastersetupfunc HW_ChooseRasterSetup(GLcontext *ctx,W3Ddriver* hwcontext)
 {
+#ifdef DBG
+    LibPrintf("HW_ChooseRasterSetup\n");
+#endif
    if (ctx->Depth.Test)
    {
 		if (ctx->Light.ShadeModel==GL_SMOOTH)
@@ -3417,6 +3558,9 @@ rastersetupfunc HW_ChooseRasterSetup(GLcontext *ctx,W3Ddriver* hwcontext)
  */
 int HW_ContextSupported_VeryFast(GLcontext* ctx)
 {
+#ifdef DBG
+    LibPrintf("HW_ContextSupported_VeryFast\n");
+#endif
    AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
    W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
    W3D_Context *context = hwcontext->context;
@@ -3597,6 +3741,9 @@ int HW_ContextSupported_VeryFast(GLcontext* ctx)
  */
 int HW_ContextSupported_Fast(GLcontext* ctx)
 {
+#ifdef DBG
+    LibPrintf("HW_ContextSupported_Fast\n");
+#endif
    AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
    W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
    W3D_Context *context = hwcontext->context;
@@ -3878,6 +4025,9 @@ int HW_ContextSupported_Fast(GLcontext* ctx)
  */
 int HW_ContextSupported(GLcontext* ctx)
 {
+#ifdef DBG
+    LibPrintf("HW_ContextSupported\n");
+#endif
    AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
    W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
    W3D_Context *context = hwcontext->context;
@@ -4260,9 +4410,6 @@ void HW_DD_pointers( GLcontext *ctx )
 	if (StormMesa.ChangePrimitiveFuncs.ON)				/* Change each time if StormMesa-Prefs want that*/
 		ChangePrimitiveFuncs=TRUE;
 
-#ifdef DBG
-   /*LibPrintf*/ printf("HW_DD_pointers\n");
-#endif
 	REM(HW_DD_pointers);
 
    /* if only lighting state changes, then it shouldn't have any
@@ -4332,7 +4479,7 @@ void HW_DD_pointers( GLcontext *ctx )
  */
 void HWDriver_Lock2(GLcontext* ctx)
 {
-printf("HWDriver_Lock2\n");
+LibPrintf("HWDriver_Lock2\n");
 		AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
 		W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
 		W3D_Context *context = hwcontext->context;
@@ -4344,7 +4491,7 @@ printf("HWDriver_Lock2\n");
 				W3D_LockHardware(context);
 				hwcontext->flags |= HWFLAG_LOCKED;
 		}
-printf("HWDriver_Lock2 exit\n");
+LibPrintf("HWDriver_Lock2 exit\n");
 }
 ;;//
 ;// HWDriver_UnLock2
@@ -4356,7 +4503,7 @@ printf("HWDriver_Lock2 exit\n");
  */
 void HWDriver_UnLock2(GLcontext* ctx)
 {
-printf("HWDriver_UnLock2\n");
+LibPrintf("HWDriver_UnLock2\n");
 		AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
 		W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
 		W3D_Context *context = hwcontext->context;
@@ -4368,7 +4515,7 @@ printf("HWDriver_UnLock2\n");
 				W3D_UnLockHardware(context);
 				hwcontext->flags &= (~HWFLAG_LOCKED);
 		}
-printf("HWDriver_UnLock2 exit\n");
+LibPrintf("HWDriver_UnLock2 exit\n");
 }
 ;;//
 ;// HWDriver_Lock3
@@ -4380,7 +4527,7 @@ printf("HWDriver_UnLock2 exit\n");
  */
 void HWDriver_Lock3(struct amigamesa_context *c)
 {
-printf("HWDriver_Lock3\n");
+//LibPrintf("HWDriver_Lock3\n");
 		W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
 		W3D_Context *context = hwcontext->context;
 
@@ -4398,12 +4545,12 @@ printf("HWDriver_Lock3\n");
 				}
 //				W3D_SetState(context,W3D_INDIRECT,W3D_DISABLE);
 //				W3D_SetState(context,W3D_FAST,W3D_DISABLE);
-printf("HWDriver_Lock3 locking hardware\n");
-				//W3D_LockHardware(context);
-printf("HWDriver_Lock3 locked hardware\n");
-				//hwcontext->flags |= HWFLAG_LOCKED;
+//LibPrintf("HWDriver_Lock3 locking hardware\n");
+				W3D_LockHardware(context);
+//LibPrintf("HWDriver_Lock3 locked hardware\n");
+				hwcontext->flags |= HWFLAG_LOCKED;
 		}
-printf("HWDriver_Lock3 exit\n");
+//LibPrintf("HWDriver_Lock3 exit\n");
 }
 ;;//
 ;// HWDriver_UnLock3
@@ -4415,7 +4562,7 @@ printf("HWDriver_Lock3 exit\n");
  */
 void HWDriver_UnLock3(struct amigamesa_context *c)
 {
-printf("HWDriver_UnLock3\n");
+LibPrintf("HWDriver_UnLock3\n");
 		W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
 		W3D_Context *context = hwcontext->context;
 
@@ -4423,13 +4570,13 @@ printf("HWDriver_UnLock3\n");
 				return;
 		if (hwcontext->flags & HWFLAG_LOCKED)
 		{
-printf("HWDriver_UnLock3 unlocking\n");
+LibPrintf("HWDriver_UnLock3 unlocking\n");
 				W3D_UnLockHardware(context);
 //				W3D_SetState(context,W3D_FAST,W3D_ENABLE);
 //				W3D_SetState(context,W3D_INDIRECT,W3D_ENABLE);
 				hwcontext->flags &= (~HWFLAG_LOCKED);
 		}
-printf("HWDriver_UnLock3 exit\n");
+LibPrintf("HWDriver_UnLock3 exit\n");
 }
 ;;//
 ;// HWDriver_UnLock4
@@ -4441,7 +4588,7 @@ printf("HWDriver_UnLock3 exit\n");
  */
 void HWDriver_UnLock4(GLcontext* ctx)
 {
-printf("HWDriver_UnLock4\n");
+LibPrintf("HWDriver_UnLock4\n");
 		AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
 		W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
 		W3D_Context *context = hwcontext->context;
@@ -4457,10 +4604,10 @@ printf("HWDriver_UnLock4\n");
 #endif
 		if ((tval2.tv_secs*1000000+tval2.tv_micro) > INTERVAL)
 		{
-printf("HWDriver_UnLock4 unlocking\n");
+LibPrintf("HWDriver_UnLock4 unlocking\n");
 				HWDriver_UnLock3(c);
 		}
-printf("HWDriver_UnLock4 exit\n");
+LibPrintf("HWDriver_UnLock4 exit\n");
 }
 ;;//
 ;// HWDriver_Flush
@@ -4472,6 +4619,9 @@ printf("HWDriver_UnLock4 exit\n");
 
 void HWDriver_Flush(GLcontext* ctx)
 {
+#ifdef DBG
+    LibPrintf("HWDriver_Flush\n");
+#endif
 		AmigaMesaContext c = (AmigaMesaContext) ctx->DriverCtx;
 		W3Ddriver *hwcontext = (W3Ddriver *)c->hwdriver;
 		W3D_Context *context = hwcontext->context;
@@ -4504,7 +4654,7 @@ void HW_SetupDD_pointers( GLcontext *ctx )
    ULONG quality;
 
 #ifdef DBG
-   /*LibPrintf*/ printf("HW_SetupDD_pointers\n");
+   LibPrintf("HW_SetupDD_pointers\n");
 #endif
 	REM(HW_SetupDD_pointers);
 
@@ -4683,7 +4833,7 @@ void HWDriver_SwapBuffer_FS(struct amigamesa_context *c)
 		W3D_Context *context = hwcontext->context;
 		ULONG result;
 #ifdef DBG
-   /*LibPrintf*/ printf("HWDriver_SwapBuffer_FS\n");
+   LibPrintf("HWDriver_SwapBuffer_FS\n");
 #endif
 
 		result = W3D_Flush(context);
@@ -4725,7 +4875,7 @@ void HWDriver_SwapBuffer_DR(struct amigamesa_context *c)
 		W3D_Context *context = hwcontext->context;
 		ULONG result;
 #ifdef DBG
-   /*LibPrintf*/ printf("HWDriver_SwapBuffer_DR\n");
+   LibPrintf("HWDriver_SwapBuffer_DR\n");
 #endif
 
 		result = W3D_Flush(context);
@@ -4786,7 +4936,7 @@ REM(HWDriver_Dispose);
 #ifndef __PPC__
   if (TimerBase) {
 REM(....will CheckIO);
-	/*LibPrintf*/ printf("TimerBase %ld timerio %ld\n",TimerBase,c->timerio);
+	//LibPrintf("TimerBase %ld timerio %ld\n",TimerBase,c->timerio);
 
 	if (!CheckIO((struct IORequest *)c->timerio)) {
 	  AbortIO((struct IORequest *)c->timerio);
@@ -4901,10 +5051,10 @@ REM(LaunchHWDriver);
 	}
 	c->right = c->RealWidth - c->width - c->left;
 	c->top = c->RealHeight - c->height - c->bottom;
-printf("FWxFH: %dx%d, RWxRH: %dx%d, WxH: %dx%d, top: %d, bottom %d, l %d, r %d\n", \
+//LibPrintf("FWxFH: %dx%d, RWxRH: %dx%d, WxH: %dx%d, top: %d, bottom %d, l %d, r %d\n", \
 	c->FixedWidth, c->FixedHeight, c->RealWidth, c->RealHeight, c->width, c->height, \
 	c->top, c->bottom, c->left, c->right);
-printf("Depth: %d\n",c->depth);
+//LibPrintf("Depth: %d\n",c->depth);
 
 #ifndef __PPC__
 	if (!(c->back_rp = AllocVec(sizeof(struct RastPort),MEMF_PUBLIC|MEMF_CLEAR)))
@@ -4921,7 +5071,7 @@ printf("Depth: %d\n",c->depth);
 		return(FALSE);
 	InitRastPort(c->back2_rp);
 #endif
-	printf("LHWD part 1\n");
+	LibPrintf("LHWD part 1\n");
 	c->draw_rp = c->back_rp;
 	if (c->flags & FLAG_FULLSCREEN)
 	{
@@ -4954,7 +5104,7 @@ printf("Depth: %d\n",c->depth);
 	c->FrontArray = c->BackArray;
 	SetAPen(c->back_rp,0);
 	RectFill(c->back_rp,0,0,c->width-1,c->height-1);
-	printf("LHWD part 2\n");
+	LibPrintf("LHWD part 2\n");
 	if (c->flags & FLAG_FULLSCREEN)
 	{
 		c->back_rp->BitMap = c->sbuf1->sb_BitMap;
@@ -4976,7 +5126,7 @@ printf("Depth: %d\n",c->depth);
 	c->bprow = GetCyberMapAttr(c->back_rp->BitMap,CYBRMATTR_XMOD);
 	c->bppix = GetCyberMapAttr(c->back_rp->BitMap,CYBRMATTR_BPPIX);
 	c->fmt = GetCyberMapAttr(c->back_rp->BitMap,CYBRMATTR_PIXFMT);
-	printf("LHWD part 3\n");
+	LibPrintf("LHWD part 3\n");
 
 	if (c->depth <= 8)
 	{
@@ -5006,7 +5156,7 @@ printf("Depth: %d\n",c->depth);
 #endif
 		return(FALSE);
 	hwcontext = (W3Ddriver *)c->hwdriver;
-	printf("LHWD part 4\n");
+	LibPrintf("LHWD part 4\n");
 
 
 /* Thellier: Warp3D can install several drivers but we cant select especially one 	*/
@@ -5016,7 +5166,7 @@ printf("Depth: %d\n",c->depth);
 	{
 /* recover current driver so can do QUERY3D on current driver/destfmt */
 	hwcontext->driver=drivers[0];
-	/*LibPrintf*/ printf("W3D_Driver <%s> soft:%ld ChipIP:%ld formats:%ld \n",hwcontext->driver->name,hwcontext->driver->swdriver,hwcontext->driver->ChipID,hwcontext->driver->formats);
+	//LibPrintf("W3D_Driver <%s> soft:%ld ChipIP:%ld formats:%ld \n",hwcontext->driver->name,hwcontext->driver->swdriver,hwcontext->driver->ChipID,hwcontext->driver->formats);
 	if (!hwcontext->driver->swdriver)		/* Use first hardware driver found. If no hardware driver then use last driver */
 		break;
 	drivers++;
@@ -5129,14 +5279,14 @@ printf("Depth: %d\n",c->depth);
 	if (hwcontext->lockmode >= 2)
 	{
 		if(W3D_SetState(hwcontext->context,W3D_INDIRECT,W3D_DISABLE) == W3D_SUCCESS) {
-			printf("W3D_INDIRECT disabled\n");
+			LibPrintf("W3D_INDIRECT disabled\n");
 		} else {
-			printf("W3D_INCIRECT failed!!\n");
+			LibPrintf("W3D_INCIRECT failed!!\n");
 		}
 		if(W3D_SetState(hwcontext->context,W3D_FAST,W3D_DISABLE) == W3D_SUCCESS) {
-			printf("W3D_FAST disabled\n");
+			LibPrintf("W3D_FAST disabled\n");
 		} else {
-			printf("W3D_FAST failed!!\n");
+			LibPrintf("W3D_FAST failed!!\n");
 		}
 	}
 
@@ -5159,7 +5309,7 @@ printf("Depth: %d\n",c->depth);
 	hwcontext->lockmode = 2;			/* fall back to full locking */
 #endif
 
-	printf("LWHD: lockmode in use is %d\n",hwcontext->lockmode);
+	//LibPrintf("LWHD: lockmode in use is %d\n",hwcontext->lockmode);
 /* temporary variables */
 
 	if (StormMesa.NOZB.ON)
@@ -5186,7 +5336,7 @@ BOOL HWDriver_init(struct amigamesa_context *c,struct TagItem *tagList)
 
 REM(HWDriver_init);
 	c->front_rp = c->rp;
-	printf("HWDI: rastport pointer 0x%08x\n",c->rp);
+	//LibPrintf("HWDI: rastport pointer 0x%08x\n",c->rp);
 	if (c->flags & FLAG_FULLSCREEN)
 	{
 		if (CyberGfxBase)
@@ -5215,7 +5365,7 @@ REM(HWDriver_init);
 			}
 		}
 		c->front_rp = c->rp = &c->Screen->RastPort;
-	printf("HWDI: rastport pointer 0x%08x\n",c->rp);
+	//LibPrintf("HWDI: rastport pointer 0x%08x\n",c->rp);
 
 		if (!(c->dbport = CreateMsgPort()))
 		{

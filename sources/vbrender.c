@@ -559,12 +559,12 @@ static void render_clipped_polygon( GLcontext *ctx, GLuint n, GLuint vlist[] )
             if (VB->ClipMask[j]) {
                /* Uh oh!  There should be no clip bits set in final polygon! */
                GLuint k, l;
-               /*LibPrintf*/ printf("CLIPMASK %d %d %02x\n", (int)i, (int)j, VB->ClipMask[j]);
-			 pf(VB->Eye[j][0]);  pf(VB->Eye[j][1]);  pf(VB->Eye[j][2]);  pf(VB->Eye[j][0]);  /*LibPrintf*/ printf("\n"); 
-			 pf(VB->Clip[j][0]); pf(VB->Clip[j][1]); pf(VB->Clip[j][2]); pf(VB->Clip[j][0]); /*LibPrintf*/ printf("\n"); 
+               LibPrintf("CLIPMASK \n"); // %d %d %02x\n", (int)i, (int)j, VB->ClipMask[j]);
+			 pf(VB->Eye[j][0]);  pf(VB->Eye[j][1]);  pf(VB->Eye[j][2]);  pf(VB->Eye[j][0]);  LibPrintf("\n"); 
+			 pf(VB->Clip[j][0]); pf(VB->Clip[j][1]); pf(VB->Clip[j][2]); pf(VB->Clip[j][0]); LibPrintf("\n"); 
                for (k=0;k<n;k++) {
                   l = vlist[k];
-                  /*LibPrintf*/ printf("%d %d %02x\n", k, l, VB->ClipMask[l]);
+                  //LibPrintf("%d %d %02x\n", k, l, VB->ClipMask[l]);
                }
             }
          }

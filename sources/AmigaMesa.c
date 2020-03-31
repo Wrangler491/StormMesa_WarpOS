@@ -41,10 +41,10 @@ extern struct STORMMESA_parameters StormMesa;
 #include "ADisp_HW.h"
 #include "htnew_color.h"
 
-//#define DEBUGPRINT
+#define DEBUGPRINT
 
 #ifdef DEBUGPRINT
-#define DEBUGOUT(x) printf(x);	//LibPrintf(x);
+#define DEBUGOUT(x) LibPrintf(x);	//printf(x);
 #else
 #define DEBUGOUT(x) /*LibPrintf(x);*/
 #endif
@@ -124,7 +124,7 @@ AmigaMesaCreateVisual(struct TagItem *tagList)
 	  return NULL;
    }
 
-printf("AMCV, visual located at: 0x%08x\n",v);
+LibPrintf("AMCV, visual located at:\n"); // 0x%08x\n",v);
 	v->rgb_flag=GetTagData(AMA_RGBMode,GL_TRUE,tagList);
 	v->db_flag=GetTagData(AMA_DoubleBuf,GL_FALSE,tagList);
 	v->alpha_flag=GetTagData(AMA_AlphaFlag,GL_FALSE,tagList);
@@ -150,7 +150,7 @@ printf("AMCV, visual located at: 0x%08x\n",v);
    v->accum = 16;
    if (GetTagData(AMA_NoAccum,GL_FALSE,tagList))
 	v->accum = 0;
-printf("AMCV RGBMode: %d, DB: %d, alpha: %d\n",v->rgb_flag,v->db_flag,v->alpha_flag);
+LibPrintf("AMCV RGBMode: \n"); // %d, DB: %d, alpha: %d\n",v->rgb_flag,v->db_flag,v->alpha_flag);
 
    /* Create core visual */
    v->gl_visual = (void *)gl_create_visual( v->rgb_flag,
@@ -210,7 +210,7 @@ struct amigamesa_buffer *AmigaMesaCreateBuffer( struct amigamesa_visual *visual,
 	  return NULL;
    }
 
-printf("AMCB, buffer located at: 0x%08x\n",b);
+LibPrintf("AMCB, buffer located at: \n"); //0x%08x\n",b);
    b->gl_buffer = (void *)gl_create_framebuffer( (GLvisual *)visual->gl_visual);
 
    /* other stuff */
@@ -285,7 +285,7 @@ struct amigamesa_context *AmigaMesaCreateContextTags(long Tag1, ...)
 
 	va_end(tagList);
 	if(val1!=TAG_END) {
-		printf("Max Tags exceeded!\n");
+		LibPrintf("Max Tags exceeded!\n");
 	}
 
 	return AmigaMesaCreateContext((struct TagItem *)tagStore);
@@ -332,7 +332,7 @@ AmigaMesaCreateContext(struct TagItem *tagList)
 
     SysBase = OpenLibrary("exec.library",0);
     UtilityBase = OpenLibrary("utility.library",0);
-    GfxBase = OpenLibrary("graphics.library",0);
+    if(GfxBase==NULL) GfxBase = OpenLibrary("graphics.library",0);
 #ifndef __PPC__
 	//wawa oldrnd = SetFPU();       //set rounding mode to 'round to zero'
 #endif
@@ -352,7 +352,7 @@ AmigaMesaCreateContext(struct TagItem *tagList)
 		{
 		return(NULL);
 		}
-	printf("AMCC context located at: 0x%08x ptr to: 0x%08x\n",c,*c);
+	LibPrintf("AMCC context located at: \n"); //0x%08x ptr to: 0x%08x\n",c,*c);
 #ifndef __PPC__
 	c->oldFPU = oldrnd;
 #endif
@@ -364,13 +364,13 @@ AmigaMesaCreateContext(struct TagItem *tagList)
 	    c->rp=(struct RastPort *)GetTagData(AMA_RastPort,0,tagList);
 	    if (!c->rp)
 		{
-		printf("No rastport!\n");
+		LibPrintf("No rastport!\n");
 		return(FALSE);
 		}
 	    c->Screen=(struct Screen *)GetTagData(AMA_Screen,0,tagList);
 	    if (!c->Screen)
 		{
-		printf("No screen!\n");
+		LibPrintf("No screen!\n");
 		return(FALSE);
 		}
 	    }
@@ -380,9 +380,9 @@ AmigaMesaCreateContext(struct TagItem *tagList)
 	    c->Screen=c->window->WScreen;
 	}
 if(c->window)
-	printf("Window ptr found: 0x%08x, ptr to: 0x%08x\n",c->window,*c->window);
-printf("Screen ptr found: 0x%08x, ptr to: 0x%08x\n",c->Screen,*c->Screen);
-printf("Rastport ptr found: 0x%08x, ptr to: 0x%08x\n",c->rp,*c->rp);
+	LibPrintf("Window ptr found: \n"); //0x%08x, ptr to: 0x%08x\n",c->window,*c->window);
+LibPrintf("Screen ptr found: \n"); // 0x%08x, ptr to: 0x%08x\n",c->Screen,*c->Screen);
+LibPrintf("Rastport ptr found: \n"); //0x%08x, ptr to: 0x%08x\n",c->rp,*c->rp);
 
 	if (GetTagData(AMA_Fullscreen,GL_FALSE,tagList) == GL_TRUE)
 		c->flags = c->flags | FLAG_FULLSCREEN;
@@ -412,7 +412,7 @@ printf("Rastport ptr found: 0x%08x, ptr to: 0x%08x\n",c->rp,*c->rp);
 
 	c->visual=(struct amigamesa_visual *)GetTagData(AMA_Visual,NULL,tagList);
 	c->buffer=(struct amigamesa_buffer *)GetTagData(AMA_Buffer,NULL,tagList);
-printf("AMCC part 1\n");
+LibPrintf("AMCC part 1\n");
 
 	if(!c->visual)
 		{
@@ -440,8 +440,8 @@ printf("AMCC part 1\n");
 	if (c->visual->rgb_flag)
 		c->flags |= FLAG_RGBA;
 
-printf("AMCC part 2\n");
-printf("AMCC hardware forbidden flag: %d\n",(c->flags & FLAG_FORBID3DHW));
+LibPrintf("AMCC part 2\n");
+LibPrintf("AMCC hardware forbidden flag: \n"); // %d\n",(c->flags & FLAG_FORBID3DHW));
 
 
 
@@ -484,7 +484,7 @@ printf("AMCC hardware forbidden flag: %d\n",(c->flags & FLAG_FORBID3DHW));
 		CloseLibrary(rtgBase);
 	   }
 #endif
-printf("AMCC part 3\n");
+LibPrintf("AMCC part 3\n");
 
 #ifndef __PPC__
 		if (Warp3DBase = OpenLibrary("Warp3D.library",2))
@@ -514,7 +514,7 @@ printf("AMCC part 3\n");
 		}
 		
 	}
-printf("AMCC part 4\n");
+LibPrintf("AMCC part 4\n");
 
 
 /* First check if cybergraphics.library available */
@@ -527,7 +527,7 @@ printf("AMCC part 4\n");
 
 /* if direct rendering to gfx RAM or fullscreen mode is enabled,
    always call the full screen SW/HW driver */
-printf("AMCC part 5: gfx RAM or FS\n");
+LibPrintf("AMCC part 5: gfx RAM or FS\n");
 
 
 			if (SWFSDriver_init(c,tagList))
@@ -544,7 +544,7 @@ printf("AMCC part 5: gfx RAM or FS\n");
 		{
 /* if double buffered, than launch the new gfxboard SW driver (or
    HW driver in future */
-printf("AMCC part 6: DB\n");
+LibPrintf("AMCC part 6: DB\n");
 
 			if (SWDriver_init(c,tagList))
 				return c;
@@ -558,7 +558,7 @@ printf("AMCC part 6: DB\n");
 		else
 		{
 /* if not double buffered, launch the old gfx board driver */
-printf("AMCC part 7: old gfx driver\n");
+LibPrintf("AMCC part 7: old gfx driver\n");
 
 
 			if (Cyb_Standard_init(c,tagList))
@@ -583,7 +583,7 @@ printf("AMCC part 7: old gfx driver\n");
 
 		if (c->flags & FLAG_FULLSCREEN)
 		{
-printf("AMCC part 8: CGFX 8/AGA driver\n");
+LibPrintf("AMCC part 8: CGFX 8/AGA driver\n");
 
 
 /* if full screen mode is enabled, call the full screen SW/HW driver */
@@ -601,7 +601,7 @@ printf("AMCC part 8: CGFX 8/AGA driver\n");
 		if(c->visual->db_flag==GL_TRUE)
 		{
 /* if double buffered, launch the new AGA compatible SW driver */
-printf("AMCC part 9: DB AGA\n");
+LibPrintf("AMCC part 9: DB AGA\n");
 
 
 			if (SWDriver_init(c,tagList))
@@ -616,7 +616,7 @@ printf("AMCC part 9: DB AGA\n");
 		else
 		{
 /* if not double-buffered, launch the old AGA driver */
-printf("AMCC part 10: old AGA\n");
+LibPrintf("AMCC part 10: old AGA\n");
 
 
 			if (Amiga_Standard_init(c,tagList))
@@ -629,7 +629,7 @@ printf("AMCC part 10: old AGA\n");
 				}
 		}
 	}
-printf("AMCC end\n");
+LibPrintf("AMCC end\n");
 }
 
 

@@ -1,10 +1,10 @@
 /* Alain Thellier - 2010							*/
 /* For GL_TRIANGLES draw fastly the vbuffer with W3D_DrawArray()	*/
 
-#define STORMMESADEBUG 1
+//#define STORMMESADEBUG 1
 
 #ifdef STORMMESADEBUG
-void LibPrintf(const char *string, ...);
+//void LibPrintf(const char *string); //, ...);
 #endif
 
 /*==================================================================*/
@@ -61,11 +61,11 @@ char mode;
 BOOL UseDrawArray;
 ULONG i;
 
-/*LibPrintf*/printf("HW_DrawTriangles %ld\n",count);
-/*LibPrintf*/printf("Func%ld flat %ld smooth %ld smoothTwo %ld \n",ctx->Driver.TriangleFunc,HW_DrawTriangle_flat,HW_DrawTriangle_smooth,HW_DrawTriangle_smoothTwo);
-	if(ctx->Driver.TriangleFunc==HW_DrawTriangle_flat)		{mode='f';/*LibPrintf*/printf("flat \n");}
-	if(ctx->Driver.TriangleFunc==HW_DrawTriangle_smooth)		{mode='s';/*LibPrintf*/ printf("smooth \n");}
-	if(ctx->Driver.TriangleFunc==HW_DrawTriangle_smoothTwo)	{mode='2';/*LibPrintf*/ printf("smoothTwo \n");}
+LibPrintf("HW_DrawTriangles \n"); // %ld\n",count);
+LibPrintf("Func \n"); //%ld flat %ld smooth %ld smoothTwo %ld \n",ctx->Driver.TriangleFunc,HW_DrawTriangle_flat,HW_DrawTriangle_smooth,HW_DrawTriangle_smoothTwo);
+	if(ctx->Driver.TriangleFunc==HW_DrawTriangle_flat)		{mode='f';LibPrintf("flat \n");}
+	if(ctx->Driver.TriangleFunc==HW_DrawTriangle_smooth)		{mode='s';LibPrintf("smooth \n");}
+	if(ctx->Driver.TriangleFunc==HW_DrawTriangle_smoothTwo)	{mode='2';LibPrintf("smoothTwo \n");}
 
 	if (hwcontext->flags & HWFLAG_STATS)
 		(hwcontext->statarray2[DRAW_TRIANGLE])+=count/3;
@@ -73,9 +73,9 @@ ULONG i;
 		HWDriver_Lock3(c);
 
 	UseDrawArray=TRUE;
-/*LibPrintf*/ printf("StippleFlag    %ld\n",ctx->Polygon.StippleFlag);
-/*LibPrintf*/ printf("MonoColor      %ld\n",VB->MonoColor);
-/*LibPrintf*/ printf("PolygonStipple %ld\n",ctx->PolygonStipple);
+LibPrintf("StippleFlag   \n"); // %ld\n",ctx->Polygon.StippleFlag);
+LibPrintf("MonoColor      \n"); //%ld\n",VB->MonoColor);
+LibPrintf("PolygonStipple \n"); //%ld\n",ctx->PolygonStipple);
 
 	if (ctx->Polygon.StippleFlag)
 		UseDrawArray=FALSE;
@@ -83,7 +83,7 @@ ULONG i;
 	if(mode=='f')
 	if(!VB->MonoColor)
 		UseDrawArray=FALSE;
-/*LibPrintf*/ printf("UseDrawArray %ld\n",UseDrawArray);
+LibPrintf("UseDrawArray \n"); //%ld\n",UseDrawArray);
 
 /* If cant use W3D_DrawArray() then loop with W3D_DrawTriangle () */
 	if(!UseDrawArray)

@@ -64,12 +64,12 @@
 /* CC is a global pointer for all threads in the address space */
 
 #ifdef WARPUP
-void LibPrintf(const char *string, ...);
+//void LibPrintf(const char *string); //, ...);
 #define GET_CONTEXT
 #else
 #ifdef AMIGA
 
-void LibPrintf(const char *string, ...);    
+//void LibPrintf(const char *string); //, ...);    
 #define GET_CONTEXT GLcontext *CC=cc;  /*  LibPrintf("GET_CONTEXT: CC %ld \n",CC); */
 
 
@@ -83,8 +83,8 @@ void LibPrintf(const char *string, ...);
 #define CHECK_CONTEXT if(!CC){return;}
 #define CHECK_CONTEXT_RETURN(R) if(!CC){return(R);}
 #else
-#define CHECK_CONTEXT if(!CC) {/*LibPrintf*/ printf("GLcontext *CC is lost !!!\n"); return;}
-#define CHECK_CONTEXT_RETURN(R) if(!CC){/*LibPrintf*/ printf("The GLcontext CC is lost !!!!!!\n");return(R);}
+#define CHECK_CONTEXT if(!CC) {LibPrintf("GLcontext *CC is lost !!!\n"); return;}
+#define CHECK_CONTEXT_RETURN(R) if(!CC){LibPrintf("The GLcontext CC is lost !!!!!!\n");return(R);}
 #endif
 
 /*

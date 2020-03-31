@@ -101,6 +101,8 @@ void HW_DrawPoint_flat(GLcontext *ctx, GLuint first, GLuint last)
    GLboolean mono = VB->MonoColor;
    W3D_Color co;
 
+   	REM(HW_DrawPoint_flat);
+
    if (hwcontext->flags & HWFLAG_STATS)
 	(hwcontext->statarray2[DRAW_POINT])+= (last-first+1);
 
@@ -139,6 +141,8 @@ void HW_DrawPoint_smooth(GLcontext *ctx, GLuint first, GLuint last)
    W3D_Point po;
    int i;
 
+   	REM(HW_DrawPoint_smooth);
+
    if (hwcontext->flags & HWFLAG_STATS)
 	(hwcontext->statarray2[DRAW_POINT])+= (last-first+1);
 
@@ -172,6 +176,8 @@ void HW_DrawLine_flat(GLcontext *ctx, GLuint v1, GLuint v2, GLuint pv)
    GLubyte* col = VB->Color[pv];
    W3D_Float* colf = hwcontext->colconv;
    GLboolean mono = VB->MonoColor;
+
+   	REM(HW_DrawLine_flat);
 
    if (hwcontext->flags & HWFLAG_STATS)
 	(hwcontext->statarray2[DRAW_LINE])++;
@@ -257,6 +263,8 @@ void HW_DrawLine_smooth(GLcontext *ctx, GLuint v1, GLuint v2, GLuint pv)
    struct vertex_buffer *VB = ctx->VB;
    W3D_Line line;
 
+   	REM(HW_DrawLine_smooth);
+
    if (hwcontext->flags & HWFLAG_STATS)
 	(hwcontext->statarray2[DRAW_LINE])++;
 
@@ -333,7 +341,8 @@ void HW_DrawTriangle_flat(GLcontext *ctx, GLuint v1, GLuint v2,
    W3D_Float* colf = hwcontext->colconv;
    GLboolean mono = VB->MonoColor;
 
-	//printf("HW_DrawTriangle_flat\n");
+
+   	REM(HW_DrawTriangle_flat);
 
    if (hwcontext->flags & HWFLAG_STATS)
 	(hwcontext->statarray2[DRAW_TRIANGLE])++;
@@ -404,7 +413,8 @@ void HW_DrawTriangle_smooth(GLcontext *ctx, GLuint v1, GLuint v2,
    W3D_Context *context = hwcontext->context;
    struct vertex_buffer *VB = ctx->VB;
    W3D_Triangle tri;
-	//printf("HW_DrawTriangle_smooth\n");
+
+   	REM(HW_DrawTriangle_smooth);
 
    if (hwcontext->flags & HWFLAG_STATS)
 	(hwcontext->statarray2[DRAW_TRIANGLE])++;
@@ -467,6 +477,8 @@ void HW_DrawQuad_flat(GLcontext *ctx, GLuint v1, GLuint v2,
    GLubyte* col = VB->Color[pv];
    W3D_Float* colf = hwcontext->colconv;
    GLboolean mono = VB->MonoColor;
+
+   	REM(HW_DrawQuad_flat);
 
    if (hwcontext->flags & HWFLAG_STATS)
 	(hwcontext->statarray2[DRAW_QUAD])++;
@@ -551,6 +563,9 @@ void HW_DrawQuad_smooth(GLcontext *ctx, GLuint v1, GLuint v2,
    W3D_Triangles tri;
    W3D_Vertex w3dv[4];
 
+
+   	REM(HW_DrawQuad_smooth);
+
    if (hwcontext->flags & HWFLAG_STATS)
 	(hwcontext->statarray2[DRAW_QUAD])++;
    if (hwcontext->lockmode >= 2)
@@ -618,6 +633,8 @@ void HW_DrawPoint_smoothTwo(GLcontext *ctx, GLuint first, GLuint last)
    GLubyte* col;
    W3D_Float* colf = hwcontext->colconv;
 
+   	REM(HW_DrawPoint_smoothTwo);
+
    if (hwcontext->flags & HWFLAG_STATS)
 	(hwcontext->statarray2[DRAW_POINT])+= (last-first+1);
 
@@ -654,6 +671,8 @@ void HW_DrawLine_smoothTwo(GLcontext *ctx, GLuint v1, GLuint v2, GLuint pv)
    W3D_Line line;
    GLubyte* col;
    W3D_Float* colf = hwcontext->colconv;
+
+   	REM(HW_DrawLine_smoothTwo);
 
    if (hwcontext->flags & HWFLAG_STATS)
 	(hwcontext->statarray2[DRAW_LINE])++;
@@ -703,6 +722,8 @@ void HW_DrawTriangle_smoothTwo(GLcontext *ctx, GLuint v1, GLuint v2,
    W3D_Triangle tri;
    GLubyte* col;
    W3D_Float* colf = hwcontext->colconv;
+
+   	REM(HW_DrawTriangle_smoothTwo);
 
    if (hwcontext->flags & HWFLAG_STATS)
 	(hwcontext->statarray2[DRAW_TRIANGLE])++;
@@ -794,6 +815,8 @@ void HW_DrawQuad_smoothTwo(GLcontext *ctx, GLuint v1, GLuint v2,
    W3D_Vertex w3dv[4];
    GLubyte* col;
    W3D_Float* colf = hwcontext->colconv;
+
+   	REM(HW_DrawQuad_smoothTwo);
 
    if (hwcontext->flags & HWFLAG_STATS)
 	(hwcontext->statarray2[DRAW_QUAD])++;
@@ -925,6 +948,8 @@ void HW_DrawLineStrip(GLcontext *ctx, GLuint first, GLuint last)
    W3D_Lines li;
    W3D_Color co;
 
+   	REM(HW_DrawLineStrip);
+
    if (hwcontext->flags & HWFLAG_STATS)
 	(hwcontext->statarray2[DRAW_LINE]) += (last-first);
 
@@ -970,6 +995,8 @@ void HW_DrawTriStrip(GLcontext *ctx, GLuint first, GLuint last)
    W3D_Triangles tri;
    W3D_Color co;
 
+   	//REM(HW_DrawTriStrip);
+
    if (hwcontext->flags & HWFLAG_STATS)
 	(hwcontext->statarray2[DRAW_TRIANGLE]) += (last-first-1);
 
@@ -986,6 +1013,8 @@ void HW_DrawTriStrip(GLcontext *ctx, GLuint first, GLuint last)
        tri.st_pattern = (unsigned char *)ctx->PolygonStipple;
    else
        tri.st_pattern = NULL;
+
+	//LibPrintf("GLctx: 0x%08x, AMctx: 0x%08x, hwctx: 0x%08x, W3Dcontext: 0x%08x, tri: 0x%08x\n",ctx,c,hwcontext,context,tri);
    if (W3D_DrawTriStrip(context,&tri) != W3D_SUCCESS)
        hwcontext->flags &= (~HWFLAG_ACTIVE);
    hwcontext->flags |= HWFLAG_DIRTY;
@@ -1011,6 +1040,8 @@ void HW_DrawTriFan(GLcontext *ctx, GLuint zero, GLuint first, GLuint last)
    W3D_Triangles tri;
    W3D_Color co;
    W3D_Vertex vtemp;
+
+   	REM(HW_DrawTriFan);
 
    if (hwcontext->flags & HWFLAG_STATS)
 	(hwcontext->statarray2[DRAW_TRIANGLE]) += (last-first);

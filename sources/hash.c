@@ -224,7 +224,7 @@ void HashPrint(const struct HashTable *table)
    for (i=0;i<TABLE_SIZE;i++) {
       struct HashEntry *entry = table->Table[i];
       while (entry) {
-	 /*LibPrintf*/ printf("%u %p\n", entry->Key, entry->Data);
+	 //ibPrintf("%u %p\n", entry->Key, entry->Data);
 	 entry = entry->Next;
       }
    }
@@ -276,17 +276,17 @@ int main(int argc, char *argv[])
    int a, b, c;
    struct HashTable *t;
 
-   /*LibPrintf*/ printf("&a = %p\n", &a);
-   /*LibPrintf*/ printf("&b = %p\n", &b);
+   //LibPrintf("&a = %p\n", &a);
+   //LibPrintf("&b = %p\n", &b);
 
    t = NewHashTable();
    HashInsert(t, 501, &a);
    HashInsert(t, 10, &c);
    HashInsert(t, 0xfffffff8, &b);
    HashPrint(t);
-   /*LibPrintf*/ printf("Find 501: %p\n", HashLookup(t,501));
-   /*LibPrintf*/ printf("Find 1313: %p\n", HashLookup(t,1313));
-   /*LibPrintf*/ printf("Find block of 100: %d\n", HashFindFreeKeyBlock(t, 100));
+   LibPrintf("Find 501: \n"); //%p\n", HashLookup(t,501));
+   LibPrintf("Find 1313: \n"); //%p\n", HashLookup(t,1313));
+   LibPrintf("Find block of 100: \n");//%d\n", HashFindFreeKeyBlock(t, 100));
    DeleteHashTable(t);
 
    return 0;

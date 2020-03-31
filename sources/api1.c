@@ -63,12 +63,12 @@
  * Part 1 of API functions
  */
 
-#define STORMMESADEBUG 1
+//#define STORMMESADEBUG 1
 /*==================================================================================*/
 #ifdef STORMMESADEBUG
-void LibPrintf(const char *string, ...);
+//void LibPrintf(const char *string); //, ...);
 void STORMMESA_Function(const char *func);
-#define VAR(var)	 /*LibPrintf*/ printf(#var ": %d \n",var);
+//#define VAR(var)	 LibPrintf(#var ": %d \n",var);
 #define SFUNCTION(func) STORMMESA_Function(#func);
 /*==================================================================================*/
 #else
@@ -157,7 +157,7 @@ void APIENTRY aglBlendFunc(void *cc,GLenum sfactor, GLenum dfactor )
 void APIENTRY aglCallList(void *cc,GLuint list )
 {
 	GET_CONTEXT; CHECK_CONTEXT;
-	/*LibPrintf*/ printf("aglCallList(cc:%d,list:%d\n",cc,list);
+	LibPrintf("aglCallList(cc:\n"); //%d,list:%d\n",cc,list);
 	SFUNCTION(CallList)	(*CC->API.CallList)(CC, list);
 }
 
@@ -165,7 +165,7 @@ void APIENTRY aglCallList(void *cc,GLuint list )
 void APIENTRY aglCallLists(void *cc,GLsizei n, GLenum type, const GLvoid *lists )
 {
 	GET_CONTEXT; CHECK_CONTEXT;
-	/*LibPrintf*/ printf("aglCallLists(cc:%d,n:%d,type:%d,lists:%d\n",cc,n,type,lists);
+	LibPrintf("aglCallLists(cc:\n"); //%d,n:%d,type:%d,lists:%d\n",cc,n,type,lists);
 	SFUNCTION(CallLists)
 	(*CC->API.CallLists)(CC, n, type, lists);
 }

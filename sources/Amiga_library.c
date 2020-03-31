@@ -37,10 +37,11 @@ void STORMMESA_Close();
 void STORMMESA_Prefs();
 void LibAlert(UBYTE *t);
 void LibsPrintf(UBYTE *buffer,UBYTE *string, ...);
-void LibPrintf(const char *string, ...);
+//void LibPrintf(const char *string); //, ...);
 #define DeleteLibrary(BASE) FreeMem((APTR)((char*)(BASE)-((BASE)->lib_NegSize)),(BASE)->lib_NegSize+(BASE)->lib_PosSize)
-#define REM(t) printf(#t); //LibAlert(#t);
-#define VAR(var) { printf(" " #var "="); printf("%ld\n",var);}//{ LibPrintf(" " #var "="); LibPrintf("%ld\n",var);}
+#define REM(t) LibPrintf(#t); //LibAlert(#t);
+//#define VAR(var) { LibPrintf(" " #var "="); LibPrintf("%ld\n",var);}
+#define LibPrintf(t) ; //printf(t); //SPrintF(t,NULL)
 
 #ifndef WARPUP
 /*======================================================================================*/
@@ -172,14 +173,14 @@ void *FirstBase=NULL;
 #endif	//WARPUP
 /*======================================================================================*/
 struct ExecBase *SysBase=NULL;
-struct IntuitionBase *IntuitionBase=NULL;
+struct IntuitionBase *IntuitionBase;	//=NULL; for SDL
 struct DosLibrary *DOSBase=NULL;
-struct GfxBase *GfxBase=NULL;
-struct Library *CyberGfxBase=NULL;
-struct Library *MathIeeeSingBasBase=NULL;
-struct Library *MathIeeeDoubBasBase=NULL;
-struct Library *__MathIeeeDoubTransBase=NULL;
-struct Library *__MathIeeeDoubBasBase=NULL;
+struct GfxBase *GfxBase;	//=NULL; for SDL
+struct Library *CyberGfxBase;	//=NULL; for SDL
+//struct Library *MathIeeeSingBasBase=NULL;
+//struct Library *MathIeeeDoubBasBase=NULL;
+//struct Library *__MathIeeeDoubTransBase=NULL;
+//struct Library *__MathIeeeDoubBasBase=NULL;
 struct UtilityBase *UtilityBase=NULL; 
 #ifndef __PPC__
 struct Library *Warp3DBase=NULL; 
@@ -251,11 +252,11 @@ UWORD BaseNum=0;
 struct Task *MyTask;
 
 	MyTask = FindTask(NULL);
-	printf("GetTaskLibBase MyTask%ld\n",MyTask);	//LibPrintf("GetTaskLibBase MyTask%ld\n",MyTask);
+	LibPrintf("GetTaskLibBase \n"); //MyTask%ld\n",MyTask);
 	ThisBase=FirstBase;
 	while(ThisBase!=NULL)
 	{
-	printf("[%ld]LibBase: %ld Task: %ld ctx: %ld\n",BaseNum,ThisBase,ThisBase->Task,ThisBase->CurrentContext);	//LibPrintf("[%ld]LibBase: %ld Task: %ld ctx: %ld\n",BaseNum,ThisBase,ThisBase->Task,ThisBase->CurrentContext);
+	//LibPrintf("[%ld]LibBase: %ld Task: %ld ctx: %ld\n",BaseNum,ThisBase,ThisBase->Task,ThisBase->CurrentContext);
 	if(ThisBase->Task==MyTask)
 		{
 		return(ThisBase);
@@ -455,7 +456,7 @@ UBYTE *s=string;
 void LibAlert(UBYTE *t)
 {
 #ifdef WARPUP
-	printf(t);
+	LibPrintf(t);
 #else
 
 void *Data=&t+1L;
@@ -552,7 +553,7 @@ struct ExampleBase * ExampleBase=LibBase;
 	if(ExampleBase->Pad[1]=='K')
 		return(ExampleBase->CurrentContext);
 
-	printf("ERROR: Unvalid LibBase in A6!\n");	//LibPrintf("ERROR: Unvalid LibBase in A6!\n");
+	LibPrintf("ERROR: Unvalid LibBase in A6!\n");
 	ExampleBase=GetTaskLibBase();		/* if LibBase is lost then try to find it with with the task */
 
 	if(ExampleBase)
@@ -576,17 +577,15 @@ BOOL OpenAmigaLibraries()
 /* Initialize the standards libraries We assume that ROM libraries open OK */
 
 	DOSBase=(struct DosLibrary *)	OpenLibrary("dos.library",36L); 
-	IntuitionBase = (struct IntuitionBase *)OpenLibrary("intuition.library", 0L);
+	if(IntuitionBase==NULL) IntuitionBase = (struct IntuitionBase *)OpenLibrary("intuition.library", 0L);
 	UtilityBase=(struct Library *)OpenLibrary("utility.library",36L); 
 
-	printf("Opened libraries\n");
 #ifndef WARPUP
 	if (OpenDevice(TIMERNAME, UNIT_MICROHZ, (struct IORequest *)&tr, 0L) != 0)
 		{return(FALSE);}
 #endif
 
 	CanPrint=TRUE;
-	printf("Returning from OpenAmigaLibraries\n");
 	return(TRUE);
 }
 /*======================================================================================*/
@@ -657,15 +656,6 @@ const ULONG LibInitTable[4] = {
 };
 /*======================================================================================*/
 #else
-//WARPUP code to support Libprintf
-void LibPrintf(const char *str, ...)
-{
-	va_list  args;
-	va_start(args, str);
-	printf(str, args);
-	va_end(args);
-	return;
-}
 
 void LibsPrintf(UBYTE *buffer, UBYTE *string, ...)
 {
@@ -677,9 +667,9 @@ void LibsPrintf(UBYTE *buffer, UBYTE *string, ...)
 void glConstructor(void)
 {
   char *Flag;
-
+	LibPrintf("Welcome to StormMesa for WarpOS\n");
   if(!OpenAmigaLibraries()) {
-	printf("Major fault starting StormMesa - quitting\n");
+	LibPrintf("Major fault starting StormMesa - quitting\n");
 	exit(10);
   }
 	LibAlert("Opened lib\n"); //FULLNAME
