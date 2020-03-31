@@ -13,6 +13,7 @@ int glutStrokeWidth(GLUTstrokeFont font, int c)
 {
   StrokeFontPtr fontinfo;
   const StrokeCharRec *ch;
+			        DEBUGOUT(11, "glutStrokeWidth\n");
 
   fontinfo = (StrokeFontPtr) font;
 
@@ -30,6 +31,7 @@ int glutStrokeLength(GLUTstrokeFont font, const unsigned char *string)
   int c, length;
   StrokeFontPtr fontinfo;
   const StrokeCharRec *ch;
+			        DEBUGOUT(11, "glutStrokeLength\n");
 
   fontinfo = (StrokeFontPtr) font;
 

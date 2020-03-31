@@ -31,6 +31,7 @@
 
 void glutInitWindowPosition(int x, int y)
 {
+		        DEBUGOUT(11, "glutInitWindowPosition\n");
   glutstuff.initposx = x;
   glutstuff.initposy = y;
 }

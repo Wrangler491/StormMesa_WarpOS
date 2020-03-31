@@ -31,6 +31,8 @@
 
 void glutReshapeWindow(int width, int height)
 {
+			        DEBUGOUT(11, "glutReshapeWindow\n");
+
   IGNORE_IN_GAME_MODE();
 
   if (glutstuff.curwin) {
@@ -44,6 +46,8 @@ void glutReshapeWindow(int width, int height)
 
 void glutPositionWindow(int x, int y)
 {
+			        DEBUGOUT(11, "glutPositionWindow\n");
+
   IGNORE_IN_GAME_MODE();
 
   if (glutstuff.curwin) {
@@ -57,6 +61,8 @@ void glutPositionWindow(int x, int y)
 
 void glutFullScreen(void)
 {
+			        DEBUGOUT(11, "glutFullScreen\n");
+
   IGNORE_IN_GAME_MODE();
 
   if (glutstuff.curwin)

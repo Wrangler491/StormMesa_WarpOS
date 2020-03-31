@@ -31,6 +31,8 @@
 
 int glutDeviceGet(GLenum param)
 {
+	        DEBUGOUT(11, "glutDeviceGet\n");
+
  /*
   * TODO: joystick-stuff
   */
@@ -65,12 +67,16 @@ int glutDeviceGet(GLenum param)
 
 void glutIgnoreKeyRepeat(int ignore)
 {
+	        DEBUGOUT(11, "glutIgnoreKeyRepeat\n");
+
   if (glutstuff.curwin)
     glutstuff.curwin->ignorekeyrepeat = ignore;
 }
 
 void glutSetKeyRepeat(int repeatmode)
 {
+	        DEBUGOUT(11, "glutSetKeyRepeat\n");
+
   if (glutstuff.curwin)
     glutstuff.curwin->repeatmode = repeatmode;
 }

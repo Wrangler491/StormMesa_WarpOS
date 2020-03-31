@@ -37,6 +37,7 @@
 #include "glutstuff.h"
 
 int glutGet(GLenum state) {
+	        DEBUGOUT(11, "glutGet\n");
 
   /* independent */
   switch (state) {

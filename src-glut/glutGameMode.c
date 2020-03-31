@@ -45,6 +45,7 @@ void CloseWindowSafely(struct Window *win);
 
 int glutEnterGameMode(void) {
   struct GlutGameMode *GameMode;
+        DEBUGOUT(11, "glutEnterGameMode\n");
 
  /*
   * TODO:
@@ -167,6 +168,7 @@ int glutEnterGameMode(void) {
 
 void glutLeaveGameMode(void) {
   struct GlutGameMode *GameMode;
+        DEBUGOUT(11, "glutLeaveGameMode\n");
 
   if ((GameMode = glutstuff.GameMode)) {
     struct nnode *act;
@@ -209,6 +211,7 @@ void glutLeaveGameMode(void) {
 }
 
 int glutGameModeGet(GLenum mode) {
+	        DEBUGOUT(11, "glutGameModeGet\n");
 
   switch (mode) {
     case GLUT_GAME_MODE_ACTIVE:
@@ -232,4 +235,5 @@ int glutGameModeGet(GLenum mode) {
 }
 
 void glutGameModeString(const char *string) {
+	        DEBUGOUT(11, "glutGameModeString\n");
 }

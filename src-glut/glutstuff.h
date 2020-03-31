@@ -42,6 +42,7 @@
 #include <exec/types.h>
 #include <intuition/intuition.h>
 #include <proto/exec.h>
+#include <stdint.h>
 #pragma pack(pop)
 #else
 #include <exec/types.h>
@@ -53,6 +54,7 @@
 
 #ifdef WARPUP
 #include <liblists.h>
+#include "../sources/AmigaIncludes.h"
 #endif
 
 #define	USE_CLIP_LAYER
@@ -64,6 +66,9 @@ extern APTR glutPool;
 APTR AllocVecPooled(register APTR poolHeader __asm__("a0"), register ULONG byteSize __asm__("d0"));
 void FreeVecPooled(register APTR poolHeader __asm__("a0"), register ULONG *memory __asm__("a1"));
 #endif
+
+//void LibPrintf(const char *string); //, ...);
+//#define LibPrintf(t) SPrintF(t,NULL)
 
 /* Menus */
 #define IGNORE_IN_GAME_MODE(args...) \
@@ -98,6 +103,8 @@ struct GlutTimer {
 };
 
 struct GlutWindow {
+  uint16_t winwidth;
+  uint16_t winheight;
   struct nnode WindowNode;					/* bind the windows together */
 #define	WinID		WindowNode.data
   struct nlist SubWindows;					/* bind all subwindows of this window together */
@@ -107,9 +114,9 @@ struct GlutWindow {
   struct nlist WindowTimers;
 
   struct Window *window;
-#ifdef USE_CLIP_LAYER
+/*#ifdef USE_CLIP_LAYER
   struct Region *clipreg;
-#endif
+#endif*/
   struct amigamesa_context *context;
 
   APTR vi;
@@ -122,10 +129,12 @@ struct GlutWindow {
   int mousex, mousey;
   int joystickpoll, cursor;						/* TODO */
 
-  int winx, winy;							/* Shape that we want */
-  int winwidth, winheight;
-  int wincurx, wincury;							/* Shape that we believe it to currently be */
-  int wincurwidth, wincurheight;
+  uint16_t winx;							/* Shape that we want */
+  uint16_t winy;
+  uint16_t wincurx;							/* Shape that we believe it to currently be */
+  uint16_t wincury;
+  uint16_t wincurwidth;
+  uint16_t wincurheight;
 
   void (*displayfunc) (void);
   void (*overlaydisplayfunc) (void);
@@ -173,7 +182,7 @@ struct GlutStuff {
   int nextmenuid;
 
   /* stuff for the glutInitWindow* functions */
-  int initposx, initposy,
+  uint16_t initposx, initposy,
       initwidth, initheight,
       scrwidth, scrheight;
   unsigned int initdisplaymode;
@@ -218,9 +227,12 @@ extern LONG debugOutputGLUT;
   if(debugOutputGLUT >= level) {	\
  /* Printf(str,"gl  : "); */		\
  /* Printf(str,##args);	*/		\
-    fprintf(stderr,"glut: ");		\
-    fprintf(stderr,str,##args);		\
-    fflush(stderr);			\
+    /*fprintf(stderr,"glut: ");*/		\
+    /*fprintf(stderr,str,##args);*/		\
+    /*fflush(stderr);*/			\
+	LibPrintf("glut: ");		\
+	LibPrintf(str);		\
+	LibPrintf("\n");		\
   }					\
 })
 //#else

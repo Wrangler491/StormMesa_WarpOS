@@ -208,11 +208,15 @@ static void teapot(GLint grid, GLdouble scale, GLenum type)
 /* CENTRY */
 void glutSolidTeapot(GLdouble scale)
 {
+				        DEBUGOUT(11, "glutSolidTeapot\n");
+
   teapot(14, scale, GL_FILL);
 }
 
 void glutWireTeapot(GLdouble scale)
 {
+				        DEBUGOUT(11, "glutWireTeapot\n");
+
   teapot(10, scale, GL_LINE);
 }
 

@@ -107,7 +107,7 @@
  *  4. Set lh_Type to the same data type as the nodes to be kept
  *     in the list. (Unless you are using a MinList).
  */
-extern void nNewList(register struct nlist *list)
+extern void nNewList( struct nlist *list)
 {
   list->head = (struct nnode *)&(list->tail);
   list->tail = NULL;
@@ -121,10 +121,10 @@ extern void nNewList(register struct nlist *list)
  * Notes: This function adds the specified node to the begining (head)
  *        of the specified list.
  */
-void nAddHead(register struct nlist *list, register struct nnode *node)
+void nAddHead( struct nlist *list,  struct nnode *node)
 {
   /* temporary pointer to a node  */
-  register struct nnode *tempnode;
+   struct nnode *tempnode;
 
   /* Save the pointer to the old head node. */
   tempnode = list->head;
@@ -144,10 +144,10 @@ void nAddHead(register struct nlist *list, register struct nnode *node)
  * Notes: This function adds the specified node to the end (tail) of
  *        the given list.
  */
-extern void nAddTail(register struct nlist *list, register struct nnode *node)
+extern void nAddTail( struct nlist *list,  struct nnode *node)
 {
-  register struct nnode *tempnode;				/* temporary pointer to a node    */
-  register struct nnode *tailnode;				/* pointer to the tail part of the list */
+   struct nnode *tempnode;				/* temporary pointer to a node    */
+   struct nnode *tailnode;				/* pointer to the tail part of the list */
 
   /* Get a pointer to the tail part of the list header so that
    * we can just treat it like a normal node. 
@@ -172,15 +172,15 @@ extern void nAddTail(register struct nlist *list, register struct nnode *node)
  *        given list.  If the list is empty, this function will
  *        return NULL.
  */
-struct nnode *nRemHead(register struct nlist *list)
+struct nnode *nRemHead( struct nlist *list)
 {
   /* If the head node is the list node in the list, then
    * the list is really empty (see header comment for why
    * this is the case), so we need to return NULL. 
    */
   if (list->nodes) {
-    register struct nnode *headnode;				/* pointer to the old head of the list  */
-    register struct nnode *tempnode;				/* pointer to temporary node   */
+     struct nnode *headnode;				/* pointer to the old head of the list  */
+     struct nnode *tempnode;				/* pointer to temporary node   */
 
     /* Get a pointer to the old head of the list. */
     headnode = list->head;
@@ -209,11 +209,11 @@ struct nnode *nRemHead(register struct nlist *list)
  *        given list.  If the list is empty, this function will
  *        return NULL.
  */
-struct nnode *nRemTail(register struct nlist *list)
+struct nnode *nRemTail( struct nlist *list)
 {
   if (list->nodes) {
-    register struct nnode *tailnode;				/* pointer to the old tail of the list  */
-    register struct nnode *tempnode;				/* pointer to temporary node   */
+     struct nnode *tailnode;				/* pointer to the old tail of the list  */
+     struct nnode *tempnode;				/* pointer to temporary node   */
 
     tailnode = list->tailpred;
     tempnode = tailnode->pred;
@@ -239,7 +239,7 @@ struct nnode *nRemTail(register struct nlist *list)
  * you attempt to remove a node that is not in a list, you will cause
  * serious system problems.
  */
-void nRemove(register struct nlist *list, register struct nnode *node)
+void nRemove( struct nlist *list,  struct nnode *node)
 {
   /* Line the node's neighbors to each other, rather than to node. */
   node->pred->succ = node->succ;
@@ -267,7 +267,7 @@ void nRemove(register struct nlist *list, register struct nnode *node)
  * both of these actions can be better accomplished with the functions
  * mentioned in the "Special Case Insertion" section below.
  */
-void nInsert(register struct nlist *list, register struct nnode *node, register struct nnode *pred)
+void nInsert( struct nlist *list,  struct nnode *node,  struct nnode *pred)
 {
   /* If the pointer to ``pred'' is NULL, then ``node'' will become
    * the head of the list. 
@@ -276,7 +276,7 @@ void nInsert(register struct nlist *list, register struct nnode *node, register 
     nAddHead(list, node);
   }
   else {
-    register struct nnode *tempnode;				/* temporary pointer to a node  */
+     struct nnode *tempnode;				/* temporary pointer to a node  */
 
     /* Save the pointer to the node that comes after ``pred''. */
     tempnode = pred->succ;
@@ -305,7 +305,7 @@ void nInsert(register struct nlist *list, register struct nnode *node, register 
  *        However, both of these actions can be better accomplished with the
  *        functions mentioned in the "Special Case Insertion" section below.
  */
-void npreInsert(register struct nlist *list, register struct nnode *node, register struct nnode *succ)
+void npreInsert( struct nlist *list,  struct nnode *node,  struct nnode *succ)
 {
   /* If the pointer to ``succ'' is NULL, then ``node'' will become
    * the head of the list. 
@@ -314,7 +314,7 @@ void npreInsert(register struct nlist *list, register struct nnode *node, regist
     nAddHead(list, node);
   }
   else {
-    register struct nnode *tempnode;				/* temporary pointer to a node  */
+     struct nnode *tempnode;				/* temporary pointer to a node  */
 
     /* Save the pointer to the node that comes before ``succ''. */
     tempnode = succ->pred;
@@ -355,16 +355,16 @@ void npreInsert(register struct nlist *list, register struct nnode *node, regist
  *      use FIFO ordering.  The new node is inserted following the list
  *      node of equal priority.
  */
-struct nnode *nFindNode(register struct nnode *startnode,
-			register int numnodes, register int data)
+struct nnode *nFindNode( struct nnode *startnode,
+			 int numnodes,  int data)
 {
-  register int middle = numnodes - 1;
-  register int shift;
+   int middle = numnodes - 1;
+   int shift;
 
   while ((shift = middle >> 1) > 0) {				/* real tries to find node is ln2(rgbnodes) */
     /* find the middle */
-    register int loop = shift;
-    register struct nnode *middnode = startnode;
+     int loop = shift;
+     struct nnode *middnode = startnode;
 
     while ((loop--) > 0)					/* this eats most of the time */
       middnode = middnode->succ;
@@ -382,16 +382,16 @@ struct nnode *nFindNode(register struct nnode *startnode,
   return startnode->data < data ? startnode->pred : startnode;
 }
 
-struct nnode *nFindNodeReverse(register struct nnode *startnode,
-			       register int numnodes, register int data)
+struct nnode *nFindNodeReverse( struct nnode *startnode,
+			        int numnodes,  int data)
 {
-  register int middle = numnodes - 1;
-  register int shift;
+   int middle = numnodes - 1;
+   int shift;
 
   while ((shift = middle >> 1) > 0) {				/* real tries to find node is ln2(rgbnodes) */
     /* find the middle */
-    register int loop = shift;
-    register struct nnode *middnode = startnode;
+     int loop = shift;
+     struct nnode *middnode = startnode;
 
     while ((loop--) > 0)					/* this eats most of the time */
       middnode = middnode->succ;
@@ -409,9 +409,9 @@ struct nnode *nFindNodeReverse(register struct nnode *startnode,
   return startnode->data < data ? startnode : startnode->pred;
 }
 
-void nEnqueue(register struct nlist *list, register struct nnode *node)
+void nEnqueue( struct nlist *list,  struct nnode *node)
 {
-  register int data = node->data;
+   int data = node->data;
 
   /* special case for empty list element */
   if (!list->nodes)
@@ -427,9 +427,9 @@ void nEnqueue(register struct nlist *list, register struct nnode *node)
     nInsert(list, node, nFindNode(list->head, list->nodes, data));
 }
 
-void nEnqueueReverse(register struct nlist *list, register struct nnode *node)
+void nEnqueueReverse( struct nlist *list,  struct nnode *node)
 {
-  register int data = node->data;
+   int data = node->data;
 
   /* special case for empty list element */
   if (!list->nodes)
@@ -451,7 +451,7 @@ void nEnqueueReverse(register struct nlist *list, register struct nnode *node)
  * Notes: This function is very similar in concept to RemHead(), with the
  *        exception that it doesn't modify the linked list.
  */
-struct nnode *nGetHead(register struct nlist *list)
+struct nnode *nGetHead( struct nlist *list)
 {
   return ((list->head->succ == NULL) ? NULL : list->head);
 }
@@ -462,7 +462,7 @@ struct nnode *nGetHead(register struct nlist *list)
  * Notes: This function is very similar in concept to RemTail(), with the
  *        exception that it doesn't modify the linked list.
  */
-extern struct nnode *nGetTail(register struct nlist *list)
+extern struct nnode *nGetTail( struct nlist *list)
 {
   return ((list->tailpred->pred == NULL) ? NULL : list->tailpred);
 }
@@ -473,13 +473,13 @@ extern struct nnode *nGetTail(register struct nlist *list)
  * Notes: This function returns a pointer to the next node, if one exists.
  *
  */
-extern struct nnode *nSuccNode(register struct nnode *node)
+extern struct nnode *nSuccNode( struct nnode *node)
 {
   return ((node->succ->succ == NULL) ? NULL : node->succ);
 }
 
 /*
-struct nnode *nCycleNode(register struct nnode *node)
+struct nnode *nCycleNode( struct nnode *node)
 {
   return ((node->succ->succ == NULL) ? *(((struct nnode *)node->succ) - 1) : node->succ);
 }
@@ -493,9 +493,9 @@ struct nnode *nCycleNode(register struct nnode *node)
  *        source list is NOT VALID AFTER THIS CALL.  Also, any nodes that
  *        might already be in the destination list will be LOST.
  */
-void nMoveList(register struct nlist *slist, register struct nlist *dlist)
+void nMoveList( struct nlist *slist,  struct nlist *dlist)
 {
-  register struct nnode *node;
+   struct nnode *node;
 
   /* First, make the destination list point to its new head and tail
    * nodes.  Also, init. the lh_Tail value.
@@ -516,13 +516,13 @@ void nMoveList(register struct nlist *slist, register struct nlist *dlist)
 /* Name : MoveNode()
  *
  */
-void nMoveNodeSorted(register struct nlist *slist, register struct nlist *dlist, register struct nnode *node)
+void nMoveNodeSorted( struct nlist *slist,  struct nlist *dlist,  struct nnode *node)
 {
   nRemove(slist, node);
   nEnqueue(dlist, node);
 }
 
-void nMoveNodeSortedReverse(register struct nlist *slist, register struct nlist *dlist, register struct nnode *node)
+void nMoveNodeSortedReverse( struct nlist *slist,  struct nlist *dlist,  struct nnode *node)
 {
   nRemove(slist, node);
   nEnqueueReverse(dlist, node);
@@ -537,7 +537,7 @@ void nMoveNodeSortedReverse(register struct nlist *slist, register struct nlist 
  *        the nodes of postList.  The resultant list is linked with the
  *        header specified by preList.
  */
-void nAppendList(register struct nlist *prelist, register struct nlist *postlist)
+void nAppendList( struct nlist *prelist,  struct nlist *postlist)
 {
   /* If the list that we were going to append to is empty, then the
    * resultant list is just the list that we were going to append.
@@ -552,9 +552,9 @@ void nAppendList(register struct nlist *prelist, register struct nlist *postlist
    * really have a chore to do.  Let's return to the caller now.
    */
   else if (postlist->nodes) {
-    register struct nnode *lastOfPre = prelist->tailpred;
-    register struct nnode *firstOfPost = postlist->head;
-    register struct nnode *lastOfPost;
+     struct nnode *lastOfPre = prelist->tailpred;
+     struct nnode *firstOfPost = postlist->head;
+     struct nnode *lastOfPost;
 
     /* This is the point where this routine gets more than just a
      * little complex.  This would make a good assignment for 3rd term,
@@ -589,7 +589,7 @@ void nAppendList(register struct nlist *prelist, register struct nlist *postlist
  *        the nodes of postList.  The resultant list is linked with the
  *        header specified by postList.
  */
-void nPrependList(register struct nlist *postList, register struct nlist *preList)
+void nPrependList( struct nlist *postList,  struct nlist *preList)
 {
   /* This is kind of a cheesy way to do this, but it works. :) The
    * main reason that I did this routine this way is that it is a
@@ -621,12 +621,12 @@ void nPrependList(register struct nlist *postList, register struct nlist *preLis
  *   25 werte im bereich 200-300
  *  der groeszte wert ist nicht berechenbar und liegt in irgendeinem bereich
  */
-void nSortListWeighted(register struct nlist *list, register int radix)
+void nSortListWeighted( struct nlist *list,  int radix)
 {
-  register struct nlist **bucket;				/* Sorting buckets.    */
-  register struct nnode *node = (struct nnode *)list;		/* Temporary list node pointer. */
-  register int lcv;						/* Local counter variable.   */
-  register int radix_divide = 0;				/* the greatest data in a node */
+   struct nlist **bucket;				/* Sorting buckets.    */
+   struct nnode *node = (struct nnode *)list;		/* Temporary list node pointer. */
+   int lcv;						/* Local counter variable.   */
+   int radix_divide = 0;				/* the greatest data in a node */
 
   /* allocate number of lists
    */
@@ -658,8 +658,8 @@ void nSortListWeighted(register struct nlist *list, register int radix)
    */
   node = list->head;						/* Temporary list node pointer. */
   for (lcv = list->nodes - 1; lcv >= 0; lcv--) {
-    register struct nnode *succnode = node->succ;
-    register int radix2 = sqrt(node->data) / radix_divide;
+     struct nnode *succnode = node->succ;
+     int radix2 = sqrt(node->data) / radix_divide;
 
     nEnqueue(bucket[radix2], node);
     node = succnode;
@@ -677,12 +677,12 @@ void nSortListWeighted(register struct nlist *list, register int radix)
   free(bucket);
 }
 
-void nSortListWeightedReverse(register struct nlist *list, register int radix)
+void nSortListWeightedReverse( struct nlist *list,  int radix)
 {
-  register struct nlist **bucket;				/* Sorting buckets.    */
-  register struct nnode *node = (struct nnode *)list;		/* Temporary list node pointer. */
-  register int lcv;						/* Local counter variable.   */
-  register int radix_divide = 0;				/* the greatest data in a node */
+   struct nlist **bucket;				/* Sorting buckets.    */
+   struct nnode *node = (struct nnode *)list;		/* Temporary list node pointer. */
+   int lcv;						/* Local counter variable.   */
+   int radix_divide = 0;				/* the greatest data in a node */
 
   /* allocate number of lists
    */
@@ -714,8 +714,8 @@ void nSortListWeightedReverse(register struct nlist *list, register int radix)
    */
   node = list->head;						/* Temporary list node pointer. */
   for (lcv = list->nodes - 1; lcv >= 0; lcv--) {
-    register struct nnode *succnode = node->succ;
-    register int radix2 = sqrt(node->data) / radix_divide;
+     struct nnode *succnode = node->succ;
+     int radix2 = sqrt(node->data) / radix_divide;
 
     nEnqueueReverse(bucket[radix2], node);
     node = succnode;
@@ -738,12 +738,12 @@ void nSortListWeightedReverse(register struct nlist *list, register int radix)
  *  die werte sind linear im daten-bereich verteilt
  *  der groeszte wert ist nicht berechenbar und liegt in irgendeinem bereich
  */
-void nSortListLinear(register struct nlist *list, register int radix)
+void nSortListLinear( struct nlist *list,  int radix)
 {
-  register struct nlist **bucket;				/* Sorting buckets.    */
-  register struct nnode *node = (struct nnode *)list;		/* Temporary list node pointer. */
-  register int lcv;						/* Local counter variable.   */
-  register int radix_divide = 0;				/* the greatest data in a node */
+   struct nlist **bucket;				/* Sorting buckets.    */
+   struct nnode *node = (struct nnode *)list;		/* Temporary list node pointer. */
+   int lcv;						/* Local counter variable.   */
+   int radix_divide = 0;				/* the greatest data in a node */
 
   /* allocate number of lists
    */
@@ -775,8 +775,8 @@ void nSortListLinear(register struct nlist *list, register int radix)
    */
   node = list->head;						/* Temporary list node pointer. */
   for (lcv = list->nodes - 1; lcv >= 0; lcv--) {
-    register struct nnode *succnode = node->succ;
-    register int radix2 = node->data / radix_divide;
+     struct nnode *succnode = node->succ;
+     int radix2 = node->data / radix_divide;
 
     nEnqueue(bucket[radix2], node);
     node = succnode;
@@ -794,12 +794,12 @@ void nSortListLinear(register struct nlist *list, register int radix)
   free(bucket);
 }
 
-void nSortListLinearReverse(register struct nlist *list, register int radix)
+void nSortListLinearReverse( struct nlist *list,  int radix)
 {
-  register struct nlist **bucket;				/* Sorting buckets.    */
-  register struct nnode *node = (struct nnode *)list;		/* Temporary list node pointer. */
-  register int lcv;						/* Local counter variable.   */
-  register int radix_divide = 0;				/* the greatest data in a node */
+   struct nlist **bucket;				/* Sorting buckets.    */
+   struct nnode *node = (struct nnode *)list;		/* Temporary list node pointer. */
+   int lcv;						/* Local counter variable.   */
+   int radix_divide = 0;				/* the greatest data in a node */
 
   /* allocate number of lists
    */
@@ -831,8 +831,8 @@ void nSortListLinearReverse(register struct nlist *list, register int radix)
    */
   node = list->head;						/* Temporary list node pointer. */
   for (lcv = list->nodes - 1; lcv >= 0; lcv--) {
-    register struct nnode *succnode = node->succ;
-    register int radix2 = node->data / radix_divide;
+     struct nnode *succnode = node->succ;
+     int radix2 = node->data / radix_divide;
 
     nEnqueueReverse(bucket[radix2], node);
     node = succnode;
@@ -855,11 +855,11 @@ void nSortListLinearReverse(register struct nlist *list, register int radix)
  *  die werte sind linear im daten-bereich verteilt
  *  der groeszte wert ist berechenbar und wird angegeben
  */
-void nSortListLinearMax(register struct nlist *list, register int radix, register int radix_divide)
+void nSortListLinearMax( struct nlist *list,  int radix,  int radix_divide)
 {
-  register struct nlist **bucket;				/* Sorting buckets.    */
-  register struct nnode *node = (struct nnode *)list;		/* Temporary list node pointer. */
-  register int lcv;						/* Local counter variable.   */
+   struct nlist **bucket;				/* Sorting buckets.    */
+   struct nnode *node = (struct nnode *)list;		/* Temporary list node pointer. */
+   int lcv;						/* Local counter variable.   */
 
   /* allocate number of lists
    */
@@ -886,8 +886,8 @@ void nSortListLinearMax(register struct nlist *list, register int radix, registe
    */
   node = list->head;						/* Temporary list node pointer. */
   for (lcv = list->nodes - 1; lcv >= 0; lcv--) {
-    register struct nnode *succnode = node->succ;
-    register int radix2 = node->data / radix_divide;
+     struct nnode *succnode = node->succ;
+     int radix2 = node->data / radix_divide;
 
     nEnqueue(bucket[radix2], node);
     node = succnode;
@@ -905,11 +905,11 @@ void nSortListLinearMax(register struct nlist *list, register int radix, registe
   free(bucket);
 }
 
-void nSortListLinearMaxReverse(register struct nlist *list, register int radix, register int radix_divide)
+void nSortListLinearMaxReverse( struct nlist *list,  int radix,  int radix_divide)
 {
-  register struct nlist **bucket;				/* Sorting buckets.    */
-  register struct nnode *node = (struct nnode *)list;		/* Temporary list node pointer. */
-  register int lcv;						/* Local counter variable.   */
+   struct nlist **bucket;				/* Sorting buckets.    */
+   struct nnode *node = (struct nnode *)list;		/* Temporary list node pointer. */
+   int lcv;						/* Local counter variable.   */
 
   /* allocate number of lists
    */
@@ -936,8 +936,8 @@ void nSortListLinearMaxReverse(register struct nlist *list, register int radix, 
    */
   node = list->head;						/* Temporary list node pointer. */
   for (lcv = list->nodes - 1; lcv >= 0; lcv--) {
-    register struct nnode *succnode = node->succ;
-    register int radix2 = node->data / radix_divide;
+     struct nnode *succnode = node->succ;
+     int radix2 = node->data / radix_divide;
 
     nEnqueueReverse(bucket[radix2], node);
     node = succnode;
@@ -953,6 +953,24 @@ void nSortListLinearMaxReverse(register struct nlist *list, register int radix, 
   for (lcv = radix - 1; lcv >= 0; lcv--)
     free(bucket[lcv]);
   free(bucket);
+}
+
+
+
+void nAddTailext(struct nlist *list,  struct nnode *node, void *ptr)	
+{
+	nAddTail(list, node);
+	node->obj = ptr;
+}
+
+void *nGetNextext( struct nnode *node)
+{
+	if(node) {
+		if(nGetNext(node)) {
+			return(nGetNext(node)->obj);
+		}
+	}
+	return(NULL);
 }
 
 #endif								/* LISTS_C */

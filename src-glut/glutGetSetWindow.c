@@ -39,6 +39,7 @@
 void glutSetWindow(int win)
 {
   struct GlutWindow *gw;
+        DEBUGOUT(11, "glutSetWindow\n");
 
   if ((gw = stuffGetWin(win))) {
     stuffMakeCurrent(gw);
@@ -51,6 +52,7 @@ void glutSetWindow(int win)
 
 void glutSetWindowTitle(const char *title)
 {
+	        DEBUGOUT(11, "glutSetWindowTitle\n");
   IGNORE_IN_GAME_MODE();
 
   if (glutstuff.curwin && glutstuff.curwin->window)
@@ -61,12 +63,16 @@ void glutSetWindowTitle(const char *title)
 
 int glutGetWindow(void)
 {
+	        DEBUGOUT(11, "glutGetWindow\n");
+
   return glutstuff.curwin ?
 	 glutstuff.curwin->WinID : 0;
 }
 
 void glutSetCursor(int cursor)
 {
+	        DEBUGOUT(11, "glutSetCursor\n");
+
   if (glutstuff.curwin)
     glutstuff.curwin->cursor = cursor;					/* TODO: different pointer images */
   else
@@ -75,6 +81,7 @@ void glutSetCursor(int cursor)
 
 void glutWarpPointer(int x, int y)
 {
+	        DEBUGOUT(11, "glutWarpPointer\n");
   if (glutstuff.curwin) {
   										/* TODO: MouseMove */
   }

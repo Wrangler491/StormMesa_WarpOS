@@ -31,6 +31,8 @@
 
 void glutPostRedisplay(void)
 {
+			        DEBUGOUT(11, "glutPostRedisplay\n");
+
   if (glutstuff.curwin)
     glutstuff.curwin->needredisplay = TRUE;
 }
@@ -38,6 +40,7 @@ void glutPostRedisplay(void)
 void glutPostWindowRedisplay(int win)
 {
   struct GlutWindow *gw;
+		        DEBUGOUT(11, "glutPostWindowRedisplay\n");
 
   if ((gw = stuffGetWin(win)))
     gw->needredisplay = TRUE;

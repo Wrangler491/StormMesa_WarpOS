@@ -46,6 +46,7 @@ static struct Menu *GetMenuPointer(int button)
 {
   struct GlutWindow *actWindow;
   struct Menu *actMenu = NULL;
+        DEBUGOUT(11, "glut: GetMenuPointer\n");
 
   if ((actWindow = glutstuff.curwin)) {
     if ((actMenu = actWindow->menu)) {
@@ -67,6 +68,7 @@ static struct Menu *GetMenuPointer(int button)
 static int CountMenuEntries(struct GlutMenu *gm)
 {
   int n = 1;									/* This menu item */
+        DEBUGOUT(11, "glut: CountMenuEntries\n");
 
   if (gm) {
     struct GlutMenuEntry *actEntry = (struct GlutMenuEntry *)&gm->MenuEntries;
@@ -90,6 +92,7 @@ static int CountMenuEntries(struct GlutMenu *gm)
 
 static void FillEntry(struct NewMenu **nm, UBYTE nm_type, const STRPTR nm_Label, APTR nm_UserData)
 {
+	        DEBUGOUT(11, "glut: FillEntry\n");
   (*nm)->nm_Type = nm_type;
   (*nm)->nm_Label = (char *)nm_Label;
   (*nm)->nm_CommKey = 0;
@@ -101,6 +104,7 @@ static void FillEntry(struct NewMenu **nm, UBYTE nm_type, const STRPTR nm_Label,
 
 static void FillMenu(struct GlutMenu *gm, struct NewMenu **nm, UBYTE type)
 {
+	        DEBUGOUT(11, "glut: FillMenu\n");
   if (gm) {
     struct GlutMenuEntry *actEntry = (struct GlutMenuEntry *)&gm->MenuEntries;
 
@@ -133,6 +137,7 @@ static struct MenuItem *MakeMenu(struct GlutMenu *gm)
 {
   struct NewMenu *nm, *nmp;
   struct MenuItem *menu = NULL;
+          DEBUGOUT(11, "glut: MakeMenu\n");
 
   if (gm) {
 #ifndef WARPUP
@@ -167,6 +172,7 @@ void RedoMenu(int button, struct GlutMenu *glutmenu)
   struct GlutWindow *actWindow;
   struct Menu *menu;
   struct MenuItem *menuitems;
+        DEBUGOUT(11, "glut: RedoMenu\n");
 
   if ((actWindow = glutstuff.curwin) && (actWindow->window) && (actWindow->menu)) {
     if ((menu = GetMenuPointer(button))) {
@@ -194,6 +200,7 @@ void RedoMenu(int button, struct GlutMenu *glutmenu)
 void glutAttachMenu(int button)
 {
   struct GlutWindow *actWindow;
+          DEBUGOUT(11, "glutAttachMenu\n");
 
   if ((actWindow = glutstuff.curwin)) {
     switch (button) {
@@ -216,6 +223,7 @@ void glutAttachMenu(int button)
 void glutDetachMenu(int button)
 {
   struct GlutWindow *actWindow;
+        DEBUGOUT(11, "glutDetachMenu\n");
 
   if ((actWindow = glutstuff.curwin)) {
     switch (button) {

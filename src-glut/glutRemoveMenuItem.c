@@ -33,6 +33,7 @@
 void glutRemoveMenuItem(int entry)
 {
   struct GlutMenu *actMenu;
+		        DEBUGOUT(11, "glutRemoveMenuItem\n");
 
   if ((actMenu = glutstuff.curmenu)) {
     struct GlutMenuEntry *gme;

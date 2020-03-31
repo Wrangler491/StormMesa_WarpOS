@@ -27,7 +27,7 @@
 #
 
 CC = gcc
-CFLAGS = --specs=warpup -woslibs -O3 -w
+CFLAGS = --specs=warpup -woslibs -O0 -w #-save-temps
 
 ##### MACROS #####
 

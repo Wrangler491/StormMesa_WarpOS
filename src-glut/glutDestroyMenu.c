@@ -33,6 +33,7 @@
 void glutDestroyMenu(int menu)
 {
   struct GlutMenu *actMenu;
+        DEBUGOUT(11, "glutDestroyMenu\n");
 
   if ((actMenu = glutstuff.curmenu)) {
     struct GlutMenu *gm;

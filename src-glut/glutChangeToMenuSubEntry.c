@@ -32,6 +32,7 @@
 void glutChangeToMenuEntry(int entry, const char *name, int value)
 {
   struct GlutMenuEntry *gme;
+          DEBUGOUT(11, "glutChangeToMenuEntry\n");
 
   if (glutstuff.curmenu) {
     if((gme = stuffGetMenuEntry(entry, glutstuff.curmenu))) {
@@ -50,6 +51,7 @@ void glutChangeToMenuEntry(int entry, const char *name, int value)
 void glutChangeToSubMenu(int entry, const char *name, int menu)
 {
   struct GlutMenuEntry *gme;
+          DEBUGOUT(11, "glutChangeToSubMenu\n");
 
   if (glutstuff.curmenu) {
     if ((gme = stuffGetMenuEntry(entry, glutstuff.curmenu))) {

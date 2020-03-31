@@ -33,6 +33,7 @@
 int glutCreateMenu(void (*func) (int value))
 {
   struct GlutMenu *gm;
+        DEBUGOUT(11, "glutCreateMenu\n");
 
 #ifndef WARPUP
   if ((gm = AllocVecPooled(glutPool, sizeof(struct GlutMenu)))) {

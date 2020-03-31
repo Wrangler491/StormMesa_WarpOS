@@ -15,6 +15,7 @@ void glutStrokeCharacter(GLUTstrokeFont font, int c)
   const CoordRec *coord;
   StrokeFontPtr fontinfo;
   int i, j;
+			        DEBUGOUT(11, "glutStrokeCharacter\n");
 
   fontinfo = (StrokeFontPtr) font;
 

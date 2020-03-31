@@ -40,6 +40,7 @@
 int glutGetModifiers(void)
 {
   int mods = 0;
+        DEBUGOUT(11, "glutGetModifiers\n");
 
   if (glutstuff.curwin) {
     DEBUGOUT(2, "qualifier: %x\n", glutstuff.curwin->qualifiers);

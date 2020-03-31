@@ -79,6 +79,8 @@ static void initQuadObj(void)
 /* CENTRY */
 void glutWireSphere(GLdouble radius, GLint slices, GLint stacks)
 {
+			        DEBUGOUT(11, "glutWireSphere\n");
+
   QUAD_OBJ_INIT();
   gluQuadricDrawStyle(quadObj, GLU_LINE);
   gluQuadricNormals(quadObj, GLU_SMOOTH);
@@ -90,6 +92,8 @@ void glutWireSphere(GLdouble radius, GLint slices, GLint stacks)
 
 void glutSolidSphere(GLdouble radius, GLint slices, GLint stacks)
 {
+			        DEBUGOUT(11, "glutSolidSphere\n");
+
   QUAD_OBJ_INIT();
   gluQuadricDrawStyle(quadObj, GLU_FILL);
   gluQuadricNormals(quadObj, GLU_SMOOTH);
@@ -101,6 +105,8 @@ void glutSolidSphere(GLdouble radius, GLint slices, GLint stacks)
 
 void glutWireCone(GLdouble base, GLdouble height, GLint slices, GLint stacks)
 {
+			        DEBUGOUT(11, "glutWireCone\n");
+
   QUAD_OBJ_INIT();
   gluQuadricDrawStyle(quadObj, GLU_LINE);
   gluQuadricNormals(quadObj, GLU_SMOOTH);
@@ -112,6 +118,8 @@ void glutWireCone(GLdouble base, GLdouble height, GLint slices, GLint stacks)
 
 void glutSolidCone(GLdouble base, GLdouble height, GLint slices, GLint stacks)
 {
+			        DEBUGOUT(11, "glutSolidCone\n");
+
   QUAD_OBJ_INIT();
   gluQuadricDrawStyle(quadObj, GLU_FILL);
   gluQuadricNormals(quadObj, GLU_SMOOTH);
@@ -167,11 +175,15 @@ static void drawBox(GLfloat size, GLenum type)
 /* CENTRY */
 void glutWireCube(GLdouble size)
 {
+			        DEBUGOUT(11, "glutWireCube\n");
+
   drawBox(size, GL_LINE_LOOP);
 }
 
 void glutSolidCube(GLdouble size)
 {
+			        DEBUGOUT(11, "glutSolidCube\n");
+
   drawBox(size, GL_QUADS);
 }
 
@@ -221,6 +233,8 @@ static void doughnut(GLfloat r, GLfloat R, GLint nsides, GLint rings)
 void glutWireTorus(GLdouble innerRadius, GLdouble outerRadius,
 		   GLint nsides, GLint rings)
 {
+			        DEBUGOUT(11, "glutWireTorus\n");
+
   glPushAttrib(GL_POLYGON_BIT);
   glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   doughnut(innerRadius, outerRadius, nsides, rings);
@@ -230,6 +244,8 @@ void glutWireTorus(GLdouble innerRadius, GLdouble outerRadius,
 void glutSolidTorus(GLdouble innerRadius, GLdouble outerRadius,
 		    GLint nsides, GLint rings)
 {
+			        DEBUGOUT(11, "glutSolidTorus\n");
+
   doughnut(innerRadius, outerRadius, nsides, rings);
 }
 
@@ -346,12 +362,16 @@ static void dodecahedron(GLenum type)
 /* CENTRY */
 void glutWireDodecahedron(void)
 {
+			        DEBUGOUT(11, "glutWireDodecahedron\n");
+
   dodecahedron(GL_LINE_LOOP);
 }
 
 void glutSolidDodecahedron(void)
 {
-  dodecahedron(GL_TRIANGLE_FAN);
+  			        DEBUGOUT(11, "glutSolidDodecahedron\n");
+
+dodecahedron(GL_TRIANGLE_FAN);
 }
 
 /* ENDCENTRY */
@@ -457,11 +477,15 @@ static void octahedron(GLenum shadeType)
 /* CENTRY */
 void glutWireOctahedron(void)
 {
+				        DEBUGOUT(11, "glutWireOctahedron\n");
+
   octahedron(GL_LINE_LOOP);
 }
 
 void glutSolidOctahedron(void)
 {
+				        DEBUGOUT(11, "glutSolidOctahedron\n");
+
   octahedron(GL_TRIANGLES);
 }
 
@@ -525,11 +549,15 @@ static void icosahedron(GLenum shadeType)
 /* CENTRY */
 void glutWireIcosahedron(void)
 {
+				        DEBUGOUT(11, "glutWireIcosahedron\n");
+
   icosahedron(GL_LINE_LOOP);
 }
 
 void glutSolidIcosahedron(void)
 {
+				        DEBUGOUT(11, "glutSolidIcosahedron\n");
+
   icosahedron(GL_TRIANGLES);
 }
 
@@ -566,11 +594,15 @@ static void tetrahedron(GLenum shadeType)
 /* CENTRY */
 void glutWireTetrahedron(void)
 {
+				        DEBUGOUT(11, "glutWireTetrahedron\n");
+
   tetrahedron(GL_LINE_LOOP);
 }
 
 void glutSolidTetrahedron(void)
 {
+				        DEBUGOUT(11, "glutSolidTetrahedron\n");
+
   tetrahedron(GL_TRIANGLES);
 }
 

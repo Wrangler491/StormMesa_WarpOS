@@ -31,6 +31,7 @@
 
 void glutInitDisplayMode(unsigned int mode)
 {
+		        DEBUGOUT(11, "glutInitDisplayMode\n");
   if (mode & GLUT_RGBA)
     glutstuff.rgba = GL_TRUE;
   if (mode & GLUT_INDEX)
@@ -67,4 +68,5 @@ void glutInitDisplayMode(unsigned int mode)
 
 void glutInitDisplayString(const char *string)
 {
+		        DEBUGOUT(11, "glutInitDisplayString\n");
 }

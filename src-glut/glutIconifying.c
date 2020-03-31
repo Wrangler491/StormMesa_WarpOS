@@ -30,6 +30,7 @@
 #include "glutstuff.h"
 
 void glutPopWindow(void) {
+	        DEBUGOUT(11, "glutPopWindow\n");
   IGNORE_IN_GAME_MODE();
 
   if (glutstuff.curwin) {
@@ -41,6 +42,7 @@ void glutPopWindow(void) {
 }
 
 void glutPushWindow(void) {
+	        DEBUGOUT(11, "glutPushWindow\n");
   IGNORE_IN_GAME_MODE();
 
   if (glutstuff.curwin) {
@@ -52,14 +54,16 @@ void glutPushWindow(void) {
 }
 
 void glutIconifyWindow(void) {
-  IGNORE_IN_GAME_MODE();
+	        DEBUGOUT(11, "glutIconifyWindow\n");
+			IGNORE_IN_GAME_MODE();
 
   if (glutstuff.curwin)
     glutstuff.curwin->iconify = TRUE;
 }
 
 void glutShowWindow(void) {
-  IGNORE_IN_GAME_MODE();
+	        DEBUGOUT(11, "glutShowWindow\n");
+			IGNORE_IN_GAME_MODE();
 
   if (glutstuff.curwin) {
     if (glutstuff.curwin->show)
@@ -70,7 +74,8 @@ void glutShowWindow(void) {
 }
 
 void glutHideWindow(void) {
-  IGNORE_IN_GAME_MODE();
+	        DEBUGOUT(11, "glutHideWindow\n");
+			IGNORE_IN_GAME_MODE();
 
   if (glutstuff.curwin) {
     if (glutstuff.curwin->show)
@@ -81,6 +86,7 @@ void glutHideWindow(void) {
 }
 
 void glutSetIconTitle(const char *title) {
+		        DEBUGOUT(11, "glutSetIconTitle\n");
   IGNORE_IN_GAME_MODE();
   										/* TODO: workbench.library icons */
 }

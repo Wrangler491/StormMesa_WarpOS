@@ -40,6 +40,8 @@
 
 GLfloat glutGetColor(int ndx, int component)
 {
+	        DEBUGOUT(11, "glutGetColor\n");
+
   /* no window */
   if(!glutstuff.curwin || !glutstuff.curwin->context) {
     DEBUGOUT(1, "no window to get colors from\n");
@@ -96,6 +98,7 @@ void glutSetColor(int cell, GLfloat red, GLfloat green, GLfloat blue)
 void glutCopyColormap(int winnum)
 {
   struct GlutWindow *win;
+        DEBUGOUT(11, "glutCopyColormap\n");
 
   if(glutstuff.curwin && (win = stuffGetWin(winnum))) {
     struct amigamesa_context *this_context, *that_context;

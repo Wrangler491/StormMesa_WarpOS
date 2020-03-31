@@ -76,7 +76,7 @@ struct Library *LayersBase = NULL;
 #endif
 APTR glutPool = NULL;
 //#if !defined(NDEBUG) && !defined(NODEBUG)
-LONG debugOutputGLUT = 100;
+LONG debugOutputGLUT = 0; //100;
 //#endif
 
 struct GlutStuff glutstuff;

@@ -51,6 +51,9 @@
 #include "glutstuff.h"
 #include <GL/Amigamesa.h>
 
+#include "../sources/AmigaIncludes.h"
+//#define LibPrintf(t) SPrintF(t,NULL)
+
 extern VOID CloseWindowSafely(struct Window *win);
 
 #ifdef WARPUP
@@ -137,7 +140,8 @@ int glutCreateWindow(const char *title)
       gw->clipreg = clipWindowToBorders(win);
 #endif
 
-      if ((gw->context = AmigaMesaCreateContextTags(AMA_Window, win,
+      if ((gw->context = AmigaMesaCreateContextTags(
+							//AMA_Window, win,
 						    AMA_RGBMode, (glutstuff.rgbamode ? (glutstuff.rgbamode < 0 ? GL_FALSE : GL_TRUE) : glutstuff.rgba),
 						    AMA_AlphaFlag, glutstuff.alpha,
 						    //AMA_Stereo, (glutstuff.stereomode ? (glutstuff.stereomode < 0 ? GL_FALSE : GL_TRUE) : glutstuff.stereo),
@@ -153,6 +157,8 @@ int glutCreateWindow(const char *title)
 						    TAG_END))) {
 	if (ModifyIDCMP(win, IDCMP_CLOSEWINDOW | IDCMP_VANILLAKEY | IDCMP_RAWKEY | IDCMP_MENUPICK | IDCMP_MOUSEBUTTONS | IDCMP_INTUITICKS | IDCMP_CHANGEWINDOW)) {
 	  DEBUGOUT(11,"CreateWindow step 1\n");
+
+LibPrintf("** Created amigamesa_context with addr:\n"); // 0x%08x\n",gw->context);
 	  nNewList(&gw->SubWindows);
 	  nNewList(&gw->WindowTimers);
 
@@ -176,13 +182,13 @@ int glutCreateWindow(const char *title)
 
 	  gw->winx = gw->wincurx = (uint16_t)win->LeftEdge;
 	  gw->winy = gw->wincury = (uint16_t)win->TopEdge;
-printf("InnerWidth: %d, width: %d, left: %d, right: %d \n",InnerWidth(win), win->Width, win->BorderLeft, win->BorderRight);
-printf("InnerHeight: %d, height: %d, top: %d, bottom: %d \n",InnerHeight(win), win->Height, win->BorderTop, win->BorderBottom);
+LibPrintf("InnerWidth: \n"); //%d, width: %d, left: %d, right: %d \n",InnerWidth(win), win->Width, win->BorderLeft, win->BorderRight);
+LibPrintf("InnerHeight: \n"); //%d, height: %d, top: %d, bottom: %d \n",InnerHeight(win), win->Height, win->BorderTop, win->BorderBottom);
 	  gw->winwidth = InnerWidth(win);
 	  gw->winheight =  InnerHeight(win);
 	  gw->wincurwidth = gw->winwidth;
 	  gw->wincurheight = gw->winheight;
-printf("Winwidthxheight: %d x %d, curwidthxcurheight: %d x %d\n",gw->winwidth,gw->winheight,gw->wincurwidth,gw->wincurheight);
+LibPrintf("Winwidthxheight: \n"); //%d x %d, curwidthxcurheight: %d x %d\n",gw->winwidth,gw->winheight,gw->wincurwidth,gw->wincurheight);
 
 	  gw->needreshapegui = TRUE;
 	  gw->needpositiongui = TRUE;
@@ -194,7 +200,7 @@ printf("Winwidthxheight: %d x %d, curwidthxcurheight: %d x %d\n",gw->winwidth,gw
 	  gw->needrightmenu = TRUE;
 	  DEBUGOUT(11,"CreateWindow step 3\n");
 
-		printf("Linking in gw: 0x%08x\n",gw);
+		LibPrintf("Linking in gw: \n"); //0x%08x\n",gw);
 	  stuffLinkInWin(gw);
 	  DEBUGOUT(10, "glutCreateWindow about to call glEnable\n");
 
@@ -204,8 +210,8 @@ printf("Winwidthxheight: %d x %d, curwidthxcurheight: %d x %d\n",gw->winwidth,gw
 	//ActivateWindow(win);
 	//glutstuff.activeWindow = gw;
 	  DEBUGOUT(2, "%d = glutCreateWindow(`%s')\n", gw->WinID, title);
-printf("Winwidth as we leave CreateWindow: %d x %d\n",gw->winwidth,gw->winheight);
-printf("First lw in gw: 0x%08x\n",*gw);
+LibPrintf("Winwidth as we leave CreateWindow: \n"); //%d x %d\n",gw->winwidth,gw->winheight);
+LibPrintf("First lw in gw: \n"); // 0x%08x\n",*gw);
 
 	  return gw->WinID;
 	}

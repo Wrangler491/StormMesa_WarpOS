@@ -31,6 +31,7 @@
 
 void glutInitWindowSize(int width, int height)
 {
+		        DEBUGOUT(11, "glutInitWindowSize\n");
   glutstuff.initwidth = width;
   glutstuff.initheight = height;
 }

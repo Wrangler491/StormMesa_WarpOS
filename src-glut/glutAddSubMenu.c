@@ -30,6 +30,7 @@
 #include "glutstuff.h"
 
 void glutAddSubMenu(const char *name, int menu) {
+	        DEBUGOUT(11, "glutAddSubMenu\n");
   if (glutstuff.curmenu) {
     glutAddMenuEntry(name, menu);
     glutChangeToSubMenu(glutstuff.curmenu->NumEntries, name, menu);

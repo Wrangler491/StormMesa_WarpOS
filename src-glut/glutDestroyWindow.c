@@ -89,6 +89,7 @@ void CloseWindowSafely(struct GlutWindow *win)
 void glutDestroyWindow(int win)
 {
   struct GlutWindow *actWindow;
+        DEBUGOUT(11, "glutDestroyWindow\n");
 
   /* link out */
   if ((actWindow = stuffGetWin(win))) {

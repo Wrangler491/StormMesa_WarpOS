@@ -13,6 +13,7 @@ int glutBitmapWidth(GLUTbitmapFont font, int c)
 {
   BitmapFontPtr fontinfo;
   const BitmapCharRec *ch;
+        DEBUGOUT(11, "glutBitmapWidth\n");
 
   fontinfo = (BitmapFontPtr) font;
 
@@ -30,6 +31,7 @@ int glutBitmapLength(GLUTbitmapFont font, const unsigned char *string)
   int c, length;
   BitmapFontPtr fontinfo;
   const BitmapCharRec *ch;
+          DEBUGOUT(11, "glutBitmapLength\n");
 
   fontinfo = (BitmapFontPtr) font;
 

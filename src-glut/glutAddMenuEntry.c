@@ -33,6 +33,7 @@
 void glutAddMenuEntry(const char *name, int value) {
   struct GlutMenu *actMenu;
 
+        DEBUGOUT(11, "glutAddMenuEntry\n");
   if ((actMenu = glutstuff.curmenu)) {
     struct GlutMenuEntry *gme;
 

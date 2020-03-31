@@ -24,6 +24,7 @@ struct nnode {
   struct nnode *succ;						/* Pointer to next (successor) */
   struct nnode *pred;						/* Pointer to previous (predecessor) */
   int data;
+  void *obj;								/* Pointer to object in node*/
 };
 
 struct nlist {
@@ -33,45 +34,50 @@ struct nlist {
   int nodes;
 };
 
-extern void nNewList(register struct nlist *list);
-void nAddHead(register struct nlist *list, register struct nnode *node);
-extern void nAddTail(register struct nlist *list, register struct nnode *node);
-struct nnode *nRemHead(register struct nlist *list);
-struct nnode *nRemTail(register struct nlist *list);
-void nRemove(register struct nlist *list, register struct nnode *node);
-void nInsert(register struct nlist *list, register struct nnode *node,
-	     register struct nnode *pred);
-void npreInsert(register struct nlist *list, register struct nnode *node,
-		register struct nnode *succ);
-struct nnode *nGetHead(register struct nlist *list);
-struct nnode *nGetTail(register struct nlist *list);
-struct nnode *nSuccNode(register struct nnode *node);
-void nMoveList(register struct nlist *slist, register struct nlist *dlist);
-void nAppendList(register struct nlist *preList,
-		 register struct nlist *postList);
+extern void nNewList( struct nlist *list);
+void nAddHead( struct nlist *list,  struct nnode *node);
+extern void nAddTail( struct nlist *list,  struct nnode *node);
+struct nnode *nRemHead( struct nlist *list);
+struct nnode *nRemTail( struct nlist *list);
+void nRemove( struct nlist *list,  struct nnode *node);
+void nInsert( struct nlist *list,  struct nnode *node,
+	      struct nnode *pred);
+void npreInsert( struct nlist *list,  struct nnode *node,
+		 struct nnode *succ);
+struct nnode *nGetHead( struct nlist *list);
+struct nnode *nGetTail( struct nlist *list);
+struct nnode *nSuccNode( struct nnode *node);
+void nMoveList( struct nlist *slist,  struct nlist *dlist);
+void nAppendList( struct nlist *preList,
+		  struct nlist *postList);
 
 /* from higher values to lower */
-struct nnode *nFindNode(register struct nnode *startnode,
-			register int numnodes, register int data);
-void nEnqueue(register struct nlist *list, register struct nnode *node);
-void nMoveNodeSorted(register struct nlist *slist, register struct nlist *dlist,
-		     register struct nnode *node);
-void nSortListWeighted(register struct nlist *list, register int radix);
-void nSortListLinear(register struct nlist *list, register int radix);
-void nSortListLinearMax(register struct nlist *list, register int radix,
-			register int radix_divide);
+struct nnode *nFindNode( struct nnode *startnode,
+			 int numnodes,  int data);
+void nEnqueue( struct nlist *list,  struct nnode *node);
+void nMoveNodeSorted( struct nlist *slist,  struct nlist *dlist,
+		      struct nnode *node);
+void nSortListWeighted( struct nlist *list,  int radix);
+void nSortListLinear( struct nlist *list,  int radix);
+void nSortListLinearMax( struct nlist *list,  int radix,
+			 int radix_divide);
 
 /* from lower values to higher */
-struct nnode *nFindNodeReverse(register struct nnode *startnode,
-			       register int numnodes, register int data);
-void nEnqueueReverse(register struct nlist *list, register struct nnode *node);
-void nMoveNodeSortedReverse(register struct nlist *slist, register struct nlist *dlist,
-			    register struct nnode *node);
-void nSortListWeightedReverse(register struct nlist *list, register int radix);
-void nSortListLinearReverse(register struct nlist *list, register int radix);
-void nSortListLinearMaxReverse(register struct nlist *list, register int radix,
-			       register int radix_divide);
+struct nnode *nFindNodeReverse( struct nnode *startnode,
+			        int numnodes,  int data);
+void nEnqueueReverse( struct nlist *list,  struct nnode *node);
+void nMoveNodeSortedReverse( struct nlist *slist,  struct nlist *dlist,
+			     struct nnode *node);
+void nSortListWeightedReverse( struct nlist *list,  int radix);
+void nSortListLinearReverse( struct nlist *list,  int radix);
+void nSortListLinearMaxReverse( struct nlist *list,  int radix,
+			        int radix_divide);
+
+void nAddTailext(struct nlist *list,  struct nnode *node, void *ptr);
+void *nGetNextext(struct nnode *node);
 
 #define	nGetNext(node)		nSuccNode(node)
+#define nGetHeadext(node)	nGetHead(node)->obj
+#define nGetTailext(node)	nGetTail(node)->obj
 
 #endif								/* LISTS_H */

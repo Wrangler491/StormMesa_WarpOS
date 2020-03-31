@@ -713,6 +713,8 @@ void glutInitDisplayString(const char *string)
 {
   char *this, *next, *old;
   int mode;
+			        DEBUGOUT(11, "glutInitDisplayString\n");
+
 
   old = this = strdup(string);
   while ((next = strstr(this, ' '))) {

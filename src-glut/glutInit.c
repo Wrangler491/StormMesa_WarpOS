@@ -76,6 +76,7 @@ void glutInit(int *argcp, char **argv)
   int t;
   char *geometrystring = 0;
   struct Screen *screen;
+	        DEBUGOUT(11, "glutInit\n");
 
   CurrentTime(&(glutstuff.basetime_secs), &(glutstuff.basetime_micros));
   glutstuff.havebasetime = TRUE;

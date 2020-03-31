@@ -42,6 +42,7 @@
 BOOL overlayed = FALSE;
 
 int glutLayerGet(GLenum param) {
+		        DEBUGOUT(11, "glutLayerGet\n");
 
   switch (param) {
     case GLUT_OVERLAY_POSSIBLE:
@@ -70,6 +71,7 @@ int glutLayerGet(GLenum param) {
 }
 
 void glutUseLayer(GLenum layer) {
+		        DEBUGOUT(11, "glutUseLayer\n");
 
   switch (layer) {
     case GLUT_NORMAL:
@@ -82,30 +84,37 @@ void glutUseLayer(GLenum layer) {
 }
 
 void glutRemoveOverlay(void) {
+		        DEBUGOUT(11, "glutRemoveOverlay\n");
 }
 
 void glutEstablishOverlay(void) {
+		        DEBUGOUT(11, "glutEstablishOverlay\n");
 }
 
 void glutShowOverlay(void) {
+		        DEBUGOUT(11, "glutShowOverlay\n");
   if(!overlayed)
     Printf("glutOverlayDisplayFunc: window has no overlay established\n");
 }
 
 void glutHideOverlay(void) {
+		        DEBUGOUT(11, "glutHideOverlay\n");
   if(!overlayed)
     Printf("glutOverlayDisplayFunc: window has no overlay established\n");
 }
 
 void glutPostOverlayRedisplay(void) {
+		        DEBUGOUT(11, "glutPostOverlayRedisplay\n");
   glutPostRedisplay();
 }
 
 void glutPostWindowOverlayRedisplay(int win) {
+		        DEBUGOUT(11, "glutPostWindowOverlayRedisplay\n");
   glutPostWindowRedisplay(win);
 }
 
 void glutOverlayDisplayFunc(void (*func)(void)) {
+		        DEBUGOUT(11, "glutOverlayDisplayFunc\n");
   if(!overlayed)
     Printf("glutOverlayDisplayFunc: window has no overlay established\n");
   else if (glutstuff.curwin);

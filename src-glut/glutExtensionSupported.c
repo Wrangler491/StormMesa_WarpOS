@@ -26,6 +26,7 @@ int glutExtensionSupported(const char *extension)
   static const GLubyte *extensions = NULL;
   const GLubyte *start;
   GLubyte *where, *terminator;
+          DEBUGOUT(11, "glutExtensionSupported\n");
 
   /* Extension names should not have spaces. */
   where = (GLubyte *) strchr(extension, ' ');

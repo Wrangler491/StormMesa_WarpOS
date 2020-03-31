@@ -12,6 +12,7 @@
 void glutSetMenu(int menu)
 {
   struct GlutMenu *gm;
+        DEBUGOUT(11, "glutSetMenu\n");
 
   if((gm = stuffGetMenu(menu)))
     stuffMakeCurrentMenu(gm);
@@ -21,5 +22,6 @@ void glutSetMenu(int menu)
 
 int glutGetMenu(void)
 {
+	        DEBUGOUT(11, "glutGetMenu\n");
   return glutstuff.curmenu ? glutstuff.curmenu->MenuID : 0;
 }

@@ -55,6 +55,8 @@ extern struct ExecBase *SysBase;
 #include <stdlib.h>
 
 #include "glutstuff.h"
+#include "../sources/AmigaIncludes.h"
+//#define LibPrintf(t) SPrintF(t,NULL)
 
 extern void RedoMenu(int button, struct GlutMenu *glutmenu);
 
@@ -157,7 +159,7 @@ void glutMainLoop(void)
     /* Apply changes
      */
     actWindow = (struct GlutWindow *)nGetHeadext(&glutstuff.Windows);
-	//printf("actWindow: 0x%08x\n",actWindow);
+	//Libprintf("actWindow: 0x%08x\n",actWindow);
     do {
 	//printf("Entered do loop\n");
 	//printf("First lw in gw: 0x%08x\n",*actWindow);
@@ -165,7 +167,7 @@ void glutMainLoop(void)
        win = actWindow->window;
 
      stuffMakeCurrent(actWindow);
-	printf("Step 0, width: %d, height: %d\n",actWindow->winwidth, actWindow->winheight);
+	//printf("Step 0, width: %d, height: %d\n",actWindow->winwidth, actWindow->winheight);
 
       if (actWindow->WindowTimers.nodes) {
         struct GlutTimer *gt = (struct GlutTimer *)nGetHeadext(&actWindow->WindowTimers);
@@ -213,7 +215,7 @@ void glutMainLoop(void)
         actWindow->push = FALSE;
         actWindow->pop = FALSE;
       }
-	printf("Step 2\n");
+	//printf("Step 2\n");
 
       if (actWindow->needposition) {
 	actWindow->needposition = FALSE;
@@ -265,7 +267,7 @@ void glutMainLoop(void)
 	actWindow->winy = 0;
 	actWindow->winwidth = win->WScreen->Width;
 	actWindow->winheight = win->WScreen->Height;
-printf("Makefullscreen\n");
+//printf("Makefullscreen\n");
 	ChangeWindowBox(win, actWindow->winx,
 			     actWindow->winy,
 			     actWindow->winwidth,
@@ -286,24 +288,29 @@ printf("Makefullscreen\n");
       }
 
       if ((actWindow->leftmenu && actWindow->leftmenu->needupdate) || actWindow->needleftmenu) {
+	LibPrintf("Step 11.6A RedoMenu LMB\n");
 	actWindow->needleftmenu = FALSE;
 	RedoMenu(GLUT_LEFT_BUTTON, actWindow->leftmenu);
       }
 
       if ((actWindow->middlemenu && actWindow->middlemenu->needupdate) || actWindow->needmiddlemenu) {
+	LibPrintf("Step 11.6B RedoMenu MMB\n");
 	actWindow->needmiddlemenu = FALSE;
 	RedoMenu(GLUT_MIDDLE_BUTTON, actWindow->middlemenu);
       }
 
       if ((actWindow->rightmenu && actWindow->rightmenu->needupdate) || actWindow->needrightmenu) {
+	LibPrintf("Step 11.6C RedoMenu RMB\n");
 	actWindow->needrightmenu = FALSE;
 	RedoMenu(GLUT_RIGHT_BUTTON, actWindow->rightmenu);
       }
+	LibPrintf("Step 11.6D Calling nGetNextext\n");
 	actWindow = (struct GlutWindow *)nGetNextext(&actWindow->WindowNode);
-	printf("Step 11.7, actWindow: 0x%08x\n",actWindow);
+	LibPrintf("Step 11.7, actWindow: \n"); //0x%08x\n",actWindow);
     } while (actWindow!=NULL);
 
     if (glutstuff.Menues.nodes) {
+	LibPrintf("Step 11.8\n");
       actMenu = (struct GlutMenu *)&glutstuff.Menues;
       while ((actMenu = (struct GlutMenu *)nGetNextext(&actMenu->MenuNode))) {
 	stuffMakeCurrentMenu(actMenu);
@@ -317,9 +324,12 @@ printf("Makefullscreen\n");
 
     /* Wait for something to happen
      */
-    if (glutstuff.idlefunc == NULL)
+    if (glutstuff.idlefunc == NULL) {
+	LibPrintf("Step 11.9: idling\n");
       Wait(1L << glutstuff.msgport->mp_SigBit);
-printf("Step 12\n");
+	}
+
+LibPrintf("Step 12\n");
     /* Handle all messages (if any)
      */
     while ((msg = (struct IntuiMessage *)GetMsg(glutstuff.msgport))) {
@@ -327,7 +337,7 @@ printf("Step 12\n");
       struct MenuItem *item;
       UWORD menuNumber;
       struct IntuiMessage cmsg = *msg;
-printf("Step 13\n");
+LibPrintf("Step 13\n");
       ReplyMsg(&msg->ExecMessage);
 
       stuffMakeCurrent((struct GlutWindow *)cmsg.IDCMPWindow->UserData);
@@ -346,13 +356,13 @@ printf("Step 13\n");
       actWindow->qualifiers = cmsg.Qualifier;
       switch (cmsg.Class) {
 	case IDCMP_REFRESHWINDOW:							/* received only in DB-mode, non-DB-modes are NoCareRefresh */
-printf("IDCMP_REFRESHWINDOW\n");
+LibPrintf("IDCMP_REFRESHWINDOW\n");
 	  BeginRefresh(win);
 	  AmigaMesaSwapBuffers(actWindow->context);					/* put current contents into damaged region */
 	  EndRefresh(win, TRUE);
 	  break;
 	case IDCMP_CHANGEWINDOW:
-printf("IDCMP_CHANGEWINDOW\n");
+LibPrintf("IDCMP_CHANGEWINDOW\n");
 	//("Step A, width: %d, height: %d\n",actWindow->winwidth, actWindow->winheight);
 	//printf("Step A.1, OS width: %d, height: %d\n",win->Width, win->Height);
 
@@ -384,7 +394,7 @@ printf("IDCMP_CHANGEWINDOW\n");
 	  }
 	  break;
 	case IDCMP_VANILLAKEY:
-printf("IDCMP_VANILLAKEY\n");
+LibPrintf("IDCMP_VANILLAKEY\n");
 	  if (cmsg.Code & IECODE_UP_PREFIX) {
 	    if (actWindow->keyboardupfunc) {
 	      if (!((cmsg.Qualifier & IEQUALIFIER_REPEAT) &&
@@ -405,7 +415,7 @@ printf("IDCMP_VANILLAKEY\n");
 	  }
 	  break;
 	case IDCMP_RAWKEY:
-printf("IDCMP_RAWKEY\n");
+LibPrintf("IDCMP_RAWKEY\n");
 	  if (cmsg.Code & IECODE_UP_PREFIX) {
 	    if (actWindow->specialupfunc) {
 	      if (!((cmsg.Qualifier & IEQUALIFIER_REPEAT) &&
@@ -426,7 +436,7 @@ printf("IDCMP_RAWKEY\n");
 	  }
 	  break;
 	case IDCMP_MENUPICK:
-printf("IDCMP_MENUPICK\n");
+LibPrintf("IDCMP_MENUPICK\n");
 	  menuNumber = cmsg.Code;
 	  while (menuNumber != MENUNULL) {
 	    item = ItemAddress(actWindow->menu, menuNumber);
@@ -440,7 +450,7 @@ printf("IDCMP_MENUPICK\n");
 	  }
 	  break;
 	case IDCMP_CLOSEWINDOW:
-printf("IDCMP_CLOSEWINDOW\n");
+LibPrintf("IDCMP_CLOSEWINDOW\n");
 	  if (wanttoquit) {
 	    /* User wants to quit, but ESC doesn't do anything
 	     * Panic, and return in the hope that it will drop
@@ -457,14 +467,14 @@ printf("IDCMP_CLOSEWINDOW\n");
 	  wanttoquit = TRUE;
 	  break;
 	case IDCMP_MOUSEBUTTONS:
-printf("IDCMP_MOUSEBUTTONS\n");
+LibPrintf("IDCMP_MOUSEBUTTONS\n");
 	  if (actWindow->mousefunc) {
 	    idleing = FALSE;
 	    (*actWindow->mousefunc) (ConvToButton(cmsg.Code, cmsg.Qualifier), ConvToButtonState(cmsg.Code), cmsg.MouseX, cmsg.MouseY);
 	  }
 	  break;
 	case IDCMP_INTUITICKS:
-printf("IDCMP_INTUITICKS\n");
+LibPrintf("IDCMP_INTUITICKS\n");
 	  if ((actWindow->mousex != cmsg.MouseX) ||
 	      (actWindow->mousey != cmsg.MouseY)) {
 	    actWindow->mousex = cmsg.MouseX;
@@ -520,7 +530,9 @@ printf("IDCMP_INTUITICKS\n");
 
     /* If nothing is happening, call the idle function
      */
-    if (idleing && glutstuff.idlefunc)
+    if (idleing && glutstuff.idlefunc) {
+	LibPrintf("Calling idle function\n");
       (*glutstuff.idlefunc) ();
+	}
   }
 }

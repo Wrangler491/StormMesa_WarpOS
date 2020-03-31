@@ -38,6 +38,7 @@
 #include "glutstuff.h"
 
 int glutVideoResizeGet(GLenum param) {
+			        DEBUGOUT(11, "glutVideoResizeGet\n");
 
   switch (param) {
     case GLUT_VIDEO_RESIZE_POSSIBLE:
@@ -59,13 +60,21 @@ int glutVideoResizeGet(GLenum param) {
 }
 
 void glutSetupVideoResizing(void) {
+			        DEBUGOUT(11, "glutSetupVideoResizing\n");
+
 }
 
 void glutStopVideoResizing(void) {
+			        DEBUGOUT(11, "glutStopVideoResizing\n");
+
 }
 
 void glutVideoResize(int x, int y, int width, int height) {
+			        DEBUGOUT(11, "glutVideoResize\n");
+
 }
 
 void glutVideoPan(int x, int y, int width, int height) {
+			        DEBUGOUT(11, "glutVideoPan\n");
+
 }
