@@ -42,11 +42,12 @@ void registerGL(register struct glreg* ptr __asm("a0"))
         f_exit = ptr->func_exit;
 }
 
+#ifndef WARPUP
 void exit(int rc)
 {
         (*f_exit)(rc);
 }
-
+#endif
 
 void Dummy_at_90(void){}
 void Dummy_at_96(void){}
