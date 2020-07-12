@@ -315,7 +315,7 @@ int main(int argc, char *argv[])
     /* do 'n' frames then exit */
     limit = atoi(argv[1]) + 1;
   } else {
-    limit = 200;
+    limit = 2000;
   }
   glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
 
