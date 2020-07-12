@@ -791,7 +791,7 @@ int main(int argc, char *argv[])
 */
 	glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
 
-	glutInitWindowPosition(0 + 1024-680, 0 + 768-520);	//#### change back
+	glutInitWindowPosition(0,0);
 	glutInitWindowSize(width, height);
 	glutCreateWindow("Gears");
 
