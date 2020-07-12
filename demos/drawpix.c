@@ -22,7 +22,7 @@
 #include <math.h>
 #include <GL/glut.h>
 
-#include "../util/readtex.c"  /* a hack, I know */
+#include "readtex.c"  /* a hack, I know */
 
 
 #define IMAGE "girl.rgb"
@@ -36,7 +36,6 @@ static int SkipPixels, SkipRows;
 static int DrawWidth, DrawHeight;
 static int Scissor = 0;
 static float Xzoom, Yzoom;
-
 
 
 static void Reset()

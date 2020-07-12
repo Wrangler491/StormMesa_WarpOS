@@ -895,6 +895,19 @@ void APIENTRY AmigaMesaSetOneColor(struct amigamesa_context *c,int index,float r
     }
 }
 
+/**********************************************************************/
+/***** AmigaMesaGetOneColor                                       *****/
+/**********************************************************************/
+
+
+GLuint AmigaMesaGetOneColor(struct amigamesa_context *c, GLuint index)
+{
+	REM(AmigaMesaGetOneColor) 
+	return c->ColorTable2[index];
+  
+}
+
+
 void AmigaMesaSetRastTags(struct amigamesa_context *c, long Tag1, ...)
 {
 	AmigaMesaSetRast(c,(struct TagItem *)&Tag1);

@@ -548,7 +548,6 @@ GLint GLAPIENTRY gluScaleImage( GLenum format,
 }
 
 
-#if 0
 /*
  * Return the largest k such that 2^k <= n.
  */
@@ -560,7 +559,6 @@ static GLint ilog2( GLint n )
    for (k=0; n>>=1; k++) ;
    return k;
 }
-#endif
 
 
 /*

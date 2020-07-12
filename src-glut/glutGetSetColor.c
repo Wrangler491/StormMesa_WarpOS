@@ -38,6 +38,10 @@
 #endif
 #include "glutstuff.h"
 
+/*temporary*/
+#define DEBUGOUT(level,str,args...) ({  printf(str,"gl  : "); 	\
+  printf(str,##args);		})
+
 GLfloat glutGetColor(int ndx, int component)
 {
 	        DEBUGOUT(11, "glutGetColor\n");
@@ -123,4 +127,7 @@ void glutCopyColormap(int winnum)
 
   DEBUGOUT(1, "cannot find second colormap to copy\n");
   return;
+
+/* temporary */
+#define DEBUGOUT 
 }

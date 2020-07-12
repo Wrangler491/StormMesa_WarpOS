@@ -49,8 +49,9 @@ GL_LIBS = -L$(LIBDIR) -laglut -laglu -lagl -lm $(XLIBS)
 
 LIB_DEP = $(LIBDIR)/$(GL_LIB) $(LIBDIR)/$(GLU_LIB) $(LIBDIR)/$(GLUT_LIB)
 
-PROGS = gears-minigl gears clearspd gamma glinfo glutfx isosurf\
-#bounce clearspd drawpix gamma gears glinfo glutfx isosurf \
+PROGS = gears-minigl\
+	bounce clearspd drawpix gamma gears glinfo glutfx isosurf\
+#	drawpix gamma gears glinfo glutfx isosurf \
 #	morph3d multiext multitex osdemo paltex pointblast reflect \
 #	renormal spectex stex3d tessdemo texcyl texobj trispd winpos
 
