@@ -21,12 +21,15 @@
 #include <math.h>
 #include <GL/glut.h>
 
+#ifdef WARPUP
+#include "readtex.c"
+#else
 #ifndef AMIGA
 #include "../util/readtex.c"   /* I know, this is a hack. */
 #else
 GLboolean LoadRGBMipmaps( const char *, GLint );
 #endif
-
+#endif
 
 #define LIT 1
 #define TEXTURED 2

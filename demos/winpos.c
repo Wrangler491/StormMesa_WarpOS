@@ -23,12 +23,15 @@
 #include <stdio.h>
 #include "GL/glut.h"
 
+#ifdef WARPUP
+#include "readtex.c"
+#else
 #ifndef AMIGA
 #include "../util/readtex.c"   /* I know, this is a hack. */
 #else
 GLubyte *LoadRGBImage( const char *, GLint *, GLint *, GLenum *);
 #endif
-
+#endif
 
 #ifndef M_PI
 #  define M_PI 3.14159265
