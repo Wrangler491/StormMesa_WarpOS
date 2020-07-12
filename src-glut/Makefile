@@ -84,7 +84,7 @@ libaglut.a: $(OBJECTS)
 
 #include ../Make-config
 
-include depend
+#include depend
 
 clean:
 	-rm *.o
