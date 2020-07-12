@@ -18,6 +18,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <math.h>
 #include <GL/glut.h>
 
@@ -195,7 +196,7 @@ int main( int argc, char *argv[] )
 
    if (argc==2 && strcmp(argv[1],"-help")==0) {
       Help(argv[0]);
-      return ;
+      return 0;
    }
 
    glutReshapeFunc( Reshape );
@@ -204,5 +205,5 @@ int main( int argc, char *argv[] )
    glutIdleFunc( Idle );
 
    glutMainLoop();
-   return;
+   return 0;
 }
