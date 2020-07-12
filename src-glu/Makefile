@@ -75,7 +75,7 @@ libaglu.a: $(OBJECTS)
 
 #include ../Make-config
 
-include depend
+#include depend
 
 clean:
 	-rm *.o 
@@ -86,5 +86,5 @@ clean:
 # Run 'make depend' to update the dependencies if you change what's included
 # by any source file.
 # 
-dep: $(SOURCES)
-	makedepend -fdepend -Y -I. $(SOURCES)
+depend: $(SOURCES)
+	makedepend -f depend -Y -I. $(SOURCES)
