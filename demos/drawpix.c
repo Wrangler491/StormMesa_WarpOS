@@ -51,8 +51,7 @@ static void Reset()
 
 static void Display( void )
 {
-   glClear( GL_COLOR_BUFFER_BIT );
-
+   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 #if 0
    glRasterPos2i(Xpos, Ypos);
 #else
@@ -209,7 +208,7 @@ static void Init( GLboolean ciMode )
    printf("GL_VERSION = %s\n", (char *) glGetString(GL_VERSION));
    printf("GL_RENDERER = %s\n", (char *) glGetString(GL_RENDERER));
 
-   Image = LoadRGBImage( IMAGE, &ImgWidth, &ImgHeight, &ImgFormat );
+   Image = LoadRGBImage( IMAGE, (GLint *)&ImgWidth, (GLint *)&ImgHeight, &ImgFormat );
    if (!Image) {
       printf("Couldn't read %s\n", IMAGE);
       exit(0);
@@ -269,6 +268,7 @@ int main( int argc, char *argv[] )
    if (argc > 1 && strcmp(argv[1], "-ci")==0) {
       ciMode = GL_TRUE;
    }
+   Usage();
 
    glutInit( &argc, argv );
    glutInitWindowPosition( 0, 0 );
@@ -282,7 +282,6 @@ int main( int argc, char *argv[] )
    glutCreateWindow(argv[0]);
 
    Init(ciMode);
-   Usage();
 
    glutReshapeFunc( Reshape );
    glutKeyboardFunc( Key );
