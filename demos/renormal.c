@@ -29,7 +29,7 @@ static void Idle(void)
 static void Display( void )
 {
    GLfloat scale = 0.6 + 0.5 * sin(Phi);
-   glClear( GL_COLOR_BUFFER_BIT );
+   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
    glPushMatrix();
    glScalef(scale, scale, scale);
    glutSolidSphere(2.0, 20, 20);
