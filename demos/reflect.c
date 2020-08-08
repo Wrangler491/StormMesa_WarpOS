@@ -148,7 +148,7 @@ static void init( void )
    /* Setup texture */
 #ifdef USE_TEXTURE
 
-   Image = LoadRGBImage( TABLE_TEXTURE, &ImgWidth, &ImgHeight, &ImgFormat );
+   Image = LoadRGBImage( TABLE_TEXTURE, (GLint *)&ImgWidth, (GLint *)&ImgHeight, &ImgFormat );
    if (!Image) {
       printf("Couldn't read %s\n", TABLE_TEXTURE);
       exit(0);
