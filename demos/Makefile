@@ -45,7 +45,7 @@ CFLAGS = --specs=warpup -woslibs -g -O2 #-save-temps
 INCDIR = ..
 LIBDIR = ../lib
 
-GL_LIBS = -L$(LIBDIR) -laglut -laglu -lagl -lm $(XLIBS)
+GL_LIBS = -L$(LIBDIR) -laglut -laglu -lagl $(XLIBS)
 
 LIB_DEP = $(LIBDIR)/$(GL_LIB) $(LIBDIR)/$(GLU_LIB) $(LIBDIR)/$(GLUT_LIB)
 
