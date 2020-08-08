@@ -23,6 +23,9 @@
 #include <stdlib.h>
 #include <math.h>
 #include <GL/glut.h>
+#ifdef WARPUP
+#include <string.h>
+#endif
 
 
 static float MinPeriod = 2.0;   /* 2 seconds */
