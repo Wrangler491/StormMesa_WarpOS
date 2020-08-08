@@ -43,8 +43,8 @@ static GLboolean HaveTexObj = GL_FALSE;
 static void draw( void )
 {
    glDepthFunc(GL_EQUAL);
-   /*   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );*/
-   glClear( GL_COLOR_BUFFER_BIT );
+   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+/*   glClear( GL_COLOR_BUFFER_BIT );*/
 
    glColor3f( 1.0, 1.0, 1.0 );
 
