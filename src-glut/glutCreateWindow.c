@@ -204,8 +204,10 @@ LibPrintf("Winwidthxheight: \n"); //%d x %d, curwidthxcurheight: %d x %d\n",gw->
 	  stuffLinkInWin(gw);
 	  DEBUGOUT(10, "glutCreateWindow about to call glEnable\n");
 
-	  if (glutstuff.depth)
+	glClear(  GL_COLOR_BUFFER_BIT );
+	  if (glutstuff.depth) {
 	    glEnable(GL_DEPTH_TEST);
+		  glClear( GL_DEPTH_BUFFER_BIT ); }
 
 	//ActivateWindow(win);
 	//glutstuff.activeWindow = gw;
