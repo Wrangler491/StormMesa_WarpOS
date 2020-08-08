@@ -93,7 +93,7 @@ static void reshape( int width, int height )
 
 static void init( void )
 {
-   Image = LoadRGBImage( IMAGE, &ImgWidth, &ImgHeight, &ImgFormat );
+   Image = LoadRGBImage( IMAGE, (GLint *)&ImgWidth, (GLint *)&ImgHeight, &ImgFormat );
    if (!Image) {
       printf("Couldn't read %s\n", IMAGE);
       exit(0);
