@@ -158,7 +158,7 @@ void tesse(void)
 	tobj=gluNewTess();
 	if(tobj!=NULL)
 	{
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glColor3f (0.7, 0.7, 0.0);
 #if defined(AMIGA) && defined(__PPC__)
 		gluTessCallback(tobj,GLU_BEGIN,(void(CALLBACK *)())my_glBegin);
@@ -293,7 +293,7 @@ void display(void)
 	GLuint i,j;
 	GLuint point_cnt;
 
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
     switch(mode)
     {
 	case DEFINE:
