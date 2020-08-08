@@ -420,8 +420,11 @@ void myinit (void)
     mode=DEFINE;
 }
 
-static void reshape(GLsizei w, GLsizei h)
+static void reshape(int w1, int h1)
 {
+	GLsizei w, h;
+	w = (GLsizei)w1;	//hack to stop warnings
+	h = (GLsizei)h1;
     glViewport(0, 0, w, h);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
