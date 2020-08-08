@@ -62,9 +62,6 @@ extern void RedoMenu(int button, struct GlutMenu *glutmenu);
 
 BOOL wanttoquit = FALSE;
 
-/* delete this*/
-int wranglercount=1;
-
 static int ConvRaw(UWORD code, UWORD qual)
 {
   switch (code) {
@@ -197,10 +194,6 @@ void glutMainLoop(void)
 	  gt = new;
 	}
       }
-
-/* delete this*/
-	//printf("Main loop iteration: %d\n",wranglercount++);
-	//printf("Step 1, width: %d, height: %d\n",actWindow->winwidth, actWindow->winheight);
 
       /* Hide/Show/Iconify */							/* TODO: workbench.library icons */
       /*  then break if hide or iconify */
@@ -401,7 +394,7 @@ LibPrintf("IDCMP_VANILLAKEY\n");
 		    (actWindow->ignorekeyrepeat ||
 		     (actWindow->repeatmode == GLUT_KEY_REPEAT_OFF)))) {
 	        idleing = FALSE;
-	        (*actWindow->keyboardupfunc) (ConvRaw(cmsg.Code, cmsg.Qualifier), cmsg.MouseX, cmsg.MouseY);
+			(*actWindow->keyboardupfunc) ((int) cmsg.Code, cmsg.MouseX, cmsg.MouseY);
 	      }
 	    }
 	  }
@@ -410,7 +403,7 @@ LibPrintf("IDCMP_VANILLAKEY\n");
 		  (actWindow->ignorekeyrepeat ||
 		   (actWindow->repeatmode == GLUT_KEY_REPEAT_OFF)))) {
 	      idleing = FALSE;
-	      (*actWindow->keyboardfunc) (ConvRaw(cmsg.Code, cmsg.Qualifier), cmsg.MouseX, cmsg.MouseY);
+			(*actWindow->keyboardfunc) ((int) cmsg.Code, cmsg.MouseX, cmsg.MouseY);
 	    }
 	  }
 	  break;
