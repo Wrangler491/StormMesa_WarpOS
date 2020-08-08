@@ -47,7 +47,7 @@ void glutAddMenuEntry(const char *name, int value) {
       gme->name = name;
       gme->EntryValue = value;
       gme->issubmenu = FALSE;
-      gme->EntryMenu = 0;
+      gme->EntryMenu = actMenu;	//Amended from 0 by Wrangler to fix menu bug
 
       actMenu->needupdate = TRUE;
     }
