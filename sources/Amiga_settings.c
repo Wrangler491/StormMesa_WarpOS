@@ -188,9 +188,15 @@ void STORMMESA_Init()
 
 	StormMesa.LOCKMODE3.ON=TRUE;
 	//StormMesa.VERYFAST.ON=TRUE;
-	//StormMesa.NOHW.ON=FALSE;
+	//StormMesa.NOHW.ON=TRUE;
 	//StormMesa.UseDrawArray.ON=TRUE;
 	//StormMesa.STATS.ON=TRUE;
+
+	if(getenv("StormMesa_SWMode")) {
+		StormMesa.NOHW.ON=TRUE;
+	} else {
+		StormMesa.NOHW.ON=FALSE;
+	}
 
 }
 /*==================================================================================*/
