@@ -188,7 +188,7 @@ visible(int vis)
 int main(int argc, char *argv[])
 {
   glutInit(&argc, argv);
-  glutInitDisplayMode(GLUT_INDEX | GLUT_DOUBLE);
+  glutInitDisplayMode(GLUT_INDEX | GLUT_DEPTH | GLUT_DOUBLE);
 
   glutCreateWindow("Bounce");
   Ball = make_ball();
