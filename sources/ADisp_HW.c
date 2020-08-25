@@ -4434,15 +4434,17 @@ void HW_DD_pointers( GLcontext *ctx )
 		hwcontext->height = (W3D_Float)c->height;
    }
    else
-   {
+   {	//Wrangler: if we are here then the HW device driver can't handle what we're doing so revert to SW
 		ctx->Driver.GetParameteri = SW_GetParameteri;
 		ctx->Driver.RasterSetup = NULL;
+		hwcontext->nohw = TRUE; //Wrangler added to ensure we revert to SW mode
+		SWFSDriver_DD_pointers(ctx); //Wrangler added to reset device driver pointers to SW
    }
    if (!(hwcontext->nohw))
    {
 	   ctx->Driver.AllocDepthBuffer = HW_AllocDepthBuffer;
-	   ctx->Driver.DepthTestSpan = HW_DepthTestSpan;
-	   ctx->Driver.DepthTestPixels = HW_DepthTestPixels;
+	   //ctx->Driver.DepthTestSpan = HW_DepthTestSpan;	#### wrangler
+	   //ctx->Driver.DepthTestPixels = HW_DepthTestPixels;	#### wrangler
 	   ctx->Driver.ReadDepthSpanFloat = HW_ReadDepthSpanFloat;
 	   ctx->Driver.ReadDepthSpanInt = HW_ReadDepthSpanInt;
    }
