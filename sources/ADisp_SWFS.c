@@ -92,7 +92,6 @@ unsigned long getLibBase()
 }
 #endif
 
-
 // misc support functions
 ;// SetBuffer
 void SetBuffer(AmigaMesaContext c)
@@ -1233,6 +1232,7 @@ void SWFSD_write_color_span_RGB15(const GLcontext *ctx, GLuint n, GLint x, GLint
 	    ptr = tempbuffer;
 	    *((long *)buffer) = *(long *)ptr;
 		(long *)buffer++;
+		(long *)buffer++;
 	}
 	for (i=0;i<n2;i++)
 	{
@@ -1282,6 +1282,7 @@ void SWFSD_write_color_span_RGB15PC(const GLcontext *ctx, GLuint n, GLint x, GLi
 	    rgba++;
 	    ptr = tempbuffer;
 	    *((long *)buffer) = *(long *)ptr;
+		(long *)buffer++;
 		(long *)buffer++;
 	}
 	for (i=0;i<n2;i++)
@@ -1333,6 +1334,7 @@ void SWFSD_write_color_span_RGB16(const GLcontext *ctx, GLuint n, GLint x, GLint
 	    ptr = tempbuffer;
 	    *((long *)buffer) = *(long *)ptr;
 		(long *)buffer++;
+		(long *)buffer++;
 	}
 	for (i=0;i<n2;i++)
 	{
@@ -1356,7 +1358,6 @@ void SWFSD_write_color_span_RGB16PC(const GLcontext *ctx, GLuint n, GLint x, GLi
 #ifdef DBG
     LibPrintf("SWFSD_write_color_span_RGB16PC\n");
 #endif
-
     if (mask)
     {
 	for (i=0;i<n;i++)
@@ -1383,12 +1384,14 @@ void SWFSD_write_color_span_RGB16PC(const GLcontext *ctx, GLuint n, GLint x, GLi
 	    ptr = tempbuffer;
 	    *((long *)buffer) = *(long *)ptr;
 		(long *)buffer++;
+		(long *)buffer++;
 	}
 	for (i=0;i<n2;i++)
 	{
 	    *buffer = TC_RGB16PC((*rgba)[0],(*rgba)[1],(*rgba)[2]);
 	    rgba++;
 	}
+
     }
 }
 #endif
@@ -1431,6 +1434,7 @@ void SWFSD_write_color_span_BGR15PC(const GLcontext *ctx, GLuint n, GLint x, GLi
 	    rgba++;
 	    ptr = tempbuffer;
 	    *((long *)buffer) = *(long *)ptr;
+		(long *)buffer++;
 		(long *)buffer++;
 	}
 	for (i=0;i<n2;i++)
@@ -1479,6 +1483,7 @@ void SWFSD_write_color_span_BGR16PC(const GLcontext *ctx, GLuint n, GLint x, GLi
 	    rgba++;
 	    ptr = tempbuffer;
 	    *((long *)buffer) = *(long *)ptr;
+		(long *)buffer++;
 		(long *)buffer++;
 	}
 	for (i=0;i<n2;i++)
@@ -1840,6 +1845,7 @@ void SWFSD_write_color_span3_RGB15(const GLcontext *ctx, GLuint n, GLint x, GLin
 	    ptr = tempbuffer;
 	    *((long *)buffer) = *(long *)ptr;
 		(long *)buffer++;
+		(long *)buffer++;
 	}
 	for (i=0;i<n2;i++)
 	{
@@ -1889,6 +1895,7 @@ void SWFSD_write_color_span3_RGB15PC(const GLcontext *ctx, GLuint n, GLint x, GL
 	    rgba++;
 	    ptr = tempbuffer;
 	    *((long *)buffer) = *(long *)ptr;
+		(long *)buffer++;
 		(long *)buffer++;
 	}
 	for (i=0;i<n2;i++)
@@ -1940,6 +1947,7 @@ void SWFSD_write_color_span3_RGB16(const GLcontext *ctx, GLuint n, GLint x, GLin
 	    ptr = tempbuffer;
 	    *((long *)buffer) = *(long *)ptr;
 		(long *)buffer++;
+		(long *)buffer++;
 	}
 	for (i=0;i<n2;i++)
 	{
@@ -1990,6 +1998,7 @@ void SWFSD_write_color_span3_RGB16PC(const GLcontext *ctx, GLuint n, GLint x, GL
 	    ptr = tempbuffer;
 	    *((long *)buffer) = *(long *)ptr;
 		(long *)buffer++;
+		(long *)buffer++;
 	}
 	for (i=0;i<n2;i++)
 	{
@@ -2039,6 +2048,7 @@ void SWFSD_write_color_span3_BGR15PC(const GLcontext *ctx, GLuint n, GLint x, GL
 	    ptr = tempbuffer;
 	    *((long *)buffer) = *(long *)ptr;
 		(long *)buffer++;
+		(long *)buffer++;
 	}
 	for (i=0;i<n2;i++)
 	{
@@ -2086,6 +2096,7 @@ void SWFSD_write_color_span3_BGR16PC(const GLcontext *ctx, GLuint n, GLint x, GL
 	    rgba++;
 	    ptr = tempbuffer;
 	    *((long *)buffer) = *(long *)ptr;
+		(long *)buffer++;
 		(long *)buffer++;
 	}
 	for (i=0;i<n2;i++)
@@ -3153,6 +3164,7 @@ void SWFSD_write_index_span32_RGB16(const GLcontext *ctx, GLuint n, GLint x, GLi
 	    ptr = tempbuffer;
 	    *((long *)buffer) = *(long *)ptr;
 		(long *)buffer++;
+		(long *)buffer++;
 	}
 	for (z=0;z<n2;z++)
 	{
@@ -3368,6 +3380,7 @@ void SWFSD_write_index_span_RGB16(const GLcontext *ctx, GLuint n, GLint x, GLint
 	    *ptr++ = (short)coltab[*index++];
 	    ptr = tempbuffer;
 	    *((long *)buffer) = *(long *)ptr;
+		(long *)buffer++;
 		(long *)buffer++;
 	}
 	for (z=0;z<n2;z++)
