@@ -4435,6 +4435,160 @@ void HW_DD_pointers( GLcontext *ctx )
    }
    else
    {	//Wrangler: if we are here then the HW device driver can't handle what we're doing so revert to SW
+		SPrintF("**** Alert: StormMesa dropping back into software mode ****\n",NULL);
+		switch(rc)
+		{
+		case CHECK_NO8BIT:
+			SPrintF("No 8 bit mode support\n",NULL);
+			break;
+		case CHECK_NOCI:
+			SPrintF("Colour indexing not supported\n",NULL);
+			break;
+		case CHECK_NOZMEM:
+			SPrintF("No Z mem\n",NULL);
+			break;
+		case CHECK_INACTIVE:
+			SPrintF("Hardware is inactive!\n",NULL);
+			break;
+		case CHECK_NODRAWBUF:
+			SPrintF("No draw buffer!\n",NULL);
+			break;
+		case CHECK_TEXMODE:
+			SPrintF("Unsupported texture mode\n",NULL);
+			break;
+		case CHECK_NOVMEM:
+			SPrintF("No video mem\n",NULL);
+			break;
+		case CHECK_NOIMAGE:
+			SPrintF("No image!\n",NULL);
+			break;
+		case CHECK_NOTEXMAPPING:
+			SPrintF("No texture mapping support\n",NULL);
+			break;
+		case CHECK_NOREPEAT_LIN:
+			SPrintF("No linear repeat support\n",NULL);
+			break;
+		case CHECK_NOCLAMP_LIN:
+			SPrintF("No linear clamp support\n",NULL);
+			break;
+		case CHECK_NOASYM:
+			SPrintF("No asym support\n",NULL);
+			break;
+		case CHECK_TEXOV_LIN:
+			SPrintF("Linear texture oversized\n",NULL);
+			break;
+		case CHECK_NOPERSP:
+			SPrintF("No perspective support\n",NULL);
+			break;
+		case CHECK_NOREPEAT_P:
+			SPrintF("No perspective repeat support\n",NULL);
+			break;
+		case CHECK_NOCLAMP_P:
+			SPrintF("No perspective clamp support\n",NULL);
+			break;
+		case CHECK_TEXOV_P:
+			SPrintF("Perspective texture oversized\n",NULL);
+			break;
+		case CHECK_NOBILINEAR:
+			SPrintF("No bilinear filter support\n",NULL);
+			break;
+		case CHECK_NOMIPMAP:
+			SPrintF("No mipmap support\n",NULL);
+			break;
+		case CHECK_NODEPTHFILTER:
+			SPrintF("No mip map depth filter\n",NULL);
+			break;
+		case CHECK_NOREPLACE:
+			SPrintF("No replace env support\n",NULL);
+			break;
+		case CHECK_NODECAL:
+			SPrintF("No decal env support\n",NULL);
+			break;
+		case CHECK_NOMODULATE:
+			SPrintF("No modulate env support\n",NULL);
+			break;
+		case CHECK_NOBLEND:
+			SPrintF("No blend env support\n",NULL);
+			break;
+		case CHECK_NORECTTEX:
+			SPrintF("No rectangular texture\n",NULL);
+			break;
+		case CHECK_NOTEXOBJ:
+			SPrintF("No texture object!\n",NULL);
+			break;
+		case CHECK_NOTEXIMAGE:
+			SPrintF("No texture image!\n",NULL);
+			break;
+		case CHECK_FORMATERR:
+			SPrintF("Mipmap format not supported\n",NULL);
+			break;
+		case CHECK_FORMATERR2:
+			SPrintF("Mipmap level format mismatch\n",NULL);
+			break;
+		case CHECK_NOW3DTEX: /* no W3D texture object exists */
+			SPrintF("No W3D texture object exists\n",NULL);
+			break;
+		case CHECK_NOSMOOTH:
+			SPrintF("No smooth shading support\n",NULL);
+			break;
+		case CHECK_NOFLAT:
+			SPrintF("No flat shading support\n",NULL);
+			break;
+		case CHECK_NOZBUFFER:
+			SPrintF("No Z buffer support\n",NULL);
+			break;
+		case CHECK_NOZMODES:
+			SPrintF("No Z compare modes support\n",NULL);
+			break;
+		case CHECK_NOZUPDATE:
+			SPrintF("No z buffer update support\n",NULL);
+			break;
+		case CHECK_NOALPHATEST:
+			SPrintF("No alpha test support\n",NULL);
+			break;
+		case CHECK_NOAMODES:
+			SPrintF("No alpha test modes support\n",NULL);
+			break;
+		case CHECK_NOBLENDING:
+			SPrintF("No blending support\n",NULL);
+			break;
+		case CHECK_NOBLENDFACTORS:
+			SPrintF("No blend factors support\n",NULL);
+			break;
+		case CHECK_DECAL_BLEND:
+			SPrintF("No decal blend support\n",NULL);
+			break;
+		case CHECK_NOFOGGING:
+			SPrintF("No fogging support\n",NULL);
+			break;
+		case CHECK_FOGLINEAR:
+			SPrintF("No linear fog support\n",NULL);
+			break;
+		case CHECK_FOGEXP:
+			SPrintF("No fog support\n",NULL);
+			break;
+		case CHECK_FOGEXP2:
+			SPrintF("No fog2 support\n",NULL);
+			break;
+		case CHECK_NOSCISSOR:
+			SPrintF("No scissor support\n",NULL);
+			break;
+		case CHECK_NOLOGICOP:
+			SPrintF("No logicop support\n",NULL);
+			break;
+		case CHECK_NOMASKING:
+			SPrintF("No masking support\n",NULL);
+			break;
+		case CHECK_NOSTENCIL:
+			SPrintF("No stencil support\n",NULL);
+			break;
+		case CHECK_NOSPECULAR:
+			SPrintF("No specular support\n",NULL);
+			break;
+		default:
+			SPrintF("Some unexpected error occured!\n",NULL);
+		}
+
 		ctx->Driver.GetParameteri = SW_GetParameteri;
 		ctx->Driver.RasterSetup = NULL;
 		hwcontext->nohw = TRUE; //Wrangler added to ensure we revert to SW mode
