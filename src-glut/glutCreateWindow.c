@@ -128,7 +128,7 @@ int glutCreateWindow(const char *title)
 				WA_MaxWidth, ~0,
 				WA_MaxHeight, ~0,
 				WA_Flags, WFLG_SIZEGADGET | WFLG_DRAGBAR | WFLG_NOCAREREFRESH | WFLG_CLOSEGADGET | WFLG_DEPTHGADGET | WFLG_SIZEBBOTTOM | ((glutstuff.doublemode) ? WFLG_SIMPLE_REFRESH : WFLG_NOCAREREFRESH),
-				WA_Activate, FALSE,				/* only by makecurrent */
+				WA_Activate, TRUE,		//Changed by Wrangler		/* only by makecurrent */
 				WA_Zoom, (ULONG)zoom,
 				TAG_END);
     UnlockPubScreen(NULL, screen);
