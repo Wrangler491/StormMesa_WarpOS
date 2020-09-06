@@ -153,6 +153,7 @@ display(void)
   glRectf(0.6, -0.01, 1.0, -1.0);
 
   glFlush();
+	//glutSwapBuffers();
 }
 
 int 
