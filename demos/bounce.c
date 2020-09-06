@@ -110,7 +110,7 @@ draw(void)
 {
   GLint i;
 
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  glClear(GL_COLOR_BUFFER_BIT);
 
   glIndexi(CYAN);
   glBegin(GL_LINES);
@@ -188,7 +188,7 @@ visible(int vis)
 int main(int argc, char *argv[])
 {
   glutInit(&argc, argv);
-  glutInitDisplayMode(GLUT_INDEX | GLUT_DEPTH | GLUT_DOUBLE);
+  glutInitDisplayMode(GLUT_INDEX | GLUT_DOUBLE);
 
   glutCreateWindow("Bounce");
   Ball = make_ball();
