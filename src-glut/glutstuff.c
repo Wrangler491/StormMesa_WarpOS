@@ -203,7 +203,7 @@ void glutConstructor(void)
   glutstuff.pubscreenname = "Mesa";
 
   glutstuff.rgba = GL_TRUE;
-  glutstuff.depth = GL_TRUE;							/* depth isn't the default! */
+  glutstuff.depth = GL_FALSE;							/* depth isn't the default! */
 
   glutstuff.initdisplaymode = GLUT_RGBA | GLUT_SINGLE | GLUT_DEPTH;
 
